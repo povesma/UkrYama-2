@@ -1,0 +1,55 @@
+@import url("reset.css");
+
+body {
+	background: #fff;
+	color: #000;
+	font: normal 62.5% Arial, sans-serif;
+}
+
+a {color:#046ab2}
+a:hover {color:#239aed}
+a:active {background: #ffdd00; color:#000;}
+.mainCols a:visited{
+	color:#674ae4;
+}
+
+.head h1{
+	font-size: 2.4em;
+}
+h1 {
+	color: #000;
+	font: normal 1.71em/1 Arial, sans-serif;
+	margin: 0 0 0.63em;
+}
+
+h2 {
+	color: #000;
+	font: bold 1.28em/1 Arial, sans-serif;
+	margin: 0 0 1em;
+}
+
+h3, h4 {
+	color:#637280;
+	font: normal 1.14em/1 Arial, sans-serif;
+	margin: 0 0 1em;
+}
+
+p {
+	margin: 0 0 1em;
+}
+
+.intro {
+	font-size: 1.15em;
+	line-height: 1.5em;
+	margin-right: 120px;
+}
+
+ol {
+	list-style-type: decimal;
+	margin: 0 0 1em 24px;
+}
+
+ol li {
+	margin: 0 0 1em;
+	padding:0 0 0 12px;
+}

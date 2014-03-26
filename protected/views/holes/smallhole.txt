@@ -1,0 +1,14 @@
+<script language="javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+<script src="http://newtest.ukryama.com/js/smallhole.js"></script>
+
+<script>
+$.get("http://newtest.ukrya​ma.com/holes/smallhole", function(data){
+	yama.innerHTML=data;
+	mc = document.createElement("script")
+	mc.src="http://newtest.ukryama.com/js/multifile.js"
+	yama.appendChild(mc)
+});
+
+</script>
+<div id="yama"></div>

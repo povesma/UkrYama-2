@@ -1,0 +1,36 @@
+<?php
+$MESS['HOLES_STATISTICS_NAME']        = 'Статистика ям';
+$MESS['HOLES_STATISTICS_DESCRIPTION'] = 'Статистика ям';
+$MESS['MAX_STRINGS'] = 'Максимальна кількість записів, що виводиться з кожного пункту';
+$MESS['YEAR1'] = 'років';
+$MESS['YEAR2'] = 'року';
+$MESS['YEAR3'] = 'рік';
+$MESS['MONTH1'] = 'місяців';
+$MESS['MONTH2'] = 'місяці';
+$MESS['MONTH3'] = 'місяць';
+$MESS['DAY1'] = 'днів';
+$MESS['DAY2'] = 'дня';
+$MESS['DAY3'] = 'день';
+$MESS['HOUR1'] = 'годин';
+$MESS['HOUR2'] = 'години';
+$MESS['HOUR3'] = 'година';
+$MESS['MINUTE1'] = 'хвилин';
+$MESS['MINUTE2'] = 'хвилини';
+$MESS['MINUTE3'] = 'хвилина';
+$MESS['SECOND1'] = 'секунд';
+$MESS['SECOND2'] = 'секунди';
+$MESS['SECOND3'] = 'секунда';
+$MESS['STATE1'] = 'Нові';
+$MESS['STATE2'] = 'Не зроблені';
+$MESS['STATE3'] = 'Надіслано заяву';
+$MESS['STATE4'] = 'Зроблені';
+$MESS['STATE5'] = 'Скарга в прокуратурі';
+$MESS['STATE6'] = 'Отримана відповідь';
+$MESS['PIT_SITY']          = 'Міста за кількістю ям';
+$MESS['FIXED_PIT_SITY']    = 'Міста за кількістю виправлених ям';
+$MESS['PIT_STATE']         = 'Кількість ям в кожному статусі';
+$MESS['AGV_TIME']          = 'Середній час виправлення ями';
+$MESS['PIT_PEOPLES']       = 'Користувачі за загальною кількістю ям';
+$MESS['FIXED_PIT_PEOPLES'] = 'Користувачі за кількістю виправлених ям';
+return $MESS;
+?>

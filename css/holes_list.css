@@ -1,0 +1,186 @@
+.holes_list {
+	font-size: 0.7em;
+	list-style-type: none;
+	margin: 0 0 2em -20px;
+}
+.holes_list .empty{
+	margin:0 0 0 20px;
+}
+
+	.holes_list li {
+		background: #fff;
+		box-shadow: 0 1px 1px #637280;
+		-webkit-box-shadow: 0 1px 1px #637280;
+		-moz-box-shadow: 0 1px 1px #637280;
+		float: left;
+
+		margin-right:5px;
+		margin-bottom:5px;
+		overflow: hidden;
+		width: 225px;
+		position: relative;
+		border-radius:8px;
+		-moz-border-radius:8px;
+		-webkit-border-radius:8px;
+	}
+	
+	.holes_list li .del {
+		position: absolute;
+		top: 10px;
+		left: 190px;
+		display: inline-block;
+	}  
+	
+	.holes_list li .premoderate {
+		position: absolute;
+		top: 10px;
+		left: 160px;
+		display: inline-block;
+	}
+	
+	.holes_list li .premoderate img {
+		cursor: pointer;
+	}
+	
+	.holes_list .noMargin {
+		/*margin-right: 0;*/
+	}
+	
+		.holes_list .photo {
+			display: block;
+			height: 160px;
+			overflow: hidden;
+			text-align: center;
+			border-radius:8px 8px 0 0;
+			-moz-border-radius:8px 8px 0 0;
+			-webkit-border-radius:8px 8px 0 0;
+		}
+
+		.holes_list .properties {
+			color: #888;
+			padding: 10px 10px 2px;
+		}
+			
+			.holes_list .service {
+				font-size: 14px;
+				color: #303030;
+				line-height: 19px;
+				overflow: hidden;
+				position: relative;
+				height: 36px;
+				margin:0 0 14px;
+			}
+			
+			.holes_list .service i {
+				
+			}
+
+			.holes_list .social {
+				float: none;
+				color: #637280;
+				padding: 0;
+				font-size: 12px;
+			}
+
+				.holes_list .social span { margin-right: 4px; float:left; line-height: 20px;}
+				.holes_list .status_span { font-weight: bold; font-size: 20px; }
+				
+				.holes_list .state_achtung { color: maroon; } 
+				.holes_list .state_prosecutor { color: maroon; }
+				.holes_list .state_fixed { color: green; }
+				.holes_list .social img { float: right; margin:-4px -2px 0 0; top:-7px;}
+
+				.holes_list .status_days { border-left: 1px solid #dadadb; }
+				.holes_list .status_days i { border-left: 1px solid #fff; font-style: normal; padding-left: 4px; }
+
+	.holes_list a, .holes_list a:hover {
+		text-decoration: none;
+	}
+.holes_list .status_span{
+	margin:6px 0 0;
+	width:7px;
+	height:7px;
+	vertical-align: middle;
+	background: url(../images/dots.png) no-repeat;
+	text-indent: -9999px;
+}
+.status_span.state_fresh { background-position: 0 0; }
+.status_span.state_inprogress { background-position: 0 -8px; }
+.status_span.state_gibddre, .status_span.state_fixed { background-position: 0 -16px; }
+.status_span.state_achtung { background-position: 0 -24px; }
+
+.pagination a, .pagination span {
+	margin-right: 1em;
+}
+
+
+
+.holes_list:after, .holes_list li:after, .holes_list .service p:after, .holes_list .social:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+	overflow: hidden;
+}
+
+#delform {
+	background: #f0f0f0;
+	color: black;
+	position: absolute;
+	border: 1px solid #333;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	padding: 5px;
+	display: none;
+	z-index: 5;
+}
+
+#delform span {
+	font-size: 1.5em;
+	cursor: pointer;
+}
+
+div#ymapcontainer { border: 1px solid #cacaca; height: 213px; margin-bottom: 2em; width: 213px; }
+div#ymapcontainer_big { display: none; position: absolute; border: 10px solid white; border-top: 0; z-index: 5; background-color: white; }
+div#ymapcontainer_big span.close { color: #333; font-size: 1.5em; font-weight: bold; cursor: pointer; padding: 0 5px; }
+div#ymapcontainer_big span.close:hover {color:#edb209}
+div#ymapcontainer_big_map { height: 600px; width: 1000px; }
+
+.state_block.checked {background-color: #ddd;}
+
+#holes_select_list{position: static; }
+#scrollcontainer{position: absolute; top:0px!important;}
+.holes_select_list_box{background-color: #e5e9ec; width: 200px; padding:10px;
+	border-radius:3px;
+	-moz-border-radius:3px;
+	-webkit-border-radius:3px;
+	margin:0 0 3px;
+}
+.holes_select_list_box br + br{
+	display: none;
+}
+.hole_check{position: absolute; z-index: 1; top:5px; left:5px;}
+
+.commentsHot { 
+    background: url("../images/icons.gif") 0px -57px no-repeat transparent;
+    color: #BE0206;
+    margin: 0px;
+    padding-left: 14px;
+    white-space: nowrap;
+    float:right;
+    height: 19px;
+}
+.commentsHot_0 { 
+    background: url("../images/icons.gif") 0px -43px no-repeat transparent;
+    color: #303030;
+    margin: 0px;
+    padding-left: 14px;
+    white-space: nowrap;
+    float:right;
+    height: 19px;
+}
+
+.fos_comment_submit{}
+.fos_comment_submit .save-photo-comment{}
+.fos_comment_submit{}
