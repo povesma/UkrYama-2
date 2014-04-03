@@ -1,4 +1,4 @@
-<?
+<?php
 $this->pageTitle=Yii::app()->name . ' - FAQ';
 $this->layout='//layouts/header_blank';
 ?>

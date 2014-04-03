@@ -1,4 +1,4 @@
-<?
+<?php
 $this->pageTitle=Yii::app()->name.' :: '.Yii::t('template', 'MY_PLACE');
 ?>
 

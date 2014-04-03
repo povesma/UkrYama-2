@@ -1,4 +1,4 @@
-<?
+<?php
 $this->title=Yii::t('template', 'STANDARTS_AND_NORM');
 $this->pageTitle=Yii::app()->name.' :: '.$this->title;
 $this->layout='//layouts/header_blank';

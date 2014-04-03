@@ -1,0 +1,19 @@
+#Options +FollowSymLinks
+IndexIgnore */*
+RewriteEngine on
+
+# if a directory or a file exists, use it directly
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+# otherwise forward it to index.php
+RewriteRule . index.php
+
+Redirect 301 /personal/holes.php http://ukryama.com/holes/personal/
+Redirect 301 /personal/holes.php http://ukryama.com/holes/personal/
+Redirect 301 /regulations http://ukryama.com/page/regulations
+Redirect 301 /faq http://ukryama.com/page/faq
+Redirect 301 /statistics http://ukryama.com/statics
+Redirect 301 /donate http://ukryama.com/page/donate
+Redirect 301 /partners http://ukryama.com/page/partners
+Redirect 301 /about http://ukryama.com/page/about

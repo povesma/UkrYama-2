@@ -279,7 +279,7 @@ $model=new CommunityForm;
     <td></td>
 </tr>
 <input type=hidden name=files id=files>
-<tr><td colspan=2><?$this->widget('ext.EFineUploader.EFineUploader',
+<tr><td colspan=2><?php $this->widget('ext.EFineUploader.EFineUploader',
  array(
        'id'=>'FineUploader',
        'config'=>array(

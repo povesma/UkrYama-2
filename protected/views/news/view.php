@@ -1,4 +1,4 @@
-<?
+<?php
 $this->pageTitle=Yii::app()->name . ' :: Новости :: '.$model->title;
 ?>
 <?php

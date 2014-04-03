@@ -1,4 +1,4 @@
-<?
+<?php
     $jsFile = CHtml::asset($this->viewPath.DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.'jquery.cookie.js');
     Yii::app()->getClientScript()->registerScriptFile($jsFile);
 

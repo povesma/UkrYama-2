@@ -1,4 +1,4 @@
-<?
+<?php
 $this->title = Yii::t("template", "MENU_TOP_ABOUT");
 $this->pageTitle = Yii::app()->name . ' :: '.$this->title;
 $this->layout='//layouts/header_blank';

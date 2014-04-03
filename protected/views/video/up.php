@@ -1,4 +1,5 @@
-<?$this->widget('ext.EFineUploader.EFineUploader',
+<?php
+$this->widget('ext.EFineUploader.EFineUploader',
  array(
        'id'=>'FineUploader',
        'config'=>array(
