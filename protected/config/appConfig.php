@@ -3,7 +3,7 @@ $bd=array(
 			'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=localhost;dbname=ukryama_ukryama',
 			'emulatePrepare' => true,
-			'username' => 'yama_user',
+			'username' => 'root',
 			'password' => '',
 			'charset' => 'utf8',
 			'tablePrefix'=>'yii_',
@@ -78,4 +78,7 @@ $params=array(
 	'adminEmail'=>'info@ukryama.com',
    'imagePath'=>'/upload/st1234/',   
 		//'layout'=>'startpage',
+        // Add own start-points for Google-map (addHole contr)
+        'latitude'=>'50.4639147',
+        'longitude'=>'30.4707367',
 );

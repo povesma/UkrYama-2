@@ -284,9 +284,21 @@ class HolesController extends Controller
 			$geoIp = new EGeoIP();
 			$geoIp->locate($request->userHostAddress); 	
 			//echo ($request->userHostAddress);
-			if ($geoIp->latitude) $model->LATITUDE=$geoIp->latitude;
-			if ($geoIp->longitude) $model->LONGITUDE=$geoIp->longitude;
-			$model->DATE_CREATED=time();
+            
+          /* delate rem if on product-server
+	      /	if ($geoIp->latitude) $model->LATITUDE=$geoIp->latitude;
+		  /	if ($geoIp->longitude) $model->LONGITUDE=$geoIp->longitude;
+          */
+        
+        // if in local-mode, then...
+        
+             $model->LATITUDE=Yii::app()->params['latitude'];
+			 $model->LONGITUDE=Yii::app()->params['longitude'];
+             
+        //------------//
+        
+		     $model->DATE_CREATED=time();
+             
 		}
 		$this->render('holeform', array('model'=>$model));
 	}

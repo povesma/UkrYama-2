@@ -1,5 +1,5 @@
 <?php
-$yii=dirname(__FILE__).'/../yii-last/framework/yii.php';
+$yii=dirname(__FILE__).'/../framework/yii.php';
 $config=dirname(__FILE__).'/protected/config/main.php';
 
 require_once($yii);

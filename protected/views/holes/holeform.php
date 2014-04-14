@@ -145,7 +145,7 @@ var defectMarker = new google.maps.Marker({
 <?php endif; ?>
   var infowindow = new google.maps.InfoWindow();
 	function updateAddress(){
-//		geo.geocode({address: "",location:marker.position, region: "uk"},function(callback){
+//		geo.geocode({addr ess: "",location:marker.position, region: "uk"},function(callback){
 		$.post("/event/GetAddress",{"lat":defectMarker.position['lat'](),"lng":defectMarker.position['lng']()},function(data){
 			var resp = JSON.parse(data);
 
@@ -179,11 +179,18 @@ var defectMarker = new google.maps.Marker({
 
 				}
 			}
-			administrative_area_level_1=(administrative_area_level_1=== undefined)?"1":administrative_area_level_1;
+
+			administrative_area_level_1=(administrative_area_level_1=== undefined)?"":administrative_area_level_1;
+            
+            if(administrative_area_level_1 == 'місто Київ, ') administrative_area_level_1 = ""; // Місто загальноукраїнського значення
+            if(administrative_area_level_1 == 'місто Севастополь, ') administrative_area_level_1 = ""; // Місто столичного підпорядкування 
+            locality=(locality=== undefined)?"":locality; // Якщо мапа віддалена ГуглМап не парсить назву міста/селища 
+            
 			sublocality=(sublocality=== undefined)?"":sublocality;
-			route=(route=== undefined)?"":route;
+            route=(route=== undefined)?"":route;
 			streetNumber=(streetNumber=== undefined)?"":streetNumber;
-			address=administrative_area_level_1+sublocality+route+streetNumber;
+            
+			address=administrative_area_level_1+locality+sublocality+route+streetNumber; // + locality
 
 			Holes_ADDRESS.value=address;
 			infowindow.setContent(address);
@@ -194,6 +201,8 @@ var defectMarker = new google.maps.Marker({
 //			var pos = defectMarker.getPosition();
 			Holes_LATITUDE.value=defectMarker.position['lat']();
 			Holes_LONGITUDE.value=defectMarker.position['lng']();
+            console.log(administrative_area_level_1)
+            console.log(resp)         
 		});
 	}
 }
