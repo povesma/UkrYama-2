@@ -280,9 +280,22 @@ google.maps.event.addDomListener(window, 'load', initialize);
 		
 		<!-- Дата обнаружения -->
 		<div class="f clearfix">
-		<?php echo $form->labelEx($model,'DATE_CREATED'); ?>
-      <?php echo CHtml::textField('defectdate', date(C_DATEFORMAT, $model->DATE_CREATED)); ?>
-		<?php echo $form->error($model,'DATE_CREATED'); ?>
+
+        
+        <?php echo $form->labelEx($model,'DATE_CREATED'); ?>
+<?php
+$this->widget('zii.widgets.jui.CJuiDatePicker', array(
+    'model' => $model,
+    'attribute' => 'DATE_CREATED',
+    'htmlOptions' => array(
+        'size' => '10',         // textField size
+        'maxlength' => '10',
+        'value' => '',    // textField maxlength
+    ),
+));
+?>
+<?php echo $form->error($model,'DATE_CREATED'); ?>
+        
 		</div>
 
       <script>

@@ -2135,7 +2135,8 @@ div.form #user-groups-passrequest-form label{
 #holes-form .lCol.main_section input[type="text"]{
 	width: 467px;
 }
-#holes-form input[id$=date] {
+
+#holes-form input[id$=Holes_DATE_CREATED] {
    width:auto!important;
 }
 #holes-form .lCol.main_section .MultiFile-wrap{
