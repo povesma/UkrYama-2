@@ -298,9 +298,7 @@ $this->widget('zii.widgets.jui.CJuiDatePicker', array(
         
 		</div>
 
-      <script>
-         $('#defectdate').datepicker({dateFormat: '<?php  echo C_DATEFORMAT_JS ?>'});
-      </script>
+
          	
 		<!-- фотки -->
 		<div class="f clearfix">
