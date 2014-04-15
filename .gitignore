@@ -1,4 +1,4 @@
-protected/config/appConfig.php
+
 sql/
 *.Cache
 ClientBin/
