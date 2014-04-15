@@ -201,8 +201,7 @@ var defectMarker = new google.maps.Marker({
 //			var pos = defectMarker.getPosition();
 			Holes_LATITUDE.value=defectMarker.position['lat']();
 			Holes_LONGITUDE.value=defectMarker.position['lng']();
-            console.log(administrative_area_level_1)
-            console.log(resp)         
+    
 		});
 	}
 }

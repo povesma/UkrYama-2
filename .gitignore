@@ -1,6 +1,4 @@
-<<<<<<< HEAD
-
-
+protected/config/appConfig.php
 sql/
 *.Cache
 ClientBin/
@@ -11,16 +9,10 @@ ClientBin/
 *.[Pp]ublish.xml
 *.pfx
 *.publishsettings
-
 Thumbs.db
 ehthumbs.db
-
-
 Desktop.ini
-
-
 $RECYCLE.BIN/
-
 assets/
 protected/runtime/
 themes/classic/views/

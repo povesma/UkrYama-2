@@ -3,7 +3,7 @@ $bd=array(
 			'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=localhost;dbname=ukryama_ukryama',
 			'emulatePrepare' => true,
-			'username' => 'yama_user',
+			'username' => 'root',
 			'password' => '',
 			'charset' => 'utf8',
 			'tablePrefix'=>'yii_',
