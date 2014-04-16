@@ -289,7 +289,7 @@ $this->widget('zii.widgets.jui.CJuiDatePicker', array(
     'htmlOptions' => array(
         'size' => '10',         // textField size
         'maxlength' => '10',
-        'value' => '',    // textField maxlength
+        'value' => date("d.m.Y",$model->DATE_CREATED),    // textField maxlength
     ),
 ));
 ?>
@@ -307,11 +307,12 @@ $this->widget('zii.widgets.jui.CJuiDatePicker', array(
             <?php echo Yii::t('template', 'ENTER_PHOTO_REMARK')?>	         
          </p>			
 		</div>
-						<?
+						<?php
 				if(!$model->isNewRecord && $model->pictures_fresh && $model->STATE!=Holes::STATE_FIXED)
 				{
 					?>
-					<div id="overshadow"><span class="command" onclick="document.getElementById('picts').style.display=document.getElementById('picts').style.display=='block'?'none':'block';"><?php echo Yii::t('template', 'INFO_CANDELETEPHOTO')?></span><div class="picts" id="picts"><?
+					<div id="overshadow"><span class="command" onclick="document.getElementById('picts').style.display=document.getElementById('picts').style.display=='block'?'none':'block';"><?php echo Yii::t('template', 'INFO_CANDELETEPHOTO')?></span><div class="picts" id="picts">
+					<?php
 					foreach($model->pictures_fresh as $i=>$picture){				
 						echo '<br>'.$form->checkBox($model,"deletepict[$i]", array('class'=>'filter_checkbox','value'=>$picture->id)).' ';
 						echo $form->labelEx($model,"deletepict[$i]", array('label'=>Yii::t('template', 'DELETEPICT'))).'<br><img src="'.$picture->medium.'"><br><br>';

@@ -118,7 +118,6 @@ class ProfileController extends Controller
 	{
 		$cs=Yii::app()->getClientScript();
         $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/add_form.css');
-        $cs->registerScriptFile('http://api-maps.yandex.ru/1.1/index.xml?key='.$this->mapkey);
         $model=$this->loadModel(Yii::app()->user->id);	
         
         	if(isset($_POST['UserAreaShapes']))

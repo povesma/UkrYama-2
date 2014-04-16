@@ -194,13 +194,14 @@ class Holes extends CActiveRecord
 		return CUploadedFile::getInstancesByName('');
 	}
 	
-	public function savePictures(){						
+	public function savePictures(){				
 		foreach ($this->deletepict as $pictid) {
 			$pictmodel=HolePictures::model()->findByPk((int)$pictid);  
 			if ($pictmodel)$pictmodel->delete();
 		}
 
 		$imagess=$this->UpploadedPictures;
+		print_r($imagess);exit;
 		$id=$this->ID;
 		$prefix='';			
       $path = $_SERVER['DOCUMENT_ROOT'].Yii::app()->params['imagePath'];			
@@ -605,7 +606,7 @@ class Holes extends CActiveRecord
 		));
 	}
 	public function region(){
-		$address=preg_split(",",$this->ADDRESS);
+		$address=preg_split("/,/",$this->ADDRESS);
 			$sub=$address[0];
 			if(strpos($sub,"місто")!==false){
 				$sub=mb_substr($sub,6,20,'UTF-8');

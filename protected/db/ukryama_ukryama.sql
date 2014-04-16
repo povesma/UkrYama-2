@@ -425,6 +425,18 @@ CREATE TABLE IF NOT EXISTS `yii_holes` (
 TRUNCATE TABLE `yii_holes`;
 -- --------------------------------------------------------
 
+DROP TABLE IF EXISTS `yii_hole_fixeds`;
+CREATE TABLE IF NOT EXISTS `yii_hole_fixeds` (
+  `hole_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `date_fix` int(11) NOT NULL,
+  `comment` text COLLATE utf8_unicode_ci NOT NULL,
+  `createdate` int(11) DEFAULT NULL,
+  PRIMARY KEY (`hole_id`,`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+TRUNCATE TABLE `yii_hole_fixeds`;
+
 --
 -- Структура таблицы `yii_hole_answers`
 --

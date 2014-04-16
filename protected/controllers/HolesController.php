@@ -178,7 +178,6 @@ class HolesController extends Controller
 
 		$cs=Yii::app()->getClientScript();
       $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/hole_view.css'); 
-      $cs->registerScriptFile('http://api-maps.yandex.ru/1.1/index.xml?key='.$this->mapkey);
       $jsFile = CHtml::asset($this->viewPath.DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.'view_script.js');
       $cs->registerScriptFile($jsFile);
         
@@ -263,7 +262,7 @@ class HolesController extends Controller
 						$model->USER_ID=$users[0]->id;
 					}
 			}
-			$model->DATE_CREATED = strtotime($_POST['defectdate']);
+			$model->DATE_CREATED = strtotime($_POST['Holes']['DATE_CREATED']);
 			if (!$model->DATE_CREATED)
 				$model->DATE_CREATED = mktime(0, 0, 0, date("m")  , date("d"), date("Y"));
 			if ($model->DATE_CREATED < time()-(7 * 86400))
@@ -319,7 +318,7 @@ class HolesController extends Controller
 		if(isset($_POST['Holes']))
 		{
 			$model->attributes=$_POST['Holes'];
-	$model->DATE_CREATED = strtotime($_POST['defectdate']);
+	$model->DATE_CREATED = strtotime($_POST['Holes']['DATE_CREATED']);
 			if ($model->validate(null, false)) {
    			if($model->save() && $model->savePictures())
    				$this->redirect(array('view','id'=>$model->ID));
@@ -373,7 +372,6 @@ class HolesController extends Controller
 		
 		$cs=Yii::app()->getClientScript();
       $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/add_form.css');
-      $cs->registerScriptFile('http://api-maps.yandex.ru/1.1/index.xml?key='.$this->mapkey);
 
 		if(isset($_POST['Holes']))
 		{
