@@ -285,19 +285,9 @@ class HolesController extends Controller
 			$geoIp->locate($request->userHostAddress); 	
 			//echo ($request->userHostAddress);
             
-          /* delate rem if on product-server
-	      /	if ($geoIp->latitude) $model->LATITUDE=$geoIp->latitude;
-		  /	if ($geoIp->longitude) $model->LONGITUDE=$geoIp->longitude;
-          */
-        
-        // if in local-mode, then...
-        
-             $model->LATITUDE=Yii::app()->params['latitude'];
-			 $model->LONGITUDE=Yii::app()->params['longitude'];
-             
-        //------------//
-        
-		     $model->DATE_CREATED=time();
+			if ($geoIp->latitude){$model->LATITUDE=$geoIp->latitude;}else{$model->LATITUDE=Yii::app()->params['latitude'];}
+			if ($geoIp->longitude){$model->LONGITUDE=$geoIp->longitude;}else{$model->LONGITUDE=Yii::app()->params['longitude'];}
+			$model->DATE_CREATED=time();
              
 		}
 		$this->render('holeform', array('model'=>$model));
