@@ -382,25 +382,25 @@ class UserGroupsUser extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
-			'group_id' => 'Группа',
-			'name' => 'Имя',
-			'second_name'=>'Отчество',
-			'last_name' => 'Фамилия',
-			'username' => 'Логин',
-			'password' => 'Пароль',
-			'password_confirm' => 'Подтверждение пароля',
-			'old_password' => 'Старый пароль',
-			'email' => 'E-mail',
-			'access' => 'Доступ',
-			'home' => 'Домашняя страница',
-			'creation_date' => 'дата создания',
-			'question' => 'Вопрос',
-			'answer' => 'Ответ',
-			'readable_home' => 'Домашняя страница',
-			'captcha' => 'Введите слово на картинке',
-			'rememberMe' => 'Запомнить меня на этом компьютере',
-			'params'=>'Другим пользователям :'
+			'id' => Yii::t('profile', 'ID'),
+			'group_id' => Yii::t('profile', 'GROUP'),
+			'name' => Yii::t('profile', 'NAME'),
+			'second_name'=>Yii::t('profile', 'SECOND_NAME'),
+			'last_name' => Yii::t('profile', 'LAST_NAME'),
+			'username' => Yii::t('profile', 'USERNAME'),
+			'password' => Yii::t('profile', 'PASSWORD'),
+			'password_confirm' => Yii::t('profile', 'PASSWORD_CONFIRM'),
+			'old_password' => Yii::t('profile', 'OLD_PASSWORD'),
+			'email' => Yii::t('profile', 'EMAIL'),
+			'access' => Yii::t('profile', 'ACCESS'),
+			'home' => Yii::t('profile', 'HOME'),
+			'creation_date' => Yii::t('profile', 'CREATION_DATE'),
+			'question' => Yii::t('profile', 'QUESTION'),
+			'answer' => Yii::t('profile', 'ANSWER'),
+			'readable_home' => Yii::t('profile', 'HOMEPAGE'),
+			'captcha' => Yii::t('profile', 'CAPTCHA'),
+			'rememberMe' => Yii::t('profile', 'REMEMBERME'),
+			'params'=>Yii::t('profile', 'PARAMS')
 		);
 	}
 	

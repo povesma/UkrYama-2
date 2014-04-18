@@ -112,7 +112,18 @@ function validator(form){
 		</ul>
 		</td></tr>
 	<tr><td><b>Если бы сайт предлагал отправку жалобы на состояние дороги от имени УкрЯмы, с дальнейшим сканированием ответа и отправкой вам, сколько бы вы готовы были за это заплатить?</b></td></tr>
-	<tr><td><span class="sub">min</span> <input name="money" type=range min=1 max=75 value=15 onChange="range.innerText=this.value"> <span class="sub">max</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b name=range id=range>15</b> грн. (<i><a href="javascript:void(0);" onClick="if(ownr03.style['display']=='none') {ownr03.style['display']='inline'}else{ownr03.style['display']='none'}"> свой вариант</a></i> <input name="ownr03" id="ownr03" style="display:none">)</td></tr>
+	<tr><td><span class="sub">min</span>
+    <input id="money" name="money" type=range min=1 max=75 value=15 > 
+    <span class="sub">max</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b name=range id=range>15</b> грн. 
+        <script type="text/javascript">
+    var p = document.getElementById("money"),
+        res = document.getElementById("range");
+        
+        p.addEventListener("input", function() {
+            res.innerHTML = p.value;
+        }, false);
+    </script>
+     (<i><a href="javascript:void(0);" onClick="if(ownr03.style['display']=='none') {ownr03.style['display']='inline'}else{ownr03.style['display']='none'}"> свой вариант</a></i> <input name="ownr03" id="ownr03" style="display:none">)</td></tr>
 	<tr><td style="padding-right:60px; float:right;"><input type="submit" value="Отправить"></td></tr>
 </form>
 </tbody>

@@ -24,7 +24,7 @@
 		'action'=>'/profile/update/',
 		'htmlOptions'=>Array ('enctype'=>'multipart/form-data'),
 	)); ?>
-	<p class="note">Поля отмеченные <span class="required">*</span> являются обязательными.</p>
+	<p class="note"><?php echo Yii::t('profile', 'REQUIRED') ?></p>
 	<?php echo $form->errorSummary(Array($miscModel,$miscModel->relProfile)); ?>
 	<table class="profileTable">
 	<tbody>
@@ -125,7 +125,7 @@
 </table>	
 <div class="row buttons">
 			<?php echo CHtml::hiddenField('formID', $form->id) ?>
-			<?php echo CHtml::submitButton('Обновить профиль'); ?>
+			<?php echo CHtml::submitButton(Yii::t('profile', 'SUBMIT_BUTTON')); ?>
 			<?php //echo CHtml::ajaxSubmitButton(Yii::t('userGroupsModule.general','Update User Profile'), Yii::app()->baseUrl . '/profile/', array('update' => '#userGroups-container'), array('id' => 'submit-mail'.$passModel->id.rand()) ); ?>
 		</div>
 	<?php $this->endWidget(); ?>
@@ -145,7 +145,7 @@
 		<div class="row">
 			<?php echo $form->labelEx($passModel,'username'); ?>
 			<?php echo $form->textField($passModel,'username',array('size'=>60,'maxlength'=>120)); ?>
-			<p>Изменив логин вы потеряете возможность авторизовываться через аккаунт социальной сети!</p>
+            <p><?php echo Yii::t('profile', 'CHANGE_PASS_WARNING') ?></p>
 			<?php echo $form->error($passModel,'username'); ?>
 		</div>
 		<?php endif; ?>
