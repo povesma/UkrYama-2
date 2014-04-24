@@ -110,14 +110,14 @@ class Profile extends CActiveRecord
 		return array(
 			'id' => 'ID',
 			'ug_id' => 'Ug',
-			'birthday' => 'Дата рождения',
-			'site' => 'Веб-сайт',
-			'avatar' => 'Фотография',
-			'image' => 'Фотография',
-			'aboutme'=>'Обо мне',
-			'request_from'=>'Фамилия, имя и отчество в родительном падеже (для подстановки в заявления)',
-			'request_signature'=>'Подпись (фамилия в именительном падеже и инициалы)',
-			'request_address'=>'Почтовый адрес для подстановки в заявления'
+			'birthday' => Yii::t('profile', 'BIRTHDAY'),
+			'site' => Yii::t('profile', 'HOMEPAGE'),
+			'avatar' => Yii::t('profile', 'AVATAR'),
+			'image' => Yii::t('profile', 'UPLOAD_PICTURE'),
+			'aboutme'=>Yii::t('profile', 'ABOUT'),
+			'request_from'=>Yii::t('profile', 'REQUEST_FROM'),
+			'request_signature'=>Yii::t('profile', 'SHOWFULLNAME'),
+			'request_address'=>Yii::t('profile', 'SHOWABOUTME')
 		);
 	}
 

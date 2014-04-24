@@ -125,6 +125,7 @@ return array(
    'DELETE_FILE'=>'Удалить файл',
    'DELETE_IMAGE'=>'Удалить это изображение',
    'UPLOAD_AT_DATE'=>'Загружено: {0}',
+   'TITLE_PROFILE_UPDATE' => 'УкрЯма::Изменение настроек профиля',
 
 
    

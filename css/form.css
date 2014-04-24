@@ -94,7 +94,7 @@ div.form input[type="password"]{
 
 }
 div.form input[type="text"]:focus,
-div.form input[type="password"]:active{
+div.form input[type="password"]:focus{
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.075) inset, 0px 0px 8px rgba(0, 115, 170, 0.6)
 }
 
@@ -116,8 +116,8 @@ div.form fieldset
 div.form label
 {
 	font-weight: normal;
-	font-size: 1.1em;
-/*	display: block; */
+/*	font-size: 1.1em;
+	display: block; */
 	text-align: right;
 }
 

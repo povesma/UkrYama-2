@@ -39,6 +39,7 @@ return array(
    'GOTO_MAIN'=>'На головну',
     
    'NEWS'=>'Новини',
+   'EVENT'=>'Події',
    'USER'=>'Користувач',   
    'USERS'=>'Користувачi',
    'HOLE'=>'Яма',
@@ -128,6 +129,7 @@ return array(
    'DELETE_FILE'=>'Видалити файл',  
    'DELETE_IMAGE'=>'Видалити це зображення',     
    'UPLOAD_AT_DATE'=>'Завантажено: {0}',
+   'TITLE_PROFILE_UPDATE' => 'УкрЯма::Зміна налаштуваннь профілю',
    
    
 );
