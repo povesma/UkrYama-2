@@ -32,7 +32,7 @@
 	<table class="bx-auth-table">
 			<tr>
 				<td class="bx-auth-label"><?php echo $form->labelEx($model,'username'); ?>:</td>
-				<td><?php echo $form->textField($model,'username'); ?>
+				<td><?php echo $form->textField($model,'username',array('class'=>'form-control')); ?>
 					<?php echo $form->error($model,'username'); ?>
 				</td>
 			</tr>

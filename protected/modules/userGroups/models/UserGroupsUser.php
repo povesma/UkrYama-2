@@ -400,17 +400,21 @@ class UserGroupsUser extends CActiveRecord
 			'readable_home' => Yii::t('profile', 'HOMEPAGE'),
 			'captcha' => Yii::t('profile', 'CAPTCHA'),
 			'rememberMe' => Yii::t('profile', 'REMEMBERME'),
-			'params'=>Yii::t('profile', 'PARAMS')
+			'params'=>Yii::t('profile', 'PARAMS'),
+            'image'=>Yii::t('profile', 'UPLOAD_PICTURE'),
+            'request_from'=>Yii::t('profile', 'REQUEST_FROM'),
+            
 		);
 	}
 	
 	public function getParamsFields()
 	{
 		return array(
-			'showFullname' => 'Показывать имя и фамилию',
-			'showAboutme' => 'Показывать информацию "обо мне"',
-			'showContactForm' => 'Разрешать пользователям отправлять сообщения на e-mail',
-			'showMyarea'=>'Показывать границы моего участка',
+			'showFullname' => Yii::t('profile', 'SHOWFULLNAME'),
+			'showAboutme' => Yii::t('profile', 'SHOWABOUTME'),
+			'showContactForm' => Yii::t('profile', 'SHOWCONTACTFORM'),
+			'showMyarea' => Yii::t('profile', 'SHOWMYAREA'),
+           
 		);
 	}
 	

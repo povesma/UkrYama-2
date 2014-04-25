@@ -14,7 +14,15 @@
     </div>
 	<?php endif; ?>
 
-
+<div id="tabs">
+    <ul>
+        <li><a href="#tabs-1">Основне</a></li>
+        <li><a href="#tabs-2">Змінити пароль</a></li>
+        <li><a href="#tabs-3">Налаштування безпеки</a></li>
+    </ul>
+    
+    <div id="tabs-1">
+    
 	<div class="form">
 
 	<?php $form=$this->beginWidget('CActiveForm', array(
@@ -89,22 +97,17 @@
 		<?php echo $form->error($miscModel->relProfile,'site'); ?></td>	
 	</tr>
 	<tr>
-		<td colspan="2">
-		<?php echo $form->labelEx($miscModel->relProfile,'aboutme'); ?>
-		<?php echo $form->textArea($miscModel->relProfile,'aboutme',array('rows'=>10,'cols'=>10,'class'=>'textInput')); ?>
+		<td colspan="3">
+		<?php echo $form->labelEx($miscModel->relProfile,'aboutme'); ?>...<br />
+		<?php echo $form->textArea($miscModel->relProfile,'aboutme',array('rows'=>7,'cols'=>15,'class'=>'textInput')); ?>
 		<?php echo $form->error($miscModel->relProfile,'aboutme'); ?>
 		</td>
-		<td>
-		<div class="f chekboxes">
-		<?php echo $form->labelEx($miscModel,'params'); ?><br/>
-		<?php echo $form->checkBoxList($miscModel,'params',$miscModel->paramsFields,Array('template'=>'{input}{label}')); ?>
-		</div>
-		</td>
+
 		</tr>
 		<tr>
 		<td colspan="3">
 		<?php echo $form->labelEx($miscModel->relProfile,'request_from'); ?>
-		<?php echo $form->textField($miscModel->relProfile,'request_from',array('maxlength'=>255,'class'=>'textInput')); ?>
+		<?php echo $form->textField($miscModel->relProfile,'request_from',array('maxlength'=>255,'class'=>'textInput')); ?>	
 		<?php echo $form->error($miscModel->relProfile,'request_from'); ?>
 		</td>
 		</tr><tr>
@@ -132,7 +135,11 @@
 	</div><!-- form -->
 
 
-	<h2>Смена пароля</h2>
+
+    </div>
+    <div id="tabs-2">
+
+	<!--<h2><?php echo Yii::t('profile', 'CH_PASS_H1') ?></h2>-->
 	<div class="form">
 
 	<?php $form=$this->beginWidget('CActiveForm', array(
@@ -183,10 +190,47 @@
 		<?php endif; ?>
 		<div class="row buttons">
 			<?php echo CHtml::hiddenField('formID', $form->id) ?>
-			<?php echo CHtml::submitButton('Изменить пароль'); ?>
+			<?php echo CHtml::submitButton(Yii::t('profile', 'CH_PASS')); ?>
 			<?php //echo CHtml::ajaxSubmitButton(Yii::t('userGroupsModule.general','Change Password'), Yii::app()->baseUrl .'/userGroups/user/update/id/'.$passModel->id, array('update' => '#userGroups-container'), array('id' => 'submit-pass'.$passModel->id.rand()) ); ?>
 		</div>
 
 	<?php $this->endWidget(); ?>
 	</div><!-- form -->
 </div>
+
+    
+        <div id="tabs-3">
+    
+	<div class="form">
+
+	<?php $form=$this->beginWidget('CActiveForm', array(
+		'id'=>'user-groups-misc-form',
+		'enableAjaxValidation'=>true,
+		'enableClientValidation'=>true,
+		'action'=>'/profile/update/',
+	)); ?>
+	<?php echo $form->errorSummary(Array($miscModel,$miscModel->relProfile)); ?>
+	<table class="profileTable">
+	<tbody>
+		<tr>
+		<td>
+		
+		<br/>
+		<?php echo $form->checkBoxList($miscModel,'params',$miscModel->paramsFields,Array('template'=>'{input}{label}')); ?>
+		
+		</td>
+		</tr>
+	
+	</tbody>
+</table>	
+<div class="row buttons">
+			<?php echo CHtml::hiddenField('formID', $form->id) ?>
+			<?php echo CHtml::submitButton(Yii::t('profile', 'SUBMIT_BUTTON')); ?>
+			<?php //echo CHtml::ajaxSubmitButton(Yii::t('userGroupsModule.general','Update User Profile'), Yii::app()->baseUrl . '/profile/', array('update' => '#userGroups-container'), array('id' => 'submit-mail'.$passModel->id.rand()) ); ?>
+		</div>
+	<?php $this->endWidget(); ?>
+	</div><!-- form -->
+        </div>
+    
+</div>
+<script>$("#tabs").tabs();</script>
