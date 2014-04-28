@@ -19,5 +19,5 @@
  * @version $Id: $
  */
 return array (
-  '{attribute} is not a valid email address.' => '',
+  '{attribute} неправельний формат електронної адреси' => '',
 );

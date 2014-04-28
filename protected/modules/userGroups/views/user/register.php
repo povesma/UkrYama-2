@@ -14,7 +14,7 @@ $this->breadcrumbs=array(
 <table class="data-table bx-registration-table">
 	<thead>
 		<tr>
-			<td colspan="2"><b>Регистрация</b></td>
+			<td colspan="2"><b><?php echo Yii::t('UserGroupsModule.general','REGISTER_NEW')?></b></td>
 		</tr>
 	</thead>
 	<tbody>
@@ -43,8 +43,9 @@ $this->breadcrumbs=array(
 			<td><?php echo $form->labelEx($model,'password'); ?></td>
 			<td>
                 <?php echo $form->passwordField($model,'password'); ?>
-			    <?php echo $form->error($model,'password'); ?>
-                <span class="form-hint">Пароль должен быть не менее 6 символов длиной.</span>
+			    <?php echo $form->error($model,'password'); ?><br />
+                <?php echo Yii::t('UserGroupsModule.general','PASS_6')?>
+                
             </td>
 		</tr>
 		<tr>
@@ -58,12 +59,13 @@ $this->breadcrumbs=array(
 			<td><?php echo $form->labelEx($model,'email'); ?></td>
 			<td>
                 <?php echo $form->textField($model,'email'); ?>
-			    <?php echo $form->error($model,'email'); ?>
-                <span class="form-hint">На указанный в форме e-mail придет запрос на подтверждение регистрации.</span>
+			    <?php echo $form->error($model,'email'); ?><br />
+                <?php echo Yii::t('UserGroupsModule.general','EMAIL_CONF')?>
+
             </td>
 		</tr>
 		<tr>
-			<td colspan="2"><b>Защита от автоматической регистрации</b></td>
+			<td colspan="2"><b>   <?php echo Yii::t('UserGroupsModule.general','REG_CAPCHA')?></b></td>
 		</tr>
 		<tr>
 			<td></td>
@@ -88,15 +90,15 @@ $this->breadcrumbs=array(
 		<tr>
 			<td></td>
 			<td>
-                <?php echo CHtml::submitButton('Регистрация'); ?>
+                <?php echo CHtml::submitButton(Yii::t('UserGroupsModule.general','REGISTER_NEW')); ?>
             </td>
 		</tr>
 	</tfoot>
 </table>
-<p><span class="required">*</span>Обязательные поля</p>
+<p><span class="required">*</span> <?php echo Yii::t('UserGroupsModule.general','REQUIRED_FILDS')?></p>
 
 <p>
-<a href="/personal/holes.php?login=yes" rel="nofollow"><b>Авторизация</b></a>
+<a href="/userGroups/" rel="nofollow"><b><?php echo Yii::t('UserGroupsModule.general','AUTH')?></b></a>
 </p>
 
 <?php $this->endWidget(); ?>

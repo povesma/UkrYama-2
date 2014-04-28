@@ -3,8 +3,8 @@ $bd=array(
 			'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=localhost;dbname=ukryama_ukryama',
 			'emulatePrepare' => true,
-//                        'username' => 'root',
-'username' => 'yama_user',
+                       'username' => 'root',
+//'username' => 'yama_user',
 			'password' => '',
 			'charset' => 'utf8',
 			'tablePrefix'=>'yii_',
@@ -82,4 +82,6 @@ $params=array(
         // Add own start-points for Google-map (addHole contr)
         'latitude'=>'50.4639147',
         'longitude'=>'30.4707367',
+	// Add a page name title (string)
+	'langtitle' => 'УкрЯма - ',   
 );

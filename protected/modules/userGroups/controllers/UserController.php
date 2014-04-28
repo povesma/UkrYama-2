@@ -205,6 +205,7 @@ class UserController extends Controller
 	 */
 	public function actionRegister()
 	{
+	   $this->pageTitle = Yii::t('titles','UG_REGISTER');
 		$model=new UserGroupsUser('registration');
 
 		// set the profile extension array
@@ -313,6 +314,7 @@ class UserController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+	    $this->pageTitle = Yii::t('titles','UG_YPDATE');
 		$miscModel=$this->loadModel($id, 'changeMisc');
 		$passModel= clone $miscModel;
 		$passModel->setScenario('changePassword');
@@ -428,7 +430,9 @@ class UserController extends Controller
 			if (isset($_POST['UserGroupsUser']))
 				$model->attributes = $_POST['UserGroupsUser'];
 			else
-				$model->attributes = $_GET['UserGroupsUser'];
+                		  $purifier = new CHtmlPurifier();
+			$model->attributes = $purifier->purify($_GET['UserGroupsUser']);
+				
 
 
 			if($model->validate()) {
@@ -505,6 +509,7 @@ class UserController extends Controller
 	 */
 	public function actionPassRequest()
 	{
+	    $this->pageTitle = Yii::t('titles','UG_PASS');
 		$formmodel = new UserGroupsUser('passRequest');
 		if (isset($_POST['UserGroupsUser'])) {
 			$formmodel->attributes = $_POST['UserGroupsUser'];
@@ -558,7 +563,7 @@ class UserController extends Controller
 
 	public function actionLogin()
 	{
-	
+	$this->pageTitle = Yii::t('titles','UG_LOGIN');
 		$service = Yii::app()->request->getQuery('service');
 		
 		if (isset($service)) {
@@ -626,6 +631,7 @@ class UserController extends Controller
 	 */
 	public function actionRecovery()
 	{
+	   $this->pageTitle = Yii::t('titles','UG_RECOVERY');
 		$model = $this->loadModel(Yii::app()->user->id, 'recovery');
 
 		// if user and password are already setted and so question and answer no form will be prompted
@@ -643,6 +649,7 @@ class UserController extends Controller
 		$this->performAjaxValidation($model);
 
 		if (isset($_POST['UserGroupsUser'])) {
+
 			$model->attributes = $_POST['UserGroupsUser'];
 			if ($model->validate()) {
 				if (!$model->save())

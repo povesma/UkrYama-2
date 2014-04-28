@@ -20,8 +20,8 @@
 	</div><!-- form -->
 </div>
 <div class="bx-auth">
-	<div class="bx-auth-title">Войти на сайт</div>
-	<div class="bx-auth-note">Пожалуйста, авторизуйтесь:</div>
+	<div class="bx-auth-title"><?php echo Yii::t('UserGroupsModule.general','ENTER_SITE_TITLE')?></div>
+	<div class="bx-auth-note"><?php echo Yii::t('UserGroupsModule.general','AUTH_PLEASE')?></div>
 
 	<?php $form=$this->beginWidget('CActiveForm', array(
 		'id'=>'login-form',
@@ -51,9 +51,9 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td class="authorize-submit-cell"><?php echo CHtml::submitButton('Войти'); ?>
+				<td class="authorize-submit-cell"><?php echo CHtml::submitButton(Yii::t('UserGroupsModule.general','ENTER_SITE')); ?>
 					<noindex>
-				<a href="/userGroups/user/passRequest/" rel="nofollow">Забыли свой пароль?</a>
+				<a href="/userGroups/user/passRequest/" rel="nofollow"><?php echo Yii::t('UserGroupsModule.general','LOST_PASSWORD')?></a>
 		</noindex>
 				</td>
 			</tr>
@@ -64,8 +64,8 @@
 		<?php if (UserGroupsConfiguration::findRule('registration')): ?>
 		<noindex>
 			<p class="bottom-text">
-				<big><?php echo CHtml::link('Зарегистрироваться', array('/userGroups/user/register'))?></big><br />
-				Если вы впервые на сайте, заполните, пожалуйста, регистрационную форму. 
+				<big><?php echo CHtml::link(Yii::t('UserGroupsModule.general','REGISTER'), array('/userGroups/user/register'))?></big><br />
+				<?php echo Yii::t('UserGroupsModule.general','FILL_REG_FORM')?> 
 			</p>
 		</noindex>
 		<?php endif; ?>		
@@ -79,7 +79,7 @@
 try{document.form_auth.USER_PASSWORD.focus();}catch(e){}
 </script>
 
-<div class="bx-auth-title">Войти как пользователь</div>
-<div class="bx-auth-note">Вы можете войти на сайт, если вы зарегистрированы на одном из этих сервисов:</div>
+<div class="bx-auth-title"><?php echo Yii::t('UserGroupsModule.general','ENTER_AS_USER')?></div>
+<div class="bx-auth-note"><?php echo Yii::t('UserGroupsModule.general','ENTER_SOCIAL')?></div>
 <?php $this->widget('ext.eauth.EAuthWidget', array('action' => '/userGroups/')); ?>
 

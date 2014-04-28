@@ -19,7 +19,7 @@
  * @version $Id: $
  */
 return array (
-  'account activation' => 'attivazione account',
-  'invitation to {website}' => 'invito per {website}',
-  'password reset request' => 'richiesta di reset della password',
+  'account activation' => 'Активація облікового запису',
+  'invitation to {website}' => 'Запрошення на {website}',
+  'password reset request' => 'Запит на відновлення паролю',
 );
