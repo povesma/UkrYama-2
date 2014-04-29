@@ -36,7 +36,7 @@ class ProfileController extends Controller
 
 	public function actionUpdate()
 	{
-	   $this->pageTitle = Yii::t('template', 'TITLE_PROFILE_UPDATE');
+	   $this->pageTitle = Yii::t('titles', 'PROFILE_UPDATE');
 		$id=Yii::app()->user->id;
 		$miscModel=$this->loadModel($id, 'changeMisc');
 		$passModel= clone $miscModel;
@@ -117,6 +117,7 @@ class ProfileController extends Controller
 	
 	public function actionMyarea()
 	{
+	    $this->pageTitle = Yii::t('titles', 'PROFILE_AREA');
 		$cs=Yii::app()->getClientScript();
         $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/add_form.css');
        // $cs->registerScriptFile('http://api-maps.yandex.ru/1.1/index.xml?key='.$this->mapkey);
@@ -196,6 +197,7 @@ class ProfileController extends Controller
 	
 	public function actionView($id)
 	{
+	    $this->pageTitle = Yii::t('titles', 'PROFILE_VIEW');
 		$this->layout='main';
 		$model= $this->loadModel($id);
 		$contactModel=new ContactForm;

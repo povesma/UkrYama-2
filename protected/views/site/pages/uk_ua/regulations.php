@@ -1,6 +1,6 @@
 <?
 $this->title=Yii::t('template', 'STANDARTS_AND_NORM');
-$this->pageTitle=Yii::app()->name.' :: '.$this->title;
+$this->pageTitle=Yii::app()->params['langtitle'].$this->title;
 $this->layout='//layouts/header_blank';
 ?>
 <h2>Державний стандарт України 3587-97 - «Автомобільні дороги, вулиці та залізничні переїзди. Вимоги до експлуатаційного стану»</h2>

@@ -1,6 +1,6 @@
 <?
 $this->title = Yii::t("template", "MENU_TOP_ABOUT");
-$this->pageTitle = Yii::app()->name . ' :: '.$this->title;
+$this->pageTitle = Yii::app()->params['langtitle'].$this->title;
 $this->layout='//layouts/header_blank';
 ?>
 <p class="intro"> Згідно з чинним Державним стандартом України 3587-97, розміри ям не повинні бути більше 0,5

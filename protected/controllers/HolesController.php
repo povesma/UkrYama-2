@@ -174,9 +174,9 @@ class HolesController extends Controller
 	 */
 	public function actionView($id)
 	{
-      //$this->layout = '//layouts/header_blank';
-
-		$cs=Yii::app()->getClientScript();
+      
+      $this->pageTitle = Yii::t('titles', 'HOLES_VIEW');
+      $cs=Yii::app()->getClientScript();
       $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/hole_view.css'); 
       $jsFile = CHtml::asset($this->viewPath.DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.'view_script.js');
       $cs->registerScriptFile($jsFile);
@@ -243,11 +243,15 @@ class HolesController extends Controller
 		}
 	}
 	public function actionAdd(){
+	    $this->pageTitle = Yii::t('titles', 'HOLES_ADD');
 		$this->layout = '//layouts/header_blank';
 		$model = new Holes;
 		$model->USER_ID = Yii::app()->user->id;
 		if(isset($_POST['Holes'])){
 			$model->attributes = $_POST['Holes'];
+        $model->LONGITUDE = 52;
+        $model->LATITUDE = 53;
+        
 			if($model->USER_ID===0 || $model->USER_ID === null){
 				$users = UserGroupsUser::model()->findAllByAttributes(array(),"email=:email",array(":email"=>$_POST['Holes']['EMAIL']));
 				if(count($users)==0){
@@ -309,6 +313,7 @@ class HolesController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+	    $this->pageTitle = Yii::t('titles', 'HOLES_UPDATE');
 		$this->layout = '//layouts/header_blank';
 		$model=$this->loadChangeModel($id);
 		if(!Yii::app()->user->isModer){
@@ -330,6 +335,7 @@ class HolesController extends Controller
 	}
 	
 	public function actionReply($id=null){
+	    $this->pageTitle = Yii::t('titles', 'HOLES_COMMENT');
 		$this->layout='//layouts/header_user';
 		$hole=$this->loadModel($id);
 		if(isset($_POST['answerdate'])){
@@ -616,6 +622,7 @@ class HolesController extends Controller
 	 */
 	public function actionIndex()
 	{
+	   $this->pageTitle = Yii::t('titles', 'HOLES_INDEX');
 		$this->layout='//layouts/header_default';
 		
 		$model=new Holes('search');		
@@ -809,7 +816,7 @@ class HolesController extends Controller
 	public function actionPersonal()
 	{
 		$this->layout='//layouts/header_user';
-	
+        $this->pageTitle = Yii::t('titles', 'HOLES_PERSONAL');
 		$model=new Holes('search');
 		$model->unsetAttributes();  // clear any default values
 		$user=$this->user;
@@ -868,6 +875,7 @@ class HolesController extends Controller
 	
 	public function actionMyarea()
 	{
+	    $this->pageTitle = Yii::t('titles', 'HOLES_AREA');
 		$user=Yii::app()->user;
 		$area=$user->userModel->hole_area;
 		if (!$area)	$this->redirect(array('/profile/myarea'));
@@ -1053,6 +1061,7 @@ class HolesController extends Controller
 	 */
 	public function actionAdmin()
 	{
+	   $this->pageTitle = Yii::t('titles', 'HOLES_DMAIN');
 		
 		if (isset($_GET['pageSize'])) {
 			Yii::app()->user->setState('pageSize',(int)$_GET['pageSize']);

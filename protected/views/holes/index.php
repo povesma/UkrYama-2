@@ -1,5 +1,5 @@
 <?php
-$this->pageTitle=Yii::app()->name;
+
 
 if(Yii::app()->user->isModer)
 	Yii::app()->clientScript->registerScript('modering',<<<EOD

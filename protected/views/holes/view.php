@@ -1,5 +1,5 @@
 <?php
-$this->pageTitle=Yii::app()->name.' :: '.Yii::t('template', 'DEFECT_CARD');
+
 
 $this->widget('application.extensions.fancybox.EFancyBox', array(
 		'target'=>'.holes_pict',

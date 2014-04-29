@@ -1,5 +1,5 @@
 <?php
-$this->pageTitle=Yii::app()->name . ' :: Мои ямы';
+
 $form=$this->beginWidget('CActiveForm', array(
 	'action'=>Yii::app()->createUrl($this->route),
 	//'method'=>'get',

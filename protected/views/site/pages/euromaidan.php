@@ -1,5 +1,5 @@
 <?php
-    $this->pageTitle=Yii::app()->name . ' :: Євромайдан';
+    $this->pageTitle=Yii::app()->params['langtitle'].'Євромайдан';
     $this->layout='//layouts/header_blank';
 ?>
 

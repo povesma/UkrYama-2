@@ -1,5 +1,5 @@
 <? 
-$this->pageTitle=Yii::app()->name . ' - '.$model->name.' - Справочник ГАИ ';
+$this->pageTitle=Yii::app()->params['langtitle'].$model->name.'Справочник ГАИ ';
 $this->title=CHtml::link('Справочник ГАИ', Array('index')).' > '.$model->name;
 ?>
 	<?php

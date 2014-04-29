@@ -6,7 +6,7 @@ if(count($requests)>0){
 $param="auth_".Yii::app()->user->getLanguage();
 //$this->title = Yii::t('holes_view', 'HOLE_REPLY').$req->$param->name;
 //$this->pageTitle=Yii::app()->name . ' :: '.$this->title;
-$this->pageTitle=Yii::app()->name;
+
 
 $answer = new HoleAnswers;
 ?>

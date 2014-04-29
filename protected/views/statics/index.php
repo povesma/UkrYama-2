@@ -1,5 +1,5 @@
 <?
-$this->pageTitle=Yii::app()->name . ' - Статистика';
+$this->pageTitle=Yii::app()->params['langtitle']. 'Статистика';
 $this->title='Статистика';
 ?>
 

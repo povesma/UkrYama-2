@@ -1,5 +1,5 @@
 <?php
-    $this->pageTitle=Yii::app()->name . ' :: Історія успіху. Київ, вул. Порика, 15, 15А';
+    $this->pageTitle=Yii::app()->params['langtitle'].'Історія успіху. Київ, вул. Порика, 15, 15А';
     $this->layout='//layouts/header_blank';
 ?>
 

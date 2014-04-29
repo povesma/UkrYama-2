@@ -362,8 +362,8 @@ textarea{
 .head #head_user_info .photo {
 	background: #ececec;
 	float: left;
-	height: 60px;
-	width: 60px;
+	max-height: 60px;
+	max-width: 60px;
 	overflow: hidden;
 	border-radius:3px;
 	-moz-border-radius:3px;
@@ -2405,8 +2405,9 @@ h2+.bx-yandex-view-layout #ymapcontainer{
 
 #userGroups-container .buttons{
 	text-align: center;
-	padding-top:17px;
-	border-top: 1px solid #d0d5d9;
+	padding-top:27px;
+    margin-top: 25px;;
+/*border-top: 1px solid #d0d5d9;*/
 }
 #user-groups-misc-form input[type="submit"]{
 	font-size: 22px;

@@ -58,6 +58,7 @@ class NewsController extends Controller
 	 */
 	public function actionCreate()
 	{
+        $this->pageTitle = Yii::t('titles','NEWS_GREATE');
 		$model=new News;
 		$this->layout='//layouts/header_user';
 		// Uncomment the following line if AJAX validation is needed
@@ -92,6 +93,7 @@ class NewsController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+        $this->pageTitle = Yii::t('titles','NEWS_UPDATE');	   
 		$model=$this->loadModel($id);
 		$this->layout='//layouts/header_user';
 		// Uncomment the following line if AJAX validation is needed
@@ -135,6 +137,7 @@ class NewsController extends Controller
 	 */
 	public function actionIndex()
 	{
+	   $this->pageTitle = Yii::t('titles','NEWS_NEWS');
 		$model=new News('search');
 		$model->unsetAttributes();
 		$this->render('index',array(
@@ -147,6 +150,7 @@ class NewsController extends Controller
 	 */
 	public function actionAdmin()
 	{
+	    $this->pageTitle = Yii::t('titles','NEWS_ADMIN');
 		$this->layout='//layouts/header_user';
 		$model=new News('search');
 		$model->unsetAttributes();  // clear any default values

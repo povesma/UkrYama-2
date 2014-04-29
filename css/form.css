@@ -43,7 +43,22 @@ div.form{
 	margin:0 auto;*/
 }
 
+.finerow
+{
+    clear: both;
+    text-align: right;
+    line-height: 25px;
+}
+.finerow label
+{
+    float: left;
+    padding-right: 10px;
+}
 
+.fineform
+{
+    float: left;
+}
 
 
 div.form tr td:first-child{

@@ -1,6 +1,6 @@
 <?
 $this->title=Yii::t('template', 'STANDARTS_AND_NORM');
-$this->pageTitle=Yii::app()->name.' :: '.$this->title;
+$this->pageTitle=Yii::app()->params['langtitle'].$this->title;
 $this->layout='//layouts/header_blank';
 ?>
 <h2>Государственный стандарт Украины 3587-97 — «Автомобильные дороги, улицы и железнодорожные переезды. Требования к эксплуатационному состоянию»</h2>

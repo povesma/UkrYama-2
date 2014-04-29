@@ -1,5 +1,5 @@
 <?php
-    $this->pageTitle=Yii::app()->name . ' :: Сми';
+    $this->pageTitle=Yii::app()->params['langtitle']. 'Сми';
     $this->layout='//layouts/header_blank';
 ?>
 

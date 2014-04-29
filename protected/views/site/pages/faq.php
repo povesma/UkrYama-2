@@ -1,5 +1,5 @@
 <?
-$this->pageTitle=Yii::app()->name . ' - FAQ';
+$this->pageTitle=Yii::app()->params['langtitle'].'FAQ';
 $this->layout='//layouts/header_blank';
 ?>
 <div class="lCol">

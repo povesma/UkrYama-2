@@ -104,29 +104,31 @@
 		</td>
 
 		</tr>
-		<tr>
-		<td colspan="3">
+        	</tbody>
+</table>
+		<br /><br />
+        <div class="fineform">
+        <div class="finerow">
 		<?php echo $form->labelEx($miscModel->relProfile,'request_from'); ?>
 		<?php echo $form->textField($miscModel->relProfile,'request_from',array('maxlength'=>255,'class'=>'textInput')); ?>	
 		<?php echo $form->error($miscModel->relProfile,'request_from'); ?>
-		</td>
-		</tr><tr>
-		<td colspan="3">
+        </div>
+		
+        <div class="finerow">
 		<?php echo $form->labelEx($miscModel->relProfile,'request_signature'); ?>
 		<?php echo $form->textField($miscModel->relProfile,'request_signature',array('maxlength'=>100,'class'=>'textInput')); ?>
 		<?php echo $form->error($miscModel->relProfile,'request_signature'); ?>
-		</td>
-		</tr>
-		<tr>
-		<td colspan="3">
+        </div>
+		
+        <div class="finerow">
 		<?php echo $form->labelEx($miscModel->relProfile,'request_address'); ?>
 		<?php echo $form->textField($miscModel->relProfile,'request_address',array('maxlength'=>255,'class'=>'textInput')); ?>
-		<?php echo $form->error($miscModel->relProfile,'request_address'); ?>  
-		</td>
-		</tr>
-	</tbody>
-</table>	
-<div class="row buttons">
+		<?php echo $form->error($miscModel->relProfile,'request_address'); ?>
+        </div>
+        </div>  
+		<br /><br />	<br /><br />
+        
+        <div class="row buttons">
 			<?php echo CHtml::hiddenField('formID', $form->id) ?>
 			<?php echo CHtml::submitButton(Yii::t('profile', 'SUBMIT_BUTTON')); ?>
 			<?php //echo CHtml::ajaxSubmitButton(Yii::t('userGroupsModule.general','Update User Profile'), Yii::app()->baseUrl . '/profile/', array('update' => '#userGroups-container'), array('id' => 'submit-mail'.$passModel->id.rand()) ); ?>
