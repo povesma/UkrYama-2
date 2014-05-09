@@ -84,4 +84,5 @@ $params=array(
         'longitude'=>'30.4707367',
 	// Add a page name title (string)
 	'langtitle' => 'УкрЯма - ',   
+	'ukrautodorEmail' => 'povesma@gmail.com', // on live site should be ukryama@ukravtodor.gov.ua
 );
