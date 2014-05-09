@@ -152,7 +152,7 @@ var defectMarker = new google.maps.Marker({
 			var cord = new google.maps.LatLng(defectMarker.position['lat']()+0.003/Math.pow(2,(map.zoom-12)), defectMarker.position['lng']());
 			var info = resp['results'][0].address_components;
 //			var address=info[3]['long_name']+", "+info[2]['long_name']+", "+info[1]['long_name']+", "+info[0]['long_name'];
-			var streetNumber, route, locality, sublocality, administrative_area_level_2, administrative_area_level_1;
+			var streetNumber, route, routeShortName, locality, sublocality, administrative_area_level_2, administrative_area_level_1;
 			for(i=0;i<info.length;i++){
 				switch(info[i]['types'][0]){
 					case "street_number":
@@ -160,6 +160,7 @@ var defectMarker = new google.maps.Marker({
 					break;
 					case "route":
 						route=info[i]['long_name']+", ";
+						routeShortName = info[i]['short_name'];
 					break;
 
 					case "sublocality":
@@ -189,7 +190,10 @@ var defectMarker = new google.maps.Marker({
 			sublocality=(sublocality=== undefined)?"":sublocality;
             route=(route=== undefined)?"":route;
 			streetNumber=(streetNumber=== undefined)?"":streetNumber;
-            
+
+			var routePattern = /^[МНТРСЕMHTPCE].*[\d]$/i; // Пример обозначение автомагистрали: E95, т.е. буква (перечислена кирилица и латиница на всякий случай) и номер.
+			Holes_ROAD_TYPE.value = (locality == '' && routeShortName !== undefined && routePattern.test(routeShortName)) ? 'highway' : 'city';
+
 			address=administrative_area_level_1+locality+sublocality+route+streetNumber; // + locality
 
 			Holes_ADDRESS.value=address;
@@ -252,7 +256,15 @@ google.maps.event.addDomListener(window, 'load', initialize);
 				</p>
 			</div>
 		</div>
-			
+
+
+		<?php if(Yii::app()->user->level > 50) { ?>
+			<?php echo $form->labelEx($model,'ROAD_TYPE'); ?>
+			<?php echo $form->dropDownList($model,'ROAD_TYPE', Holes::getAllRoadTypes()); ?>
+		<?php } else {?>
+			<?php echo $form->hiddenField($model,'ROAD_TYPE'); ?>
+		<?php } ?>
+
 		<!-- тип дефекта -->
 		<div class="f clearfix">
 			<?php echo $form->labelEx($model,'TYPE_ID'); ?>
