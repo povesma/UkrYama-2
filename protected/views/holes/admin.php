@@ -78,7 +78,12 @@ $this->widget('zii.widgets.grid.CGridView', array(
             'value'=>'$data->type->name',
             'filter'=>CHtml::listData( HoleTypes::model()->findAll(), 'id', 'name' ),
         ),
-        array(       
+		array(
+			'name'=>'ROAD_TYPE',
+			'value'=>'$data->roadType',
+			'filter'=> Holes::getAllRoadTypes(),
+		),
+		array(
             'name'=>'STATE',
             'value'=>'$data->stateName',
             'filter'=>$model->allstates,

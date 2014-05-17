@@ -146,6 +146,14 @@ class Holes extends CActiveRecord
          'class' => 'application.extensions.CAdvancedArBehavior'));
    }
 
+	public static function getAllRoadTypes()
+	{
+		return array(
+			'city' => Yii::t('holes','HOLES_ROAD_TYPE_CITY'),
+			'highway' => Yii::t('holes','HOLES_ROAD_TYPE_HIGHWAY')
+		);
+	}
+
 	public static function getAllstates()	{
    	$arr=Array();
    	$arr['fresh']      = Yii::t('holes','HOLES_STATE_FRESH_FULL');
@@ -174,6 +182,12 @@ class Holes extends CActiveRecord
 	{	
 		return $this->AllstatesShort[$this->STATE];
 	}
+
+	public function getRoadType()
+	{
+		$roadTypes = $this->getAllRoadTypes();
+		return $roadTypes[$this->ROAD_TYPE];
+	}
 	
 	public function getIsSelected()	
 	{	
@@ -200,8 +214,9 @@ class Holes extends CActiveRecord
 			if ($pictmodel)$pictmodel->delete();
 		}
 
-		$imagess=$this->UpploadedPictures;
-		print_r($imagess);exit;
+		$imagess = CUploadedFile::getInstancesByName('Holes[upploadedPictures]');
+
+		//print_r($imagess);exit;
 		$id=$this->ID;
 		$prefix='';			
       $path = $_SERVER['DOCUMENT_ROOT'].Yii::app()->params['imagePath'];			
@@ -474,6 +489,7 @@ class Holes extends CActiveRecord
          'deletepict'=> Yii::t('template', 'DELETEPICT'), 
 			'replуfiles'=> Yii::t('template', 'INFO_REPLYFILES'), 
 			'upploadedPictures'=>$this->scenario=='fix' ? Yii::t('template', 'INFO_UPLOADPICT_FIX') : Yii::t('template', 'INFO_UPLOADPICT'),
+			'ROAD_TYPE' => Yii::t('holes', 'WIDGET_ROAD_TYPE'),
 		);
 	}
    

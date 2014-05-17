@@ -2,6 +2,7 @@
 $MESS['WIDGET_DEFAULT_REGION']         = 'Область';
 $MESS['WIDGET_DEFAULT_CITY']           = 'Місто';
 $MESS['WIDGET_TYPE_DEFECT']            = 'Тип дефекту';
+$MESS['WIDGET_ROAD_TYPE']              = 'Знаходження';
 $MESS['WIDGET_STATUS_DEFECT']          = 'Статус дефекту';
 $MESS['WIDGET_SUBMIT_DEFECT']          = 'Показати';
 $MESS['WIDGET_CLEAR_DEFECT']           = 'Очистити';
@@ -31,6 +32,9 @@ $MESS['HOLES_TYPE_FENCE']="Огорожа";
 $MESS['HOLES_TYPE_LIGHT']="Світлофор";
 $MESS['HOLES_TYPE_BADREPAIR']="Неякісний ремонт дороги";
 $MESS['HOLES_TYPE_UNFINISHED-REPAIR']      = "Незавершений ремонт дороги";
+
+$MESS['HOLES_ROAD_TYPE_CITY']="Місто";
+$MESS['HOLES_ROAD_TYPE_HIGHWAY']="Шоссе";
 
 $MESS['all_news']="Всі новини";
 

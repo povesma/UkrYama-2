@@ -273,10 +273,17 @@ class HolesController extends Controller
 				$model->addError("DATE_CREATED",Yii::t('template', 'DATE_CANT_BE_PAST', array('{attribute}'=>$model->getAttributeLabel('DATE_CREATED')))); 
 			
 			$model->PREMODERATED = (Yii::app()->user->level > 50) ? 1 : 0; 	
+
+			$model->ROAD_TYPE = $_POST['Holes']['ROAD_TYPE'];
+
 			$tran = $model->dbConnection->beginTransaction();
 			if ($model->validate(null, false)) {
 				if($model->save() && $model->savePictures()){
 					$tran->commit();
+
+					if ($model->PREMODERATED && $model->ROAD_TYPE == 'highway') {
+						$this->sendMailToUkrautodor($model);
+					}
 					$this->redirect(array('view','id'=>$model->ID));
 				}
 			}
@@ -646,9 +653,19 @@ class HolesController extends Controller
 			if (!$model->PREMODERATED) {
 				$model->PREMODERATED=1;
 				if(isset($_GET['ajax'])){
-					if ($model->update()) echo "ok";
+					if ($model->update())  {
+						echo "ok";
+						if ($model->ROAD_TYPE == 'highway') {
+							$this->sendMailToUkrautodor($model);
+						}
+					}
 				}else{
-					if ($model->update()) $this->redirect($_SERVER['HTTP_REFERER']);
+					if ($model->update()) {
+						if ($model->ROAD_TYPE == 'highway') {
+							$this->sendMailToUkrautodor($model);
+						}
+						$this->redirect($_SERVER['HTTP_REFERER']);
+					}
 				}
 			}
 			elseif (isset($_GET['ajax']) && $_GET['ajax']=='holes-grid'){
@@ -659,11 +676,15 @@ class HolesController extends Controller
 		else {
 			$holes=Holes::model()->findAll('id IN ('.$_GET['PREMODERATE_ALL'].')');
 			$ok=0;
-			foreach ($holes as $model)
-			if (!$model->PREMODERATED) {
-				$model->PREMODERATED=1;
-				if ($model->update()) $ok++;
+			foreach ($holes as $model) if (!$model->PREMODERATED) {
+				$model->PREMODERATED = 1;
+				if ($model->update()) {
+					if ($model->ROAD_TYPE == 'highway') {
+						$this->sendMailToUkrautodor($model);
+					}
+					$ok++;
 				}
+			}
 			if ($ok==count($holes))  echo 'ok';
 		}
 	}
@@ -1147,5 +1168,23 @@ class HolesController extends Controller
 			echo CActiveForm::validate($model);
 			Yii::app()->end();
 		}
+	}
+	/**
+	 * Sends hole notification email to Ukrautodor.
+	 */
+	protected function sendMailToUkrautodor($hole)
+	{
+		$headers = "MIME-Version: 1.0\r\nFrom: " . Yii::app()->params['adminEmail'] . "\r\nReply-To: " . Yii::app()->params['adminEmail'] . "\r\nContent-Type: text/html; charset=utf-8";
+		Yii::app()->request->baseUrl = Yii::app()->request->hostInfo;
+
+		$mailbody = $this->renderPartial(
+			'application.views.ugmail.ukrautodor',
+			Array(
+				'model' => $hole,
+			),
+			true
+		);
+
+		return mail(Yii::app()->params['ukrautodorEmail'], 'УкрЯма: добавлена яма', $mailbody, $headers);
 	}
 }
