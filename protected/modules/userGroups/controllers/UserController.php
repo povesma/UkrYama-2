@@ -429,10 +429,11 @@ class UserController extends Controller
 
 			if (isset($_POST['UserGroupsUser']))
 				$model->attributes = $_POST['UserGroupsUser'];
+                
 			else
-                		  $purifier = new CHtmlPurifier();
-			$model->attributes = $purifier->purify($_GET['UserGroupsUser']);
-				
+            
+			     $model->attributes = $_GET['UserGroupsUser'];
+			 	
 
 
 			if($model->validate()) {
