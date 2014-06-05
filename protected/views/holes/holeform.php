@@ -47,7 +47,7 @@ echo $form->errorSummary($model); ?>
 	</script>
 
 	<!-- левая колоночка -->
-<!--<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>-->
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
 <?php if($model->isNewRecord): ?>
 <script src="/js/markers.js"></script>
 <?php endif; ?>

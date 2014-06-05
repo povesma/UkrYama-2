@@ -261,7 +261,9 @@ class HolesController extends Controller
 					$umodel->last_name=$_POST['Holes']['LAST_NAME'];
 					$umodel->email=$_POST['Holes']['EMAIL'];
 					$umodel->password=$this->randomPassword();
-					if($umodel->save()){$model->USER_ID=$umodel->primaryKey;}
+					if($umodel->save()){
+					   $model->USER_ID=$umodel->primaryKey;
+                       }
 					}else{
 						$model->USER_ID=$users[0]->id;
 					}

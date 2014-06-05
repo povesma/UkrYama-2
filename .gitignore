@@ -17,3 +17,4 @@ assets/
 protected/runtime/
 themes/classic/views/
 .htaccess
+upload/
