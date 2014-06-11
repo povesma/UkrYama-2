@@ -249,8 +249,7 @@ class HolesController extends Controller
 		$model->USER_ID = Yii::app()->user->id;
 		if(isset($_POST['Holes'])){
 			$model->attributes = $_POST['Holes'];
-        $model->LONGITUDE = 52;
-        $model->LATITUDE = 53;
+
         
 			if($model->USER_ID===0 || $model->USER_ID === null){
 				$users = UserGroupsUser::model()->findAllByAttributes(array(),"email=:email",array(":email"=>$_POST['Holes']['EMAIL']));
