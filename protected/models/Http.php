@@ -21,8 +21,7 @@ public function http_request($params)
             'url' => $params,
             'method' => 'GET'
         );
-    }
-    
+    } 
     if( $params['url']=='' ) return FALSE;
     
     if( ! isset($params['method']) ) $params['method'] = (isset($params['data'])&&is_array($params['data'])) ? 'POST' : 'GET';
@@ -43,7 +42,7 @@ public function http_request($params)
         else
         {
             $url['host'] = $url['path'];
-            $url['path'] = '/';	
+            $url['path'] = '/'; 
         }
     }
     $url['path'] = preg_replace("/[\\/]+/", "/", $url['path']);
@@ -56,7 +55,11 @@ public function http_request($params)
     if( ! isset($params['return']) ) $params['return'] = 'content';
     
     $scheme = $url['scheme']=='https' ? 'ssl://':'';
-    $fp = @fsockopen($scheme.$url['host'], $port, $errno, $errstr, $timeout);
+    if(isset($params['fp'])){
+        $fp=$params['fp'];
+    }else{
+        $fp = @fsockopen($scheme.$url['host'], $port, $errno, $errstr, $timeout);
+    }
     if( $fp )
     {
         /* Mozilla */
@@ -73,7 +76,11 @@ public function http_request($params)
             else $cookie = $params['cookie'];
             if( $cookie!='' ) $request .= "Cookie: $cookie\r\n";
         }
-        $request .= "Connection: close\r\n";
+        if( isset($params['redirect']) && $params['redirect']==true){
+            $request .= "Connection: keep-alive\r\n";
+        }else{
+            $request .= "Connection: close\r\n";
+        }
         if( $params['method']=='POST' )
         {
             if( isset($params['data']) && is_array($params['data']) )
@@ -125,12 +132,15 @@ public function http_request($params)
                 }
                 if( isset($params['redirect']) && $params['redirect']==true && isset($headers['LOCATION']) )
                 {
-                    $params['url'] = $headers['LOCATION'];
+                    $params['url']=$url['scheme']."://".$url['host']."/".$headers['LOCATION'];
+                    $params['redirect']=false;
+                    $params['cookie']=$headers['SET-COOKIE'];
                     if( !isset($params['redirect-count']) ) $params['redirect-count'] = 0;
                     if( $params['redirect-count']<10 )
                     {
                         $params['redirect-count']++;
                         $func = __FUNCTION__;
+                        $params['fp']=$fp;
                         return @is_object($this) ? $this->$func($params) : $func($params);
                     }
                 }
