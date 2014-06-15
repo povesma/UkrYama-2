@@ -137,10 +137,10 @@ class UserGroupsUser extends CActiveRecord
 		// rules
 		$rules = array(
 			array('group_id', 'length', 'max'=>20),
-		//	array('username, password, home, last_name,second_name, name', 'length', 'max'=>120),
-		//	array('xml_id, external_auth_id', 'length', 'max'=>255),
+			array('username, password, home, last_name,second_name, name', 'length', 'max'=>120),
+			array('xml_id, external_auth_id', 'length', 'max'=>255),
 			array('email', 'email'),
-		///	array('is_bitrix_pass', 'numerical', 'integerOnly'=>true),
+			array('is_bitrix_pass', 'numerical', 'integerOnly'=>true),
 			array('rememberMe, params', 'safe'),
 			// rules for registration
 			array('captcha', 'required', 'on' => 'registration'),
