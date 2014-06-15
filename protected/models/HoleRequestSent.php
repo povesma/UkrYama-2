@@ -44,7 +44,12 @@ class HoleRequestSent extends CActiveRecord
 			$this->ddate=date("Y-m-d",strtotime(mb_substr(strstr($result,"вручене за довіреністю "),23,10,'UTF-8')));
 			$this->status=1;
 			$this->update();
+		}elseif(strstr($result,"вручене адресату (одержувачу) особисто")){
+			$this->ddate=date("Y-m-d",strtotime(mb_substr(strstr($result,"особисто "),9,10,'UTF-8')));
+			$this->status=1;
+			$this->update();
 		}else{
+
 			return 0;
 		}
 	}	
