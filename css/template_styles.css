@@ -1030,8 +1030,9 @@ div.submit input {font: normal 1em Arial, sans-serif; margin-right: 8px;}
 
 .rosyama {
 	float: right;
-	width:194px;
-}
+	padding-top: 35px;
+        
+}   
 
 .rosyama a.rs {
 	left: -20px;
