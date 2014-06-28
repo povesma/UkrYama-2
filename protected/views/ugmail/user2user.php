@@ -3,4 +3,4 @@
 <p><?php echo nl2br($model->body); ?></p>
 <br/>
 -----<br/>
-<?php echo CHtml::link('РосЯма', array('/holes/index'));?>
+<?php echo CHtml::link('УкрЯма', array('/holes/index'));?>

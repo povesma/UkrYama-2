@@ -2300,6 +2300,14 @@ div.form #user-groups-passrequest-form label{
    background: url(../images/st1234/unfinished-repair-active.png) no-repeat;
 }
 
+/* Тротуар*/
+.defect_type label[for="type_sidewalk"]:before{
+   background: url(../images/st1234/sidewalk.png) no-repeat;
+}
+.defect_type input[type="radio"]:checked + label[for="type_sidewalk"]:before{
+   background: url(../images/st1234/sidewalk-active.png) no-repeat;
+}
+
 /*
 
 
