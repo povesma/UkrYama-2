@@ -255,6 +255,8 @@ google.maps.event.addDomListener(window, 'load', initialize);
                <?php echo Yii::t('template', 'ENTER_POINT_TO_MAP_DOBLECLICK')?>					
 				</p>
 			</div>
+ 			<br>
+				<?php echo Yii::t('template', 'ADDRESS_HINT') ?>	
 		</div>
 
 
