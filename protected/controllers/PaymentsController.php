@@ -188,7 +188,6 @@ class PaymentsController extends Controller
               
             if (isset($_POST)) {
                 $model->description = $_POST['description'];
-            //$model->hole_id = $_POST['order_id'];
             $model->transaction_id = $_POST['transaction_id'];
             $model->status = $_POST['status'];
             $model->amount = $_POST['amount'];
@@ -202,7 +201,7 @@ class PaymentsController extends Controller
         $data = $_POST;
         file_put_contents('dump.txt', print_r($data, true), FILE_APPEND);
         fclose($file);
-  */
+  */ 
  
     }
     
