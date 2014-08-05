@@ -35,7 +35,7 @@ $(window).keydown(function(e){
 });
 </script>
 	<div class="lc">
-		<a href="/payment" class="button"><?= Yii::t('holes_view', 'SEND_GAI_ONLINE')?><sub>*</sub></a>
+		<a href="/payments/add?holeid=<?php echo $hole->ID?>" class="button"><?= Yii::t('holes_view', 'SEND_GAI_ONLINE')?><sub>*</sub></a>
 	</div><br />
 
 <?php if(!Yii::app()->user->isGuest){ ?>

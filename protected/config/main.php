@@ -23,13 +23,13 @@ return array(
 		'application.classes.*',
 		'application.modules.userGroups.*',
 		'application.modules.userGroups.models.*',
-                'application.modules.userGroups.components.*',
-                'application.modules.comments.models.*',
+        'application.modules.userGroups.components.*',
+        'application.modules.comments.models.*',
 		'application.extensions.nestedset.*',
 		'application.extensions.fpdf.*',
 		'application.extensions.*',
 		'application.helpers.*',
-	        'ext.eoauth.*',
+        'ext.eoauth.*',
 		'ext.eoauth.lib.*',
 		'ext.lightopenid.*',
 		'ext.eauth.services.*',
@@ -39,7 +39,7 @@ return array(
 			'gii'=>array(
 				'class'=>'system.gii.GiiModule',
 				'password'=>'root',
-				'ipFilters' => array('77.37.132.232', '195.91.137.124', '127.0.0.1'),
+				'ipFilters' => array('127.0.0.1'),
 				'generatorPaths' => array(
 				'ext.giix-core',
 				),
@@ -49,9 +49,9 @@ return array(
 				'salt'=>'111',				
 				'profile'=>Array('Profile')
 			),
-                        'comments'=>array(
-				//you may override default config for all connecting models
-				'defaultModelConfig' => array(
+            'comments'=>array(
+    				//you may override default config for all connecting models
+    				'defaultModelConfig' => array(
 					//only registered users can post comments
 					'registeredOnly' => true,
 					'useCaptcha' => false,
@@ -179,6 +179,20 @@ return array(
 		),
 
 		'db'=>$bd,
+		       /*  'log' => array(
+             'class' => 'CLogRouter',
+             'routes' => array(
+                 array(
+                     'class' => 'CFileLogRoute',
+                     'categories' => 'system.db.CDbCommand',
+                     'levels' => 'trace, info, error, warning',
+                 ),
+                 array(
+                     'class' => 'CWebLogRoute',
+                 ),
+             ),
+         ),*/
+
 		
 		'cache'=>array(
             'class'=>'system.caching.CDummyCache',          
@@ -217,24 +231,8 @@ return array(
                 ),
             ),
         ),
-/*
-		'log'=>array(
-			'class'=>'CLogRouter',
-			'routes'=>array(
-                array(
-                    'class'=>'CFileLogRoute',
-                    'levels'=>'error, warning, info',
-		    'logFile'=>'phplog-hey.log',
-		    'enabled'=>'false',
-                ),
-                array(
-                    'class' => 'application.extensions.pqp.PQPLogRoute',
-                    'categories' => 'application.*, exception.*',
-                ),
-            ),
-		//	'enabled'=>isset($_GET['testing'])?true:false,  // enable caching in non-debug mode  
-		),
-*/
+
+
 	),
 
 	// application-level parameters that can be accessed
