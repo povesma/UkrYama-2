@@ -134,14 +134,11 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->clientScript->getCoreScrip
    		<?php $this->widget('zii.widgets.CMenu',array(
       		'items'=>array(
       			array('label'=>Yii::t("template", "inform_foot")),
-                    
       			array('label'=>Yii::t("template", "help_project"), 'url'=>array('/site/page', 'view'=>'donate')),
-                       array('label'=>Yii::t("template", "api"), 'url'=>array('/site/page', 'view'=>'api')),
       			array('label'=>Yii::t("template", "social"), 'url'=>"http://ukryama.info/", 'linkOptions'=>array('target'=>"_blank")),
                array('label'=>Yii::t("template", "partners"), 'url'=>array('/site/page', 'view'=>'partners')),
       			array('label'=>Yii::t("template", "thanks"), 'url'=>array('/site/page', 'view'=>'thanks')),
       			array('label'=>Yii::t("template", "smi"), 'url'=>array('/site/page', 'view'=>'smi')),
-                 
       		),
       		'htmlOptions'=>array('class'=>'small-menu'), 
    	  )); ?>

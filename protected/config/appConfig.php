@@ -2,17 +2,15 @@
 $bd=array(
 			'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=localhost;dbname=ukryama_ukryama',
-			'emulatePrepare' => true,
-                       //'username' => 'root',
-			'username' => 'yama_user',
+			'emulatePrepare' => false,
+			'username' => 'root',
 			'password' => '',
 			'charset' => 'utf8',
 			'tablePrefix'=>'yii_',
 			'schemaCachingDuration'=>3600,
 			'enableProfiling' => true,
-            'enableParamLogging' => true,
+	               'enableParamLogging' => true,
 		);
-
 $socials=array( // You can change the providers and their classes.
 				/*'google' => array(
 					'class' => 'GoogleOpenIDService',
@@ -75,14 +73,22 @@ $socials=array( // You can change the providers and their classes.
 
 
 $params=array(
-	// this is used in contact page
-	'adminEmail'=>'info@ukryama.com',
-   'imagePath'=>'/upload/st1234/',   
-		//'layout'=>'startpage',
-        // Add own start-points for Google-map (addHole contr)
-        'latitude'=>'50.4639147',
-        'longitude'=>'30.4707367',
-	// Add a page name title (string)
-	'langtitle' => 'УкрЯма - ',   
-	'ukrautodorEmail' => 'povesma@gmail.com', // on live site should be ukryama@ukravtodor.gov.ua
+    	    // this is used in contact page
+    	    'adminEmail'=>'info@ukryama.com',
+            'imagePath'=>'/upload/st1234/',
+                           
+            // Add own start-points for Google-map (addHole contr)
+            'latitude'=>'50.4639147',
+            'longitude'=>'30.4707367',
+            
+    	    // Add a page name title (string)
+ 	        'langtitle' => 'УкрЯма - ',   
+  	        'ukrautodorEmail' => 'povesma@gmail.com', // on live site should be ukryama@ukravtodor.gov.ua
+            
+            //These params used in paid-hole form (donate page)
+            'public_key' => 'i8596801856', // LigPay public_pay param. You should get it on the LiqPay off-site https://www.liqpay.com/ru/admin/business/buttons
+            'paymant_system' => 'LiqPay',
+             
+            // Current version
+            'version' => '2.2',
 );
