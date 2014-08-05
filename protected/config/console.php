@@ -6,6 +6,7 @@ include ('appConfig.php');
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'My Console Application',
+        'preload'=>array('log'),
 	// autoloading model and component classes
 	'import'=>array(
 		'application.models.*',
@@ -19,10 +20,11 @@ return array(
 		'application.extensions.fpdf.*',
 		'application.extensions.*',
 		'application.helpers.*',
-	        'ext.eoauth.*',
+        	'ext.eoauth.*',
 		'ext.eoauth.lib.*',
 		'ext.lightopenid.*',
 		'ext.eauth.services.*',
+        
 	),
 	'modules'=>array(	
 			'userGroups'=>array(
@@ -44,8 +46,24 @@ return array(
 		'user'=>array(
 			'allowAutoLogin'=>true,
 			'class'=>'userGroups.components.WebUserGroups',
-
+            ),
+		'log'=>array(
+			'class'=>'CLogRouter',
+			'routes'=>array(
+                array(
+                    'class'=>'CFileLogRoute',
+                    'levels'=>'error, warning, info',
+		            'logFile'=>'phplog-hey.log',
+                    'enabled'=>'false',
+                ),
+                array(
+                    'class' => 'application.extensions.pqp.PQPLogRoute',
+                    'categories' => 'application.*, exception.*',
+                ),
+            ),
+		//	'enabled'=>isset($_GET['testing'])?true:false,  // enable caching in non-debug mode  
 		),
+		
 
 		// uncomment the following to use a MySQL database
 		/*

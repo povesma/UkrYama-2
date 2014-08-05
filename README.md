@@ -1,7 +1,7 @@
-UkrYama-2.1
+UkrYama-2
 ===========
 
-UkrYama.com service, version 2.2 development
+UkrYama.com service
 
 1) Fresh database dump with all basic settings and data is stored in /protected/db/ukryama_ukryama.sql.gz
    Just import it with you phpmyadmin or similar database client software.

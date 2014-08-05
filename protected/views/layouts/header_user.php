@@ -56,6 +56,7 @@
                 'items'=>Array(
                     array('label'=>Yii::t('template', 'NEWS'), 'url'=>array('/news/admin'), 'linkOptions'=>array('class'=>'profileBtn')),
                     array('label'=>Yii::t('template', 'USERS'), 'url'=>array('/userGroups/'), 'linkOptions'=>array('class'=>'profileBtn')),
+                    array('label'=>Yii::t('template', 'PAYD'), 'url'=>array('/payments/admin/'), 'linkOptions'=>array('class'=>'profileBtn')),
                     array('label'=>Yii::t('template', 'HOLES'), 'url'=>array('/holes/admin'), 'linkOptions'=>array('class'=>'profileBtn'), 'visible'=>$this->user->groupName=='root'),
                     array('label'=>Yii::t('template', 'HOLETYPES'), 'url'=>array('/holeTypes/index'), 'linkOptions'=>array('class'=>'profileBtn')),
                     array('label'=>Yii::t('template', 'RESULT_OF_REQUESTS'), 'url'=>array('/holeAnswerResults/index'), 'linkOptions'=>array('class'=>'profileBtn')),
@@ -69,8 +70,8 @@
       <?php endif;?>
    </div>
 </div>
-
-<a href="http://stfalcon.github.io/euromaidan/" class="em-ribbon" style="position: absolute; left:0; top:0; width: 90px; height: 90px; background: url('http://stfalcon.github.io/euromaidan/img/em-ribbon.png'); z-index: 2013; border: 0;" title="Розмісти стрічку з символікою України і ЄС на своєму сайті!" target="_blank"></a>
+<!-- BUG: Повернути взад 
+<a href="http://stfalcon.github.io/euromaidan/" class="em-ribbon" style="position: absolute; left:0; top:0; width: 90px; height: 90px; background: url('http://stfalcon.github.io/euromaidan/img/em-ribbon.png'); z-index: 2013; border: 0;" title="Розмісти стрічку з символікою України і ЄС на своєму сайті!" target="_blank"></a> -->
 <div class="mainCols">
 	<?php echo $content; ?>
 </div>		

@@ -657,7 +657,8 @@ class UserGroupsUser extends CActiveRecord
 			$this->addError('activation_code',Yii::t('UserGroupsModule.recovery','This user cannot login in recovery mode.'));
 		else
 			$this->addError('password',Yii::t('UserGroupsModule.recovery','wrong user or password.').'<br/>'.CHtml::link(Yii::t('UserGroupsModule.recovery', 'Password Recovery'), array('/userGroups/user/passRequest')));
-			return false;
+            return $this->_identity->errorCode;
+			//return false;
 	}
 
 	/**

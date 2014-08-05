@@ -486,7 +486,7 @@ class Holes extends CActiveRecord
 			'PREMODERATED' => Yii::t('template', 'PREMODERATED'),
 			'NOT_PREMODERATED' =>  Yii::t('template', 'NOT_PREMODERATED'),
          
-         'deletepict'=> Yii::t('template', 'DELETEPICT'), 
+            'deletepict'=> Yii::t('template', 'DELETEPICT'), 
 			'replуfiles'=> Yii::t('template', 'INFO_REPLYFILES'), 
 			'upploadedPictures'=>$this->scenario=='fix' ? Yii::t('template', 'INFO_UPLOADPICT_FIX') : Yii::t('template', 'INFO_UPLOADPICT'),
 			'ROAD_TYPE' => Yii::t('holes', 'WIDGET_ROAD_TYPE'),

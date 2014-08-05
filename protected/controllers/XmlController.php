@@ -47,6 +47,11 @@ class XmlController extends Controller
 		Yii::app()->end();
 	}	
 	
+    public function actionTest()
+    {
+        echo $_POST['login'];
+    }
+    
 	public function actionIndex($id=null, $user=null)
 	{
 		$model=new Holes('search');
@@ -99,11 +104,11 @@ class XmlController extends Controller
 					$tags[]=CHtml::closeTag('username');
 					$tags[]=CHtml::tag('latitude', array (), CHtml::encode($hole->LATITUDE), true);
 					$tags[]=CHtml::tag('longitude', array (), CHtml::encode($hole->LONGITUDE), true);
-					$tags[]=CHtml::tag('address', array ('city'=>$hole->ADR_CITY, 'subjectrf'=>$hole->region_id), CHtml::encode(($hole->subject ? $hole->subject->name_full.', ' : '') .$hole->ADR_CITY.', '.$hole->ADDRESS), true);
+			//		$tags[]=CHtml::tag('address', array ('city'=>$hole->ADR_CITY, 'subjectrf'=>$hole->region_id), CHtml::encode(($hole->subject ? $hole->subject->name_full.', ' : '') .$hole->ADR_CITY.', '.$hole->ADDRESS), true);
 					$tags[]=CHtml::tag('state', array ('code'=>$hole->STATE), CHtml::encode($hole->StateName), true);
 					$tags[]=CHtml::tag('type', array ('code'=>$hole->type->alias), CHtml::encode($hole->type->name), true);
 					$tags[]=CHtml::tag('datecreated', array ('readable'=>date('d.m.Y',$hole->DATE_CREATED)), CHtml::encode($hole->DATE_CREATED), true);
-					$tags[]=CHtml::tag('datesent', array ('readable'=>$hole->DATE_SENT ? date('d.m.Y',$hole->DATE_SENT) : ''), CHtml::encode($hole->DATE_SENT), true);
+	//				$tags[]=CHtml::tag('datesent', array ('readable'=>$hole->DATE_SENT ? date('d.m.Y',$hole->DATE_SENT) : ''), CHtml::encode($hole->DATE_SENT), true);
 					$tags[]=CHtml::tag('datestatus', array ('readable'=>$hole->DATE_STATUS ? date('d.m.Y',$hole->DATE_STATUS) : ''), CHtml::encode($hole->DATE_STATUS), true);
 					$tags[]=CHtml::tag('commentfresh', array (), CHtml::encode($hole->COMMENT1), true);
 					$tags[]=CHtml::tag('commentfixed', array (), CHtml::encode($hole->COMMENT2), true);
@@ -135,13 +140,17 @@ class XmlController extends Controller
 								$tags[]=CHtml::tag('src', array ('id'=>$pict->id), CHtml::encode($pict->medium), true);
 								}								
 							$tags[]=CHtml::closeTag('fixed');
-							$tags[]=CHtml::tag('gibddreply', array (), false, false);								
-								foreach ($hole->requests_gibdd as $request)
-									foreach ($request->answers as $answer)
-										foreach ($answer->files_img as $pict){
-										$tags[]=CHtml::tag('src', array ('id'=>$pict->id), CHtml::encode($answer->filesFolder.'/'.$pict->file_name), true);
-										}
-							$tags[]=CHtml::closeTag('gibddreply');
+						/**
+ * 	$tags[]=CHtml::tag('gibddreply', array (), false, false);								
+ * 								
+ *   foreach ($hole->requests_gibdd as $request)
+ *   									foreach ($request->answers as $answer)
+ *   										foreach ($answer->files_img as $pict){
+ *   										$tags[]=CHtml::tag('src', array ('id'=>$pict->id), CHtml::encode($answer->filesFolder.'/'.$pict->file_name), true);
+ *  										}
+ *  
+ * 							$tags[]=CHtml::closeTag('gibddreply');
+ */
 						$tags[]=CHtml::closeTag('medium');
 						
 						$tags[]=CHtml::tag('small', array (), false, false);
@@ -156,30 +165,34 @@ class XmlController extends Controller
 								}								
 							$tags[]=CHtml::closeTag('fixed');
 							$tags[]=CHtml::tag('gibddreply', array (), false, false);								
-								foreach ($hole->requests_gibdd as $request)
-									foreach ($request->answers as $answer)
-										foreach ($answer->files_img as $pict){
-										$tags[]=CHtml::tag('src', array ('id'=>$pict->id), CHtml::encode($answer->filesFolder.'/thumbs/'.$pict->file_name), true);
-										}
+					/**
+ * 			foreach ($hole->requests_gibdd as $request)
+ * 									foreach ($request->answers as $answer)
+ * 										foreach ($answer->files_img as $pict){
+ * 										$tags[]=CHtml::tag('src', array ('id'=>$pict->id), CHtml::encode($answer->filesFolder.'/thumbs/'.$pict->file_name), true);
+ * 										}
+ */
 							$tags[]=CHtml::closeTag('gibddreply');
 						$tags[]=CHtml::closeTag('small');
 					
 					$tags[]=CHtml::closeTag('pictures');
 					$tags[]=CHtml::tag('gibddrequests', array (), false, false);	
-						foreach ($hole->requests_gibdd as $request){
-						$tags[]=CHtml::tag('request', array ('id'=>$request->id, 'gibdd_id'=>$request->gibdd_id,'date'=>$request->date_sent,'user_id'=>$request->user_id, 'user_name'=>$request->user->Fullname
-						), false, false);
-								foreach ($request->answers as $answer){
-								$tags[]=CHtml::tag('answer', array ('id'=>$answer->id, 'date'=>$answer->date), false, false);
-									$tags[]=CHtml::tag('files', array (), false, false);
-										foreach ($answer->files as $pict){
-										$tags[]=CHtml::tag('file', array ('id'=>$pict->id, 'type'=>$pict->file_type), CHtml::encode($answer->filesFolder.'/'.$pict->file_name), true);
-										}
-									$tags[]=CHtml::closeTag('files');	
-								$tags[]=CHtml::closeTag('answer');	
-								}		
-						$tags[]=CHtml::closeTag('request');	
-						}
+/**
+ * 						foreach ($hole->requests_gibdd as $request){
+ * 						$tags[]=CHtml::tag('request', array ('id'=>$request->id, 'gibdd_id'=>$request->gibdd_id,'date'=>$request->date_sent,'user_id'=>$request->user_id, 'user_name'=>$request->user->Fullname
+ * 						), false, false);
+ * 								foreach ($request->answers as $answer){
+ * 								$tags[]=CHtml::tag('answer', array ('id'=>$answer->id, 'date'=>$answer->date), false, false);
+ * 									$tags[]=CHtml::tag('files', array (), false, false);
+ * 										foreach ($answer->files as $pict){
+ * 										$tags[]=CHtml::tag('file', array ('id'=>$pict->id, 'type'=>$pict->file_type), CHtml::encode($answer->filesFolder.'/'.$pict->file_name), true);
+ * 										}
+ * 									$tags[]=CHtml::closeTag('files');	
+ * 								$tags[]=CHtml::closeTag('answer');	
+ * 								}		
+ * 						$tags[]=CHtml::closeTag('request');	
+ * 						}
+ */
 					$tags[]=CHtml::closeTag('gibddrequests');					
 				$tags[]=CHtml::closeTag('hole');	
 				}
@@ -188,20 +201,23 @@ class XmlController extends Controller
 		$this->renderXml($tags);
 	}
 	
-	public function actionGetregions()
-	{
-		$model=RfSubjects::model()->findAll(Array('order'=>'id'));
-		$tags=Array();
-		$tags[]=CHtml::tag('regionslist', array (), false, false);
-		foreach ($model as $item){
-			$tags[]=CHtml::tag('region', array ('id'=>$item->id), CHtml::encode($item->name_full), true);
-		}
-		$tags[]=CHtml::closeTag('regionslist');
-		$this->renderXml($tags);
-	}
+/**
+ * 	public function actionGetregions()
+ * 	{
+ * 		$model=RfSubjects::model()->findAll(Array('order'=>'id'));
+ * 		$tags=Array();
+ * 		$tags[]=CHtml::tag('regionslist', array (), false, false);
+ * 		foreach ($model as $item){
+ * 			$tags[]=CHtml::tag('region', array ('id'=>$item->id), CHtml::encode($item->name_full), true);
+ * 		}
+ * 		$tags[]=CHtml::closeTag('regionslist');
+ * 		$this->renderXml($tags);
+ * 	}
+ */
 	
 	public function actionAuthorize()
 	{
+        
 		$tags=Array();
 		$user=$this->auth();
 		$tags[]=CHtml::tag('user', array ('id'=>$user->id), false, false);
@@ -270,7 +286,7 @@ class XmlController extends Controller
 		$longitude=Yii::app()->request->getParam('longitude');
 		if (!$longitude) $this->error('LONGITUDE_NOT_SET'); 
 		$comment=Yii::app()->request->getParam('comment');
-		$gibdd_id=Yii::app()->request->getParam('gibdd_id');
+	//	$gibdd_id=Yii::app()->request->getParam('gibdd_id');
 		$type=Yii::app()->request->getParam('type');
 		if (!$type) $this->error('INCORRECT_TYPE');
 		else {
@@ -279,22 +295,26 @@ class XmlController extends Controller
 			elseif (!$typemodel->published) $this->error('DEPRECATED_TYPE'); 
 			}
 		
-		$addressArr    = RfSubjects::model()->Address($address);
-		$subject_rf = $addressArr['subject_rf'];
+	//	$addressArr    = RfSubjects::model()->Address($address);
+	//	$subject_rf = $addressArr['subject_rf'];
 		$city       = $addressArr['city'];
 		$address    = $addressArr['address'];
 		
-		if((!$subject_rf || !$city || !$address) && ($latitude && $longitude)){
-				$addressArr    = RfSubjects::model()->AddressfromLatLng($latitude, $longitude, $this->mapkey);
-					if ($addressArr) {
-						$subject_rf = $addressArr['subject_rf'];
-						$city       = $addressArr['city'];
-						$address    = $addressArr['address'];	
-					}
-			}
+/**
+ * 		if((!$subject_rf || !$city || !$address) && ($latitude && $longitude)){
+ * 				$addressArr    = RfSubjects::model()->AddressfromLatLng($latitude, $longitude, $this->mapkey);
+ * 					if ($addressArr) {
+ * 						$subject_rf = $addressArr['subject_rf'];
+ * 						$city       = $addressArr['city'];
+ * 						$address    = $addressArr['address'];	
+ * 					}
+ * 			}
+ */
 		
-		// ворнинги, если надо
-		if(!$subject_rf || $subject_rf==0) $this->error('CANNOT_REALISE_SUBJECTRF');
+/**
+ * 		// ворнинги, если надо
+ * 		if(!$subject_rf || $subject_rf==0) $this->error('CANNOT_REALISE_SUBJECTRF');
+ */
 	
 		if(!$city) $this->error('CANNOT_REALISE_CITY');
 		
@@ -302,7 +322,7 @@ class XmlController extends Controller
 		$model=new Holes;		
 		$model->USER_ID=$user->id;	
 		$model->DATE_CREATED=time();
-		$model->region_id=$subject_rf;
+		//$model->region_id=$subject_rf;
 		$model->ADR_CITY=trim($city);
 		$model->ADDRESS=trim($address);
 		if ($user->level > 50) $model->PREMODERATED=1;
@@ -311,12 +331,14 @@ class XmlController extends Controller
 		$model->LONGITUDE=$longitude;
 		$model->TYPE_ID=$typemodel->id;
 		$model->COMMENT1=$comment;
-		if (!$gibdd_id){
-			$subjmodel=RfSubjects::model()->findByPk($subject_rf);
-			if ($subjmodel) $model->gibdd_id=$subjmodel->gibdd_ru->id;
-			else $model->gibdd_id=0;
-			}
-		else $model->gibdd_id=$gibdd_id;
+/**
+ * 		if (!$gibdd_id){
+ * 			$subjmodel=RfSubjects::model()->findByPk($subject_rf);
+ * 			if ($subjmodel) $model->gibdd_id=$subjmodel->gibdd_ru->id;
+ * 			else $model->gibdd_id=0;
+ * 			}
+ * 		else $model->gibdd_id=$gibdd_id;
+ */
 		
 		if (!$model->upploadedPictures) $this->error('NO_FILES'); 
 		
@@ -344,7 +366,7 @@ class XmlController extends Controller
 		$comment=Yii::app()->request->getParam('comment');
 		$type=Yii::app()->request->getParam('type');
 		$deletefiles=Yii::app()->request->getParam('deletefiles');
-		$gibdd_id=Yii::app()->request->getParam('gibdd_id');
+	//	$gibdd_id=Yii::app()->request->getParam('gibdd_id');
 		if ($type){
 			$typemodel=HoleTypes::model()->find('alias="'.$type.'"');
 			if (!$typemodel) $this->error('INCORRECT_TYPE');
@@ -352,27 +374,31 @@ class XmlController extends Controller
 			}
 		
 		if ($address){
-			$addressArr    = RfSubjects::model()->Address($address);
-			$subject_rf = $addressArr['subject_rf'];
+/**
+ * 			$addressArr    = RfSubjects::model()->Address($address);
+ * 			$subject_rf = $addressArr['subject_rf'];
+ */
 			$city       = $addressArr['city'];
 			$address    = $addressArr['address'];
-			// ворнинги, если надо
-			if((!$subject_rf || !$city || !$address) && ($latitude && $longitude)){
-				$addressArr    = RfSubjects::model()->AddressfromLatLng($latitude, $longitude, $this->mapkey);
-					if ($addressArr) {
-						$subject_rf = $addressArr['subject_rf'];
-						$city       = $addressArr['city'];
-						$address    = $addressArr['address'];	
-					}
-			}
-			if(!$subject_rf) $this->error('CANNOT_REALISE_SUBJECTRF');	
+/**
+ * 			// ворнинги, если надо
+ * 			if((!$subject_rf || !$city || !$address) && ($latitude && $longitude)){
+ * 				$addressArr    = RfSubjects::model()->AddressfromLatLng($latitude, $longitude, $this->mapkey);
+ * 					if ($addressArr) {
+ * 						$subject_rf = $addressArr['subject_rf'];
+ * 						$city       = $addressArr['city'];
+ * 						$address    = $addressArr['address'];	
+ * 					}
+ * 			}
+ */
+			//if(!$subject_rf) $this->error('CANNOT_REALISE_SUBJECTRF');	
 			if(!$city) $this->error('CANNOT_REALISE_CITY');
 		}
 		
 		$tags=Array();
 
 		if ($address) {
-		$model->region_id=$subject_rf;
+		//$model->region_id=$subject_rf;
 		$model->ADR_CITY=trim($city);
 		$model->ADDRESS=trim($address);
 		}
@@ -381,7 +407,7 @@ class XmlController extends Controller
 		if ($type) $model->TYPE_ID=$typemodel->id;
 		if ($comment) $model->COMMENT1=$comment;
 		if ($deletefiles) $model->deletepict=$deletefiles;
-		if ($gibdd_id) $model->gibdd_id=$gibdd_id;
+		//if ($gibdd_id) $model->gibdd_id=$gibdd_id;
 		$model->validate();
 		if ($model->getError('upploadedPictures')) $this->getUploadError($model->getError('upploadedPictures'));
 			if($model->save() && $model->savePictures())
@@ -540,8 +566,8 @@ class XmlController extends Controller
 				'address'=>Yii::app()->request->getParam('holeaddress') ? Yii::app()->request->getParam('holeaddress') : $model->ADDRESS,
 				'comment'=>Yii::app()->request->getParam('comment'),
 				'signature'=>Yii::app()->request->getParam('signature'),
-				'gibdd'=>Yii::app()->request->getParam('gibdd'),
-				'gibdd_reply'=>Yii::app()->request->getParam('gibddre'),
+				//'gibdd'=>Yii::app()->request->getParam('gibdd'),
+			///	'gibdd_reply'=>Yii::app()->request->getParam('gibddre'),
 				'application_data'=>$model->request_gibdd ? date('d.m.Y',$model->request_gibdd->date_sent) : '',
 				'pdf'=>true,
 				);
@@ -692,19 +718,37 @@ class XmlController extends Controller
 			$loginmode='regular';
 			$model->username=Yii::app()->request->getParam('login');
 			$model->password=Yii::app()->request->getParam('password');
-			if (Yii::app()->request->getParam('passwordhash')) {
+            $model->rememberMe=0;
+
+			if (Yii::app()->request->getParam('passwordhash')) 
+            {
 				$model->password=Yii::app()->request->getParam('passwordhash');
 				$loginmode='fromHash';
-				}
-			$model->rememberMe=0;		
-			if ($model->validate() && $model->login($loginmode)) return Yii::app()->user;
-			elseif($model->username && $model->password)
-				$this->error('WRONG_CREDENTIALS');
-			else
-				$this->error('AUTHORIZATION_REQUIRED');
+			}
+                
+
+            
+			if ($model->validate() && $model->login($loginmode))
+            {
+                
+                return Yii::app()->user;   
+                 
+            } elseif($model->username && $model->password) {
+                
+                $this->error('WRONG_CREDENTIALS'); // Логін та пароль передані, але вони не вірні
+                
+            }else {
+               
+            
+           
+                $this->error('AUTHORIZATION_REQUIRED');
+                
+            }		
 				
 		}
+        
 		else return Yii::app()->user; 
+        
 	}
 	
 	public function actionError()

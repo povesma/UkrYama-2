@@ -8,8 +8,8 @@ include ('appConfig.php');
 
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
-	'name'=>'Rosyama',
-	'language'=>'ru',
+	'name'=>'UkrYama',
+	'language'=>'Uk',
 	'defaultController'=>'xml',
 	// preloading 'log' component
 	//'layout'=>'startpage',
@@ -105,12 +105,12 @@ return array(
 				  '/my/<id:\d+>/<type:[a-zA-Z0-9\_]+>'=>'xml/setstate',
 				  '/<action:\w+>'=>'xml/<action>',
 				  '/<action:\w+>/<id:\d+>'=>'xml/<action>',
-
 			),
 
 		),
 
-
+        'db'=>$bd,
+		
 		'image'=>array(
           'class'=>'application.extensions.image.CImageComponent',
             // GD or ImageMagick
@@ -118,9 +118,7 @@ return array(
             // ImageMagick setup path
             'params'=>array('directory'=>'/opt/local/bin'),
         ),
-		
 
-		'db'=>$bd,
 
 		 'widgetFactory'=>array(
 			'enableSkin'=>true,
@@ -135,7 +133,7 @@ return array(
                     'cssFile'=>'/css/CDetailView/styles.css',
                 ),*/
                 'CJuiDatePicker'=>array(
-                    'language'=>'ru',
+                    'language'=>'uk',
                 ),
                 'CLinkPager'=>array(
                     'maxButtonCount'=>10,
