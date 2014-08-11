@@ -85,10 +85,13 @@ $params=array(
  	        'langtitle' => 'УкрЯма - ',   
   	        'ukrautodorEmail' => 'povesma@gmail.com', // on live site should be ukryama@ukravtodor.gov.ua
             
-            //These params used in paid-hole form (donate page)
+            // These params used in paid-hole form (donate page)
             'public_key' => 'i8596801856', // LigPay public_pay param. You should get it on the LiqPay off-site https://www.liqpay.com/ru/admin/business/buttons
             'paymant_system' => 'LiqPay',
              
             // Current version
             'version' => '2.2',
+    
+            // Google Maps Geolocation API-Key
+            'google_maps_api' => 'AIzaSyCTK4y073bUzvq0EGMPKskM57-3aN9JnsE' // Store here your own API-KEY. Get it on https://developers.google.com/maps/
 );
