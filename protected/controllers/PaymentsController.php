@@ -172,44 +172,37 @@ class PaymentsController extends Controller
 		));
     }
     
-        public function actionCallback()
-    {
-            $model=new Payments;
+   public function actionCallback()
+{
+    $model=new Payments;
+        /*
+        // Дані для тесту платіжних систем
+        $model->hole_id = 6;
+        $model->user_id = Yii::app()->user->id;
+        $model->transaction_id = 122121;
+        $model->status = 21212;
+        $model->amount =12323;
+        $model->save();
+        */
+        // Продакшен заповнення моделі
+        if (isset($_POST)) {
+        $model->description = $_POST['description'];
+        $model->transaction_id = $_POST['transaction_id'];
+        $model->status = $_POST['status'];
+        $model->amount = $_POST['amount'];
+        // Імейл адміну якщо платіж прийшов і успішно збережений у БД
+        if($model->save()) {
+        mail(Yii::app()->params['adminEmail'], 'Зарахований новий платіж з УкрЯми', 'Доброго дня! Відбувся новий платіж на УкрЯма. Перевірте тут - http://ukryama.com/payments/admin/');
+        }
+}
 /*
-  // Дані для тесту платіжних систем
-           $model->hole_id = 6;
-            $model->user_id = Yii::app()->user->id;
-            $model->transaction_id = 122121;
-            $model->status = 21212;
-            $model->amount =12323;
-            $model->save();
-  */          
-            
-            
-           // Продакшен заповнення моделі
-            if (isset($_POST)) {
-            $model->description = $_POST['description'];
-            $model->transaction_id = $_POST['transaction_id'];
-            $model->status = $_POST['status'];
-            $model->amount = $_POST['amount'];
-            
-            
-            // Імейл адміну якщо платіж прийшов і успішно збережений у БД
-            if($model->save()) {
-            mail(Yii::app()->params['adminEmail'], 'Зарахований новий платіж з УкрЯми', 'Доброго дня! Відбувся новий платіж на УкрЯма. Перевірте тут - http://ukryama.com/payments/admin/');        
-            
-            }
-            
-/*
-        // Тестування POST-запитів від платіжних інтерфейсів
-        $file = fopen("dump.txt", a);
-        $data = $_POST;
-        file_put_contents('dump.txt', print_r($data, true), FILE_APPEND);
-        fclose($file);
-  */ 
- 
-    }
-    
+// Тестування POST-запитів від платіжних інтерфейсів
+$file = fopen("dump.txt", a);
+$data = $_POST;
+file_put_contents('dump.txt', print_r($data, true), FILE_APPEND);
+fclose($file);
+*/
+}
         public function actionDone()
     {
 
