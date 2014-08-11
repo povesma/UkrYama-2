@@ -9,7 +9,9 @@ return array(
    'MENU_TOP_DONATE' => 'Допомога проекту',  
    'STANDARTS_AND_NORM'=>'Стандарти та нормативи',
    'MANUALS_GIBDD'=>'Довідники ДАI',
-   
+   // Email адміну про успішне проходження платежу
+   'EMAIL_ADMIN_PAYMANT_ADD_TITLE' => 'Зарахований новий платіж з УкрЯми',
+   'EMAIL_ADMIN_PAYMANT_ADD_TEXT' => 'Доброго дня! Відбувся новий платіж на УкрЯма. Перевірте тут - http://ukryama.com/payments/admin/',
    // Сторінка з оплатою дефекту
    'PAYD_TITLE' => 'Ми все зробимо за вас!',
    'PAYD_ADDRESS' => '<strong>Адреса:</strong>',
@@ -36,7 +38,7 @@ return array(
    'LOGOUT' => 'Вийти',
    'help_project' => 'Допомогти проекту',
    'inform_foot' => 'Інформація',
-    'api' => 'API розробника',
+   'api' => 'API розробника',
    'social' => 'Спільнота',
    'partners' => 'Партнери',
    'thanks' => 'Подяка',

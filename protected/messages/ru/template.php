@@ -10,6 +10,9 @@ return array(
    'MENU_TOP_DONATE' => 'Помощь проекту',
    'STANDARTS_AND_NORM'=>'Стандарты и нормативы',
    'MANUALS_GIBDD'=>'Справочники ГАИ',
+   // Email админу о успешном прохождениии платежа
+   'EMAIL_ADMIN_PAYMANT_ADD_TITLE' => 'Зарахований новий платіж з УкрЯми',
+   'EMAIL_ADMIN_PAYMANT_ADD_TEXT' => 'Доброго дня! Відбувся новий платіж на УкрЯма. Перевірте тут - http://ukryama.com/payments/admin/',
    
    // Страница с оплатой дефекта
    'PAYD_TITLE' => 'Мы все сделаем за вас!',

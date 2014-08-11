@@ -192,7 +192,7 @@ class PaymentsController extends Controller
         $model->amount = $_POST['amount'];
         // Імейл адміну якщо платіж прийшов і успішно збережений у БД
         if($model->save()) {
-        mail(Yii::app()->params['adminEmail'], 'Зарахований новий платіж з УкрЯми', 'Доброго дня! Відбувся новий платіж на УкрЯма. Перевірте тут - http://ukryama.com/payments/admin/');
+        mail(Yii::app()->params['adminEmail'], Yii::t('template', 'EMAIL_ADMIN_PAYMANT_ADD_TITLE'), Yii::t('template', 'EMAIL_ADMIN_PAYMANT_ADD_TEXT'));
         }
 }
 /*
