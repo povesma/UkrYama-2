@@ -39,9 +39,9 @@ echo Yii::t("template","PAYD_COMMENT").' '.$hole->COMMENT1.'<br /><br />';
 <input type="hidden" name="pay_way" value="card,delayed" />
 <input type="hidden" name="language" value="ru" /> <br />
 
-<input type="hidden" name="sandbox" value="1" />
+<input type="hidden" name="sandbox" value="<?php echo Yii::app()->params['liqpay_sandbox']?>" />
 
-<input type="hidden" name="server_url" value="http://newtest.ukryama.com/payments/callback" />
+<input type="hidden" name="server_url" value="<?php echo Yii::app()->params['liqpay_server_url']?>" />
 <input type="image" src="//static.liqpay.com/buttons/p1ru.radius.png" name="btn_text" />
 </form>
 

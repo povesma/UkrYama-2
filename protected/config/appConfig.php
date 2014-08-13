@@ -88,6 +88,8 @@ $params=array(
             // These params used in paid-hole form (donate page)
             'public_key' => 'i8596801856', // LigPay public_pay param. You should get it on the LiqPay off-site https://www.liqpay.com/ru/admin/business/buttons
             'paymant_system' => 'LiqPay',
+            'liqpay_sandbox'=>'1',
+            'liqpay_server_url'=>'http://newtest.ukryama.com/payments/callback',
              
             // Current version
             'version' => '2.2',
