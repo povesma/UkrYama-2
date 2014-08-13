@@ -180,9 +180,11 @@ class HolesController extends Controller
       $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/hole_view.css'); 
       $jsFile = CHtml::asset($this->viewPath.DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.'view_script.js');
       $cs->registerScriptFile($jsFile);
+      $pays = Payments::model()->find('hole_id=:hole_id', array(':hole_id'=>$id));
         
 		$this->render('view',array(
 			'hole'=>$this->loadModel($id),
+                        'pays'=>$pays,
 		));
 	}
 	

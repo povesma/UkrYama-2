@@ -93,7 +93,12 @@ function initialize() {
 					<p class="type type_<?= $hole->type->alias ?>"><?php echo $hole->type->getName(); ?></p>
 					<p class="address"><?= CHtml::encode($hole->ADDRESS) ?></p>
 					<p class="status">
-	   					<span class="bull <?= $hole->STATE ?>">&bull;</span><b><?=CHtml::encode($hole->StateName)?></b>
+                                            
+	   					<span class="bull <?= $hole->STATE ?>">&bull;</span><b><?=CHtml::encode($hole->StateName)?></b><br />
+                                               <?php if($pays)
+                                                {?>
+                                                <span class="money"></span><b>Оплачено.</b> Сума: <?php echo $pays->amount; ?> грн. Дата: <?php echo $pays->date; }?> 
+                                                
 						<?php
 							$arr[] = array('name'=>CHtml::tag('b', array(), Yii::t('holes_view', 'HOLE_CREATED_INFO')));
 							$arr[] = array('date'=>Y::dateTimeFromTime($hole->createdate), 'name'=>Yii::t('holes_view', 'HOLE_CREATED'));

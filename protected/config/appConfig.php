@@ -93,5 +93,6 @@ $params=array(
             'version' => '2.2',
     
             // Google Maps Geolocation API-Key
-            'google_maps_api' => 'AIzaSyCTK4y073bUzvq0EGMPKskM57-3aN9JnsE' // Store here your own API-KEY. Get it on https://developers.google.com/maps/
-);
+            'google_maps_api' => 'AIzaSyCTK4y073bUzvq0EGMPKskM57-3aN9JnsE', // Store here your own API-KEY. Get it on https://developers.google.com/maps/
+            'google_maps_api_server' => 'AIzaSyCTK4y073bUzvq0EGMPKskM57-3aN9JnsE', // Server GoogleMap API-key
+    );

@@ -50,6 +50,15 @@ div.rCol .h span.bull {
 	float:left;
 	margin:4px 10px 0 2px;
 }
+div.rCol .h span.money {
+	width:7px;
+	height:7px;
+	vertical-align: middle;
+	background: url(../images/gryvna.png) no-repeat;
+ 
+	float:left;
+	margin:4px 10px 0 2px;
+}
 div.rCol .h span.fresh { color: #aaa; }
 div.rCol .h span.inprogress { background-position: 0 100%; }
 div.rCol .h span.gibddre { background-position: 0 100%; }
