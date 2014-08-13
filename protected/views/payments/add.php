@@ -21,7 +21,7 @@ echo Yii::t("template","PAYD_COMMENT").' '.$hole->COMMENT1.'<br /><br />';
 <form method="POST" accept-charset="utf-8" action="https://www.liqpay.com/api/pay">
 <input type="hidden" name="public_key" value="<?php echo Yii::app()->params['public_key'] ?>" />
 
-<input id="amount" name="amount" type=range min=20 max=1000 value=20 > 
+<input id="amount" name="amount" type=range min=20 max=200 value=20 > 
     <span class="sub">max</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b name=range id=range>20</b> грн. 
         <script type="text/javascript">
     var p = document.getElementById("amount"),
