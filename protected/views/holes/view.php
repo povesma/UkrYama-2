@@ -95,7 +95,7 @@ function initialize() {
 					<p class="status">
                                             
 	   					<span class="bull <?= $hole->STATE ?>">&bull;</span><b><?=CHtml::encode($hole->StateName)?></b><br />
-                                               <?php if($pays)
+                                               <?php if($pays and $userGroup->level)
                                                 {?>
                                                 <span class="money"></span><b>Оплачено.</b> Сума: <?php echo $pays->amount; ?> грн. Дата: <?php echo $pays->date; }?> 
                                                 
