@@ -97,7 +97,7 @@ function initialize() {
 	   					<span class="bull <?= $hole->STATE ?>">&bull;</span><b><?=CHtml::encode($hole->StateName)?></b><br />
                                                <?php if($pays and $userGroup->level)
                                                 {?>
-                                                <span class="money"></span><b>Оплачено.</b> Сума: <?php echo $pays->amount; ?> грн. Дата: <?php echo $pays->date; }?> 
+                                                <span class="money"></span><b>Оплачено.</b> Сума: <?php echo $pays->amount; if($currency == 'UAH') { echo 'грн.'} else { echo '$'; }?> Дата: <?php echo $pays->date; }?> 
                                                 
 						<?php
 							$arr[] = array('name'=>CHtml::tag('b', array(), Yii::t('holes_view', 'HOLE_CREATED_INFO')));

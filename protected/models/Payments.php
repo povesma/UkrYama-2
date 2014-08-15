@@ -12,6 +12,7 @@
  * @property string $status
  * @property string $type
  * @property iineger $transaction_id
+ * @property varchar $currency
  * The followings are the available model relations:
  * @property UsergroupsUser $user
  */
@@ -38,11 +39,11 @@ class Payments extends CActiveRecord
 			
                     array('description', 'length', 'max'=>500),
                           array('transaction_id', 'length', 'max'=>30),
-			array('status, type', 'length', 'max'=>15),
+			array('status, type, currency', 'length', 'max'=>15),
 			array('date', 'safe'),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, hole_id, amount, date, status, type, transaction_id, description', 'safe', 'on'=>'search'),
+			array('id, hole_id, amount, date, status, type, transaction_id, description, currency', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,7 +72,9 @@ class Payments extends CActiveRecord
 			'status' => Yii::t('template','status'),
 			'type' => Yii::t('template','type'),
                         'transaction_id' => Yii::t('template','transaction_id'),
-                    'description' => Yii::t('template','description'),
+                        'description' => Yii::t('template','description'),
+                        'currency' => Yii::t('template','currency'),
+                    
                     
 		);
 	}
@@ -102,6 +105,7 @@ class Payments extends CActiveRecord
 		$criteria->compare('type',$this->type,true);
                 $criteria->compare('transaction_id',$this->transaction_id,true);
                 $criteria->compare('description',$this->description,true);
+                $criteria->compare('currency',$this->description,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
