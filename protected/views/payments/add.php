@@ -17,6 +17,11 @@ echo Yii::t("template","PAYD_COMMENT").' '.$hole->COMMENT1.'<br /><br />';
 
 ?>
 
+<?php  
+if (Yii::app()->params['liqpay_sandbox'] == true) { 
+  echo ('<B>Увага!</b> Режим емуляції платежів! Платіж насправді не буде виконано. Це означає, що гроші не будуть перераховані УкрЯмі та юристи не будуть займатися вашою справою. Причина, скоріше за все, в профілактичних роботах на сервері УкрЯми. Якщо ваша справа термінова, напишіть листа на info@ukryama.com<br>'); 
+}
+?>
 
 <form method="POST" accept-charset="utf-8" action="https://www.liqpay.com/api/pay">
 <input type="hidden" name="public_key" value="<?php echo Yii::app()->params['public_key'] ?>" />
