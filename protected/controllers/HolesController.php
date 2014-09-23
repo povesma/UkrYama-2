@@ -492,12 +492,15 @@ class HolesController extends Controller
 	   $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('personal'));
 	}	
 	
-	//форма ГИБДД
+	//форма печати заявления
 	public function actionRequestForm($id)
 	{
 		$lang=$_POST['lang'];
+
 		$holetype=$_POST['hole_type'];
+		$defect_type=$_POST['defect_type'];
 		$auth=$_POST[$lang.'_auth'];
+		$first_authid=$_POST['first_authid'];	
 		$to_name=$_POST[$lang.'_to_name'];
 		$to_address=$_POST[$lang.'_to_address'];
 		$to_index=$_POST[$lang.'_to_index'];
@@ -505,7 +508,6 @@ class HolesController extends Controller
 		$postaddress=$_POST[$lang.'_postaddress'];
 		$signature=$_POST[$lang.'_signature'];
 
-		$auth=Authority::model()->findByPk(array('id'=>$auth,'lang'=>$lang));
 		$model=$this->loadModel($id);
 
 		$pics=array();
@@ -518,6 +520,8 @@ class HolesController extends Controller
 			Yii::app()->setLanguage("uk_ua");
 			$lang="ua";
 		}
+
+		$auth=Authority::model()->findByPk(array('id'=>$auth,'lang'=>$lang));
 
 		$pics=array_keys($_POST['chpk']);
 		setlocale(LC_ALL, 'ru_RU.UTF-8');
@@ -578,11 +582,36 @@ class HolesController extends Controller
 					}
 				}
 
+ 				$formType = "";
+				$first_auth = "";
+				$sent_date = "";
+				$delivery_date = "";
+				if($defect_type < 30 ){ // обычный дефект
+	                                $formType=$model->type['alias'];
+				}else{ // повторное обжалование - дефект типа незаконного ответа, неответа
+					$fType=$model->type->findByPk(array("id"=>$defect_type,"lang"=>$lang));
+					$formType = $fType->alias;
+
+					$requests=$model->requests;
+					$req=false;
+					if(count($requests)>0){
+						$req=$requests[0];
+						$sent_date = $req->date_sent;
+					}
+					$delivery_date = $model->request_sent[0]->ddate;
+					$nauth= new Authority;
+					$fType = $nauth->findByPk(array("id"=>$first_authid,"lang"=>$lang));
+					$first_auth = $fType->name;
+				}
+
 		$_data = array(
 			"ref" => "$id",
 			"to_name" =>$to_name,
 			"to_address"=>$to_address,
 			"from_name"=>$from,
+			"first_auth"=>$first_auth,
+			"sent_date"=>date("Y-m-d", $sent_date),
+			"delivery_date"=>$delivery_date,
 			"from_address"=>$postaddress,
 			"when"=>strftime("%e ".Yii::t('month', date("n"))." %Y", $model->DATE_CREATED ? $model->DATE_CREATED : time()),
 			"where"=>$model->ADDRESS,
@@ -592,20 +621,24 @@ class HolesController extends Controller
 			"files"=>$photos,
 			"map"=>1
 		);
-				if(!$first){
-					$formType=$model->type['alias'];
-				}else{
-					$formType="prosecutor2";
-				}
+//  			foreach ($_data as $dt) echo $dt."<br>";
+
+
+//				$formType=$model->type['alias'];
+
+				$name="$formType"."_$lang";
+
+				$printer = Yii::app()->Printer;
+
+				$tpl_base_name = YiiBase::getPathOfAlias($printer->params['templates'])."/dyplates/".$auth->atype->alias."_";
+				$tplname = $tpl_base_name.$name.".php";
+				$cssfilename = $tpl_base_name.$formType.".css";
+
 
 				if($_POST['print']=="HTML")
 				{
 					header('Content-Type: text/html; charset=utf8', true);
-					$printer = Yii::app()->Printer;
-//					echo $printer->printHTML($_data, $formType, $lang);
-					$name="$formType"."_$lang";
-					$tplname = YiiBase::getPathOfAlias($printer->params['templates'])."/dyplates/".$auth->atype->alias."_".$name.".php";
-					$css = file_get_contents(YiiBase::getPathOfAlias($printer->params['templates'])."/dyplates/".$auth->atype->alias."_".$formType.".css"); 
+					$css = file_get_contents($cssfilename); 
 					$html = $this->renderFile($tplname,$_data,true);
 					$html = "<style>$css</style>\n$html";
 					echo $html;
@@ -613,13 +646,9 @@ class HolesController extends Controller
 				}//end print html
 				else
 				{//print pdf
-					$printer = Yii::app()->Printer;
-					$name="$formType"."_$lang";
-					$tplname = YiiBase::getPathOfAlias($printer->params['templates'])."/dyplates/".$auth->atype->alias."_".$name.".php";
 					if(file_exists($tplname)){
-						$css = file_get_contents(YiiBase::getPathOfAlias($printer->params['templates'])."/dyplates/".$auth->atype->alias."_".$formType.".css"); 
+						$css = file_get_contents($cssfilename); 
 						$html = $this->renderFile($tplname,$_data,true);
-
 						$outname="ukryama-".date("Y-m-d_G-i-s");
 						echo $printer->printH2P($html, $css, $outname);
 						return;

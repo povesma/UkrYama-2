@@ -33,6 +33,7 @@ class Holes extends CActiveRecord
 		return parent::model($className);
 	}
 	
+	public $DATE_FIRST_SENT; 	
 	public $WAIT_DAYS; 	
 	public $PAST_DAYS;	
 	public $NOT_PREMODERATED;	
@@ -85,7 +86,7 @@ class Holes extends CActiveRecord
 			array('PREMODERATED, TYPE_ID, NOT_PREMODERATED, createdate, updatedate', 'numerical', 'integerOnly'=>true),
 			array('LATITUDE, LONGITUDE', 'numerical'),
 			array('USER_ID, STATE, DATE_CREATED, DATE_STATUS', 'length', 'max'=>10),
-			array('ADR_CITY', 'length', 'max'=>50),
+			array('ADR_CITY', 'length', 'max'=>70),
 //			array('STR_SUBJECTRF, username', 'length'),
 			array('COMMENT1, COMMENT2, deletepict, upploadedPictures, showUserHoles', 'safe'),	
 			array('upploadedPictures', 'file', 'types'=>'jpg, jpeg, png, gif','maxFiles'=>10, 'allowEmpty'=>true, 'on' => 'update, import, fix'),
@@ -390,6 +391,35 @@ class Holes extends CActiveRecord
 		}
 
 	}		
+
+	public function getFirstSentDate()
+	{
+		$requests=$this->requests; // это неправильно. Выбирается дата отправки, а не доставки!
+		$req=false;
+		if(count($requests)>0){
+			$req=$requests[0];
+			$this->DATE_FIRST_SENT = $req->date_sent;
+			return $this->DATE_FIRST_SENT;
+			
+		}else{
+			return false;
+		}
+
+	}		
+
+
+	public function daysWaitPast(){  // 100 - неприменимо (не отправлено ничего, время ожидания не больше 31 дня), >0 - осталось ждать, <0 - просрочено
+
+           if($this->STATE != Holes::STATE_INPROGRESS) {
+              return 100;
+           }
+	   if (!$this->DATE_FIRST_SENT) {
+		if(!$this->getFirstSentDate()) {
+			return 100;
+		}
+	   }
+           return 31 - ceil((time() - $this->DATE_FIRST_SENT) / 86400);
+        }
 	
 /*	
 	public function afterFind(){

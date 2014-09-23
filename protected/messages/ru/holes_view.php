@@ -16,8 +16,8 @@ $MESS['HOLE_REQUEST_FORM']    = 'Заявление';
 $MESS['HOLE_FIXED']           = 'отмечен факт исправления дефекта';
 
 $MESS['HOLE_STATE_fresh']      = 'Добавлено на сайт';
-$MESS['HOLE_STATE_inprogress'] = '';
-$MESS['HOLE_STATE_fixed']      = '';
+$MESS['HOLE_STATE_inprogress'] = 'Рассматривается';
+$MESS['HOLE_STATE_fixed']      = 'Исправлено';
 $MESS['HOLE_STATE_achtung']    = '';
 $MESS['HOLE_STATE_gibddre']    = 'Получен ответ из ГАИ';
 
@@ -64,6 +64,7 @@ $MESS['DELETE_DEFECT_CONFIRM'] = 'Вы уверены, что хотите уд�
 
 
 $MESS['PRINT_CLAIM']  = 'Напечатать заявление';
+$MESS['MISSED_ANSWER_CLAIM']  = 'Жалоба на отсутствие ответа';
 $MESS['CLAIM_TO_GAI_WAS_SEND']  = 'Заявление в ГАИ отправлено';
 $MESS['CLAIM_WAS_SEND']  = 'Заявление отправлено';
 $MESS['HOLE_REPLY_RECEIVED']  = 'Ответ получен';

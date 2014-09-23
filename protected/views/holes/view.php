@@ -97,7 +97,7 @@ function initialize() {
 	   					<span class="bull <?= $hole->STATE ?>">&bull;</span><b><?=CHtml::encode($hole->StateName)?></b><br />
                                                <?php if($pays and $userGroup->level)
                                                 {?>
-                                                <span class="money"></span><b>Оплачено.</b> Сума: <?php echo $pays->amount; if($currency == 'UAH') { echo 'грн.'} else { echo '$'; }?> Дата: <?php echo $pays->date; }?> 
+                                                <span class="money"></span><b>Оплачено.</b> Сума: <?php echo $pays->amount; if($currency == 'UAH') { echo 'грн.'; } else { echo '$'; }?> Дата: <?php echo $pays->date; } ?> 
                                                 
 						<?php
 							$arr[] = array('name'=>CHtml::tag('b', array(), Yii::t('holes_view', 'HOLE_CREATED_INFO')));
@@ -111,7 +111,7 @@ function initialize() {
 								$arr[] = array('name'=>CHtml::tag('b', array(), Yii::t('holes_view', 'HOLE_REQUEST_USER_TO', array('{0}'=>$request->user->getFullname(),'{1}'=>$request->$param->name))), 'date'=>Y::dateFromTime($request->date_sent));
 								$deliv=$request->req_sent;
 								if(count($deliv)){
-									if(!$deliv->status){$deliv->updateMail();}
+									if(!$deliv->status){$deliv->updateMail();}          
 
 									if($deliv->status){
 										if($deliv->status!=2){$arr[] = array('name'=>Yii::t('holes_view', 'HOLE_REQUEST_DELIVERED',array('{0}'=>$request->$param->name)), 'date'=>Y::dateFromTime($deliv->ddate));}

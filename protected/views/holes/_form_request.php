@@ -9,17 +9,19 @@ $usermodel=Yii::app()->user->userModel;
 $model=new RequestForm;
 //			$mytype=$hole->type->findAll("id=:id",array(':id'=>$hole->TYPE_ID));
 $mytype=array();
-if($first==1){
+
 	$mytype['ru']=$hole->type->findByPk(array("id"=>$hole->TYPE_ID,"lang"=>"ru"));
 	$mytype['ua']=$hole->type->findByPk(array("id"=>$hole->TYPE_ID,"lang"=>"ua"));
-}else{
-	$mytype['ru']=$hole->type->findByPk(array("id"=>13,"lang"=>"ru"));
-	$mytype['ua']=$hole->type->findByPk(array("id"=>13,"lang"=>"ua"));
+
+if($first!=1){
+	$mytype['ru']=$hole->type->findByPk(array("id"=>$first,"lang"=>"ru"));
+	$mytype['ua']=$hole->type->findByPk(array("id"=>$first,"lang"=>"ua"));
 	
 	$auth['ru']=$req->auth_ru;
 	$auth['ua']=$req->auth_ua;
-	$mytype['ru']->name=$auth['ru']->name;
-	$mytype['ua']->name=$auth['ua']->name;
+	$authid=$auth['ua']->id;
+	$mytype['ru']->name = $auth['ru']->name . ", ".$mytype['ru']->name;
+	$mytype['ua']->name = $auth['ua']->name . ", ".$mytype['ua']->name;
 }
 
 $region=$hole->region();
@@ -67,6 +69,8 @@ $usermodel=Yii::app()->user->userModel;
 <tr><td>
 <input type="hidden" name="lang" id="lang" value="ua">
 <input type="hidden" name="hole_type" value="<?= $hole->TYPE_ID?>">
+<input type="hidden" name="defect_type" value="<?= $first?>">
+<input type="hidden" name="first_authid" id="first_authid" value="<?= $authid?>">
 
 <label><?=Yii::t('holes_view', 'HOLE_REQUEST_FORM_LANG',array(),null,'uk_ua')?></label>/<label><?=Yii::t('holes_view', 'HOLE_REQUEST_FORM_LANG',array(),null,'ru')?></label>
 </td>
@@ -76,13 +80,13 @@ $usermodel=Yii::app()->user->userModel;
 <table id="ua_form"">
 <tr><td>
 <label><?=Yii::t('holes_view', 'HOLE_REQUEST_FORM_DEFECT_TYPE',array(),null,'uk_ua')?></label></td>
-<td><?= $mytype['ua']->name;?>
+<td><?= $mytype['ua']->name." <b>[".$first."]</b>";?>
 </td></tr>
 <tr><td>
 <label><?=Yii::t('holes_view', 'HOLE_REQUEST_FORM_AUTHORITY',array(),null,'uk_ua')?></label>
 </td>
 <td>
-<select onClick="authChange(this,'ua')" name="ua_auth">
+	<select onClick="authChange(this,'ua')" name="ua_auth">
 	<option value="0">. . .
 <?php foreach($choices['ua'] as $choice) {?>
 	<option value="<?= $choice->id?>"><?=$choice->name?>

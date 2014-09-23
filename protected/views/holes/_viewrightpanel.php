@@ -1,16 +1,16 @@
 <div class="progress">
-   <?php if($hole->WAIT_DAYS): ?>
+   <?php if($hole->daysWaitPast() >= 0): ?>
    <div class="lc">
       <div class="wait">
-         <span class="days"><?php echo $hole->WAIT_DAYS ?></span>
-         <span class="day-note"><?php echo Yii::t('template', 'INFO_COUNT_DAYS_WAIT', array('{0}'=>Y::declOfDays($hole->WAIT_DAYS, false))) ?></span>
+         <span class="days"><?php echo $hole->daysWaitPast() ?></span>
+         <span class="day-note"><?php echo Yii::t('template', 'INFO_COUNT_DAYS_WAIT', array('{0}'=>Y::declOfDays($hole->daysWaitPast(), false))) ?></span>
      </div>
    </div>
-   <?php elseif($hole->PAST_DAYS): ?>
+   <?php elseif($hole->daysWaitPast()<0): ?>
    <div class="lc">
       <div class="wait">
-         <span class="days"><?php echo $hole->PAST_DAYS ?></span>
-         <span class="day-note"><?php echo Yii::t('template', 'INFO_COUNT_PAST_DAYS', array('{0}'=>Y::declOfDays($hole->PAST_DAYS, false))) ?></span>
+         <span class="days"><?php echo abs($hole->daysWaitPast()) ?></span>
+         <span class="day-note"><?php echo Yii::t('template', 'INFO_COUNT_PAST_DAYS', array('{0}'=>Y::declOfDays(abs($hole->daysWaitPast()), false))) ?></span>
       </div>
    </div>
    <?php endif; ?>
@@ -44,17 +44,17 @@ $(window).keydown(function(e){
 	$requests=$hole->requests_user;
 	$status=0;
 	$req=false;
-	if(count($requests)>0){
+	if(count($requests)>0){ // по крайней мере один запрос был
 		$req=$requests[count($requests)-1];
-		if($req->answer){
+		if($req->answer){ // получен ответ на запрос
 			$answ=$req->answer;
 			$status=2;
-		}else{
+		}else{  // ответ не получен
 			$status=1;
 		}
 	}
 
-	if($status!=1){
+	if($status!=1){ // или не отправлено, или отправлено и получен ответ
 	?>
          		<div class="lc">
        			<a href="#" onclick="var c=document.getElementById('pdf_form');if(c){c.style.display=c.style.display=='block'?'none':'block';c.focus()}return false;" class="button"><?= Yii::t('holes_view', 'PRINT_CLAIM') ?></a>
@@ -63,10 +63,10 @@ $(window).keydown(function(e){
 			<a href="#" onclick="var c=document.getElementById('pdf_form');if(c){c.style.display=c.style.display=='block'?'none':'block';}return false;" class="close">&times;</a>
 			<div id="gibdd_form"></div>
         <?php
-		if($status==0){
-			$this->renderPartial('_form_request', array('hole'=>$hole, "first"=>1));
-		}elseif($status==2){
-			$this->renderPartial('_form_request', array('hole'=>$hole, "first"=>2,'req'=>$req, 'answ'=>$answ));
+		if($status==0){ // запрос не отправлялся
+			$this->renderPartial('_form_request', array('hole'=>$hole, "first"=>1)); // 1 - первичный запрос
+		}elseif($status==2){ // получен ответ на запрос
+			$this->renderPartial('_form_request', array('hole'=>$hole, "first"=>31,'req'=>$req, 'answ'=>$answ)); // 31 - ответ с нарушением, жалоба в высший орган
 		}
 	?>
 		</div>
@@ -81,12 +81,25 @@ $(window).keydown(function(e){
 					</div>
 	<?php endif;
 
-	}else{
+	}else{ // отправлено, ответа не получено
+           if ($hole->daysWaitPast()<0) { // просрочено
+		?>
+         		<div class="lc">
+       			<a href="#" onclick="var c=document.getElementById('pdf_form');if(c){c.style.display=c.style.display=='block'?'none':'block';c.focus()}return false;" class="button"><?= Yii::t('holes_view', 'MISSED_ANSWER_CLAIM') ?></a>
+         		</div><br />
+		<div class="pdf_form" id="pdf_form"<?= isset($_GET['show_pdf_form']) ? ' style="display: block;"' : '' ?>>
+			<a href="#" onclick="var c=document.getElementById('pdf_form');if(c){c.style.display=c.style.display=='block'?'none':'block';}return false;" class="close">&times;</a>
+			<div id="gibdd_form"></div>
+        	<?php
+			$this->renderPartial('_form_request', array('hole'=>$hole, "first"=>30,'req'=>$req, 'past'=> $hole->daysWaitPast())); // 31 - ответ не получен в срок, жалоба в высший орган
+		?>
+		</div> <?php
+	   } else {
 	?>
 		<div class="rc">
 			<p><?= CHtml::link(Yii::t('holes_view', 'CANCEL_REQUEST_MY_CLAIM'), array('notsent', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
 		</div>
-	<?php } ?>
+	<?php } } ?>
 	<?php if($status!=0): ?>
 		<div class="rc">
 			<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_REPLY_RECEIVED'), array('reply', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
