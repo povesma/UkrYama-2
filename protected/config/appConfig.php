@@ -73,8 +73,30 @@ $socials=array( // You can change the providers and their classes.
 
 
 $params=array(
-    	    // this is used in contact page
+    //------------------------------------------------------------------------//
+    	    // Set the admin's and moder's messangers UINs.
+   
+            // Set the admin's messangers
     	    'adminEmail'=>'info@ukryama.com',
+            'adminViber' => '',
+            'adminVelegram' => '',
+            'adminWhatsapp' => '',
+            'adminFacebook' => '',
+            'adminTwetter' => '',
+            'adminInstagram' => '',
+             
+            // Activate the moderator role
+            'enableModeratorRole' => false,
+    
+            // Set the moderator's messangers
+            'moderatorEmail' => 'moder@ukryama.com',
+            'moderatorViber' => '',
+            'moderatorTelegram' => '',
+            'moderatorWhatsapp' => '',
+            'moderatorFacebook' => '',
+            'moderatorTwetter' => '',
+            'moderatorInstagram' => '',
+    //------------------------------------------------------------------------//
             'imagePath'=>'/upload/st1234/',
                            
             // Add own start-points for Google-map (addHole contr)
@@ -82,14 +104,14 @@ $params=array(
             'longitude'=>'30.4707367',
             
     	    // Add a page name title (string)
- 	        'langtitle' => 'УкрЯма - ',   
-  	        'ukrautodorEmail' => 'povesma@gmail.com', // on live site should be ukryama@ukravtodor.gov.ua
+ 	    'langtitle' => 'УкрЯма - ',   
+  	    'ukrautodorEmail' => 'povesma@gmail.com', // on live site should be ukryama@ukravtodor.gov.ua
             
             // These params used in paid-hole form (donate page)
             'public_key' => 'i8596801856', // LigPay public_pay param. You should get it on the LiqPay off-site https://www.liqpay.com/ru/admin/business/buttons
             'paymant_system' => 'LiqPay',
             'liqpay_sandbox'=>'1',
-            'liqpay_server_url'=>'http://newtest.ukryama.com/payments/callback',
+            'liqpay_server_url'=>'http://newtest.ukryama.com/payments/callback', // Change in producting server.
              
             // Current version
             'version' => '2.2',
@@ -97,4 +119,15 @@ $params=array(
             // Google Maps Geolocation API-Key
             'google_maps_api' => 'AIzaSyCTK4y073bUzvq0EGMPKskM57-3aN9JnsE', // Store here your own API-KEY. Get it on https://developers.google.com/maps/
             'google_maps_api_server' => 'AIzaSyCTK4y073bUzvq0EGMPKskM57-3aN9JnsE', // Server GoogleMap API-key
+    
+            // Messages configuration. Please, set state to TRUE if you want use same messanger in system.
+            
+            // Set core messangers state for
+            'email' => true,
+            'viber' => true,
+            'telegram' => true,
+            'whatsapp' => true,
+            'facebook' => true,
+            'twetter' => true,
+            'instagram' => true,
     );

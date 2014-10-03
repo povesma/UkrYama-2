@@ -18,3 +18,4 @@ protected/runtime/
 themes/classic/views/
 .htaccess
 upload/
+/nbproject/private/

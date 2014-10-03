@@ -156,5 +156,5 @@ return array(
    'DELETE_IMAGE'=>'Видалити це зображення',     
    'UPLOAD_AT_DATE'=>'Завантажено: {0}',
    
-   
+
 );

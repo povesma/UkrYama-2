@@ -16,9 +16,10 @@
 
 <div id="tabs">
     <ul>
-        <li><a href="#tabs-1">Основне</a></li>
-        <li><a href="#tabs-2">Змінити пароль</a></li>
-        <li><a href="#tabs-3">Налаштування безпеки</a></li>
+        <li><a href="#tabs-1"><?php echo Yii::t('profile','PROFILE_MAIN'); ?></a></li>
+        <li><a href="#tabs-2"><?php echo Yii::t('profile','PROFILE_CHANGE_PASS'); ?></a></li>
+        <li><a href="#tabs-3"><?php echo Yii::t('profile','PROFILE_SECURE'); ?></a></li>
+          <li><a href="#tabs-4"><?php echo Yii::t('profile','PROFILE_MESSAGERS'); ?></a></li>
     </ul>
     
     <div id="tabs-1">
@@ -233,6 +234,30 @@
 	<?php $this->endWidget(); ?>
 	</div><!-- form -->
         </div>
-    
-</div>
+      <div id="tabs-4">
+          
+          
+          <div class="form">
+        <?php   echo CHtml::beginForm(array('id'=>'user-groups-misc-form'));
+                  foreach($messagesModel as $messages) {
+                      
+                   
+                      ?>
+                          
+                            <div class="row">
+                    
+                        <?php echo CHtml::Label($messages->messanger0->name,false); ?>
+                        <?php echo CHtml::textField($messages->messanger0->name,$messages->uin); ?>
+                        <?php echo CHtml::checkBox('status_'.$messages->messanger0->name,$messages->status).Yii::t('profile','SEND_TO_THIS_MESSENGER') ?>
+                             
+                            </div>
+
+                             <?php
+                            }
+                    echo CHtml::endForm(); 
+             ?>
+              </div>
+          
+          </div>
+     </div>
 <script>$("#tabs").tabs();</script>

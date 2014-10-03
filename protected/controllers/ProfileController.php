@@ -40,6 +40,10 @@ class ProfileController extends Controller
 		$id=Yii::app()->user->id;
 		$miscModel=$this->loadModel($id, 'changeMisc');
 		$passModel= clone $miscModel;
+                		$CreateMesModel=new Messangers;
+
+                 $messagesModel = Messangers::model()->findAll("user = :user_id", array('user_id'=>Yii::app()->user->id));
+               // var_dump($messagesModel);
 		$passModel->setScenario('changePassword');
 		$passModel->password = NULL;		
 		// pass the models inside the array for ajax validation
@@ -112,7 +116,7 @@ class ProfileController extends Controller
 					Yii::app()->user->setFlash('user', 'Произошла ошибка. Попробуйте позже.');
 			}
 		}		
-		$this->render('update',array('miscModel'=>$miscModel,'passModel'=>$passModel, 'profiles' => $profile_models), false, true);
+		$this->render('update',array('miscModel'=>$miscModel,'passModel'=>$passModel, 'profiles' => $profile_models,'messagesModel'=>$messagesModel,'CreateMesModel'=>$CreateMesModel), false, true);
 	}
 	
 	public function actionMyarea()

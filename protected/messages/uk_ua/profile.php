@@ -34,6 +34,14 @@ return array(
    'REQUEST_ADDRESS' => 'Поштова адреса для підстановки у заяву',
    'CH_PASS' => 'Змінити пароль',
    'CH_PASS_H1' => 'Змінa паролю',
+   'PROFILE_MAIN' => 'Основне',
+   'PROFILE_CHANGE_PASS' => 'Змінити пароль',
+   'PROFILE_SECURE' => 'Налаштування безпеки',
+   'PROFILE_MESSAGERS' => 'Налаштування повідомленнь',
+   
+    //
+    
+    'SEND_TO_THIS_MESSENGER' => 'Надсилати повідомлення на цей мессенджер',
    );
    
    

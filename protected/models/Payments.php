@@ -73,7 +73,7 @@ class Payments extends CActiveRecord
 			'type' => Yii::t('template','type'),
                         'transaction_id' => Yii::t('template','transaction_id'),
                         'description' => Yii::t('template','description'),
-                        'currency' => Yii::t('template','currency'),
+                        'currency' => Yii::t('template','CURRENCY'),
                     
                     
 		);

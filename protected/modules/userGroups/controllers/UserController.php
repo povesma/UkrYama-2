@@ -317,6 +317,9 @@ class UserController extends Controller
 	    $this->pageTitle = Yii::t('titles','UG_YPDATE');
 		$miscModel=$this->loadModel($id, 'changeMisc');
 		$passModel= clone $miscModel;
+                 $messagesModel = Messangers::model()->findAll("user = :user_id", array('user_id'=>Yii::app()->user->id));
+                var_dump($messagesModel);
+                
 		$passModel->setScenario('changePassword');
 		$passModel->password = NULL;
 
@@ -380,8 +383,9 @@ class UserController extends Controller
 					Yii::app()->user->setFlash('user', Yii::t('userGroupsModule.general','An Error Occurred. Please try later.'));
 			}
 		}
-
-		$this->renderPartial('application.views.profile.update',array('miscModel'=>$miscModel,'passModel'=>$passModel, 'profiles' => $profile_models), false, true);
+ //$messagesModel = Messangers::model()->findAll("user = :user_id", array('user_id'=>Yii::app()->user->id));
+   //             var_dump($messagesModel);
+		//$this->renderPartial('application.views.profile.update',array('miscModel'=>$miscModel,'passModel'=>$passModel, 'profiles' => $profile_models,'messagesModel'=>$messagesModel), false, true);
 	}
 	
 	
