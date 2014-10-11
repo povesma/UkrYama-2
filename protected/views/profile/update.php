@@ -238,14 +238,7 @@
           
           
           <div class="form">
-              
-        <?php 
-        /*$mess = new Messanger;
-       $mess->send(1, "Коротше  друзі, треба щось вже робити чи кудою");
-      // var_dump($mess->test(1,4)); */
-        
-         
-        echo CHtml::beginForm(array('id'=>'user-groups-misc-form'));
+        <?php   echo CHtml::beginForm(array('id'=>'user-groups-misc-form'));
                   foreach($messagesModel as $messages) {
                       
                    
