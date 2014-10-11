@@ -123,11 +123,11 @@ $params=array(
             // Messages configuration. Please, set state to TRUE if you want use same messanger in system.
             
             // Set core messangers state for
-            'email' => true,
-            'viber' => true,
+            'email' => false,
+            'viber' => false,
             'telegram' => true,
-            'whatsapp' => true,
+            'whatsapp' => false,
             'facebook' => true,
-            'twetter' => true,
-            'instagram' => true,
+            'twetter' => false,
+            'instagram' => false,
     );
