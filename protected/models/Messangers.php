@@ -16,6 +16,24 @@
  */
 class Messangers extends CActiveRecord
 {
+    
+    protected $_userid;
+    
+    protected $_facebook;
+       
+    protected $_viber;
+    
+    protected $_telegram;
+      
+    protected $_whatsapp;
+       
+    protected $_twitter;
+    
+    protected $_instagram;
+    
+    protected $_email;
+    
+    
 	/**
 	 * @return string the associated database table name
 	 */
@@ -68,6 +86,49 @@ class Messangers extends CActiveRecord
 		);
 	}
 
+        
+                
+        protected function getUsersMessanger($userid)
+        {
+                {
+        
+     $messsangers_id  = array(1,2,3,4,5,6);
+     
+     foreach ($messangerids as $m) {
+         $ms = Messangers::model()->find("user = :user_id and messanger = :messangerID", 
+                                       array('user_id'=> $this->_userid, 'messangerID'=>$m));
+         if($ms) 
+         {
+          switch ($m){
+                case 1:
+                    $this->_email = $ms;
+                    break;
+                case 2:
+                    $this->_whatsapp = $ms;
+                    break;
+                case 3:
+                    $this->_telegram = $ms;
+                    break;
+                case 4:
+                    $this->_facebook = $ms;
+                    break;
+                case 5:
+                    $this->_twitter = $ms;
+                    break;
+                case 6:
+                    $this->_viber = $ms;
+                    break;
+                default:
+                    throw new CHttpException(500, 'Messangers check error');  
+                    
+                    }
+            }
+    
+        }
+    }
+
+        }
+        
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
 	 *
