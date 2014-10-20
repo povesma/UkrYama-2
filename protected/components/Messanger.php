@@ -29,7 +29,7 @@ class Messanger extends CComponent {
     
 
     // Єдина строчка відсилання нотифікації для усього сайту (Messanger::send($userid, $subject, $message)) 
-    public function send($userid, $message, $subject = NULL)
+    public function condence($userid, $message, $subject = NULL)
     {
         $this->_userid = $userid;
         
@@ -56,7 +56,7 @@ class Messanger extends CComponent {
     // Відправляємо мило користувачу
     protected function email($subject,$message)
     {
-       
+       if($subject === NULL) $subject = "Message from UkrYama";
       mail($this->_email->uin,$subject,$message); 
       
     }
@@ -69,7 +69,7 @@ class Messanger extends CComponent {
         if($this->_facebook) {          
 
             //Логіка відправки повідомлення на ФБ користувача ($this->_facebook->uin)
-           // echo 'Працює друзі'.$this->_facebook->messanger0->name;
+           echo 'Працює друзі'.$this->_facebook->messanger0->name;
             
         } else {
            
@@ -193,6 +193,22 @@ class Messanger extends CComponent {
         }
     }
 
+    /**
+     * Користувацька функця, що обробляє запит на відправку повідомлення
+     * Працює в любому місці сайту і викликається ось так:  Messanger::send(ID користувача, "Текст повідомлення", "Тема повідомлення або без теми");
+     * @param int $userid
+     * @param string $message
+     * @param string $subject
+     */
+    
+    public static function send($userid, $message, $subject = NULL)
+    {
+    	$mod = new Messanger;
+    	$mod->condence($userid, $message, $subject);
+    
+    }
+    
+    
     //------------------------------------------------------------------//
     // Функція для тесту
     //------------------------------------------------------------------//
@@ -204,5 +220,7 @@ public function test($userid,$messengerID)
     $this->_messengercalss = $ms;
 return $this->_messengercalss;
 }
+
+
 
 }

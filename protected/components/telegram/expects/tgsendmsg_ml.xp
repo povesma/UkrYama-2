@@ -1,0 +1,11 @@
+#!/usr/bin/expect
+set user [lindex $argv 0]
+set text [lindex $argv 1]
+set timeout 5
+spawn /etc/telegram/telegram -k /etc/telegram/tg.pub
+expect "User"
+send "send_text $user $text\r"
+expect "Sent:"
+send "quit\r"
+expect eof
+puts "Message has been sent"

@@ -1,0 +1,16 @@
+<?php
+class derp {
+	public $name 	= 'derp'; // these aren't needed, but it's probably good practice to have them
+	public $version = '0.01';
+	public $creator = 'kenny';
+	public $desc	= 'Example module.';
+	
+	public function handle ($recv, $replyobj) {
+		$replyobj->reply('txt','faggotniggaabortiongodisntrealtranny'); // replies to any command handled by this module
+	}
+	
+}
+
+$this->registerModule('derp'); // registers module
+$this->registerCommand('derp', 'derp'); // assigns command 'derp' to handler class 'derp' (this one)
+?>

@@ -240,9 +240,9 @@
           <div class="form">
               
         <?php 
-        /*$mess = new Messanger;
-       $mess->send(1, "Коротше  друзі, треба щось вже робити чи кудою");
-      // var_dump($mess->test(1,4)); */
+        
+       //Messanger::send(1, "Коротше  друзі, треба щось вже робити чи кудою"); // Чисто тест для месенджера
+
         
          
         echo CHtml::beginForm(array('id'=>'user-groups-misc-form'));
