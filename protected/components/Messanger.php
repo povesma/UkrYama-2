@@ -11,22 +11,35 @@ class Messanger extends CComponent {
     
     // У властивостях класу тримаємо ексземпляри моделі окремих месенджерів користувача
     
-    protected $_userid;
+    public $_userid;
     
-    protected $_facebook;
+    public $_facebook;
+    
+    public $_facebook_status;
        
-    protected $_viber;
+    public $_viber;
     
-    protected $_telegram;
+    public $_viber_status;
+    
+    public $_telegram;
+    
+    public $_telegram_status;
       
-    protected $_whatsapp;
+    public $_whatsapp;
+    
+    public $_whatsapp_status;
        
-    protected $_twitter;
+    public $_twitter;
     
-    protected $_instagram;
+    public $_twitter_status;
     
-    protected $_email;
+    public $_instagram;
     
+    public $_instagram_status;
+    
+    public $_email;
+
+    public $_email_status;
 
     // Єдина строчка відсилання нотифікації для усього сайту (Messanger::send($userid, $subject, $message)) 
     public function condence($userid, $message, $subject = NULL)
@@ -60,7 +73,6 @@ class Messanger extends CComponent {
       mail($this->_email->uin,$subject,$message); 
       
     }
-    
     
     // Відправляємо повідомлення користувачу в Фейсбук
     protected function facebook($message = NULL)
@@ -154,7 +166,7 @@ class Messanger extends CComponent {
     }
     
     /** 
-     * Перевіряємо по списку чи вводив користувач свої месенджери та чи активував на них рохсилання
+     * Перевіряємо по списку чи вводив користувач свої месенджери та чи активував на них розсилання
      */
     protected function checkMessanger($messangerids) 
     {
@@ -194,7 +206,7 @@ class Messanger extends CComponent {
     }
 
     /**
-     * Користувацька функця, що обробляє запит на відправку повідомлення
+     * Користувацька функція, що обробляє запит на відправку повідомлення
      * Працює в любому місці сайту і викликається ось так:  Messanger::send(ID користувача, "Текст повідомлення", "Тема повідомлення або без теми");
      * @param int $userid
      * @param string $message
@@ -208,6 +220,76 @@ class Messanger extends CComponent {
     
     }
     
+    
+    /** -------------------------------------
+     * Працюємо з заповненням полів профіля
+      --------------------------------------- */
+public static function checkProf($userid)
+{
+	$m = new Messanger();
+	
+	$m->condenceProf($userid);
+	
+	return $m;
+}
+    // Єдина строчка відсилання нотифікації для усього сайту (Messanger::send($userid, $subject, $message))
+    public function condenceProf($userid)
+    {
+    	$this->_userid = $userid;
+    
+    	$messangerids = array(1,2,3,4,5,6); // ID месенджерів
+    
+    	$this->checkMessangersProf($messangerids); // Перевіряємо які месенджери є у користувача і на які можна відсидати нотифікацію
+    	
+    
+    }
+
+    /**
+     * Перевіряємо по списку чи вводив користувач свої месенджери та чи активував на них розсилання
+     */
+    protected function checkMessangersProf($messangerids)
+    {
+    
+    	 
+    	foreach ($messangerids as $m) {
+    		$ms = Messangers::model()->find("user = :user_id and messanger = :messangerID",
+    				array('user_id'=> $this->_userid, 'messangerID'=>$m));
+    		if($ms)
+    		{
+    			switch ($m){
+    				case 1:
+    					$this->_email = $ms->uin;
+    					$this->_email_status = $ms->status;
+    					break;
+    				case 2:
+    					$this->_whatsapp = $ms->uin;
+    					$this->_whatsapp_status = $ms->status;
+    					break;
+    				case 3:
+    					$this->_telegram = $ms->uin;
+    					$this->_telegram_status = $ms->status;
+    					break;
+    				case 4:
+    					$this->_facebook = $ms->uin;
+    					$this->_facebook_status = $ms->status;
+    					break;
+    				case 5:
+    					$this->_twitter = $ms->uin;
+    					$this->_twitter_status = $ms->status;
+    					break;
+    				case 6:
+    					$this->_viber = $ms->uin;
+    					$this->_viber_status = $ms->status;
+    					break;
+    				default:
+    					throw new CHttpException(500, 'Messangers check error');
+    
+    			}
+    		}
+    
+    	}
+    }
+
     
     //------------------------------------------------------------------//
     // Функція для тесту

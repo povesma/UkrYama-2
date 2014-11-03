@@ -241,26 +241,39 @@
               
         <?php 
         
-       //Messanger::send(1, "Коротше  друзі, треба щось вже робити чи кудою"); // Чисто тест для месенджера
-
+       echo $messagesModel->_facebook;
+    
+	
         
          
-        echo CHtml::beginForm(array('id'=>'user-groups-misc-form'));
-                  foreach($messagesModel as $messages) {
-                      
-                   
-                      ?>
-                          
+        echo CHtml::beginForm(array('id'=>'user-groups-misc-form')); ?>
+
+                                  <div class="row">
+                    
+                        <label>Telegram</label>                        <input type="text" value="<?php echo $messagesModel->_telegram;?>" name="Telegram" id="Telegram" />                        <input checked="checked" type="checkbox" value="0" name="status_FaceBook" id="status_FaceBook" />Надсилати повідомлення на цей мессенджер                             
+                            </div>
                             <div class="row">
                     
-                        <?php echo CHtml::Label($messages->messanger0->name,false); ?>
-                        <?php echo CHtml::textField($messages->messanger0->name,$messages->uin); ?>
-                        <?php echo CHtml::checkBox('status_'.$messages->messanger0->name,$messages->status).Yii::t('profile','SEND_TO_THIS_MESSENGER') ?>
-                             
+                        <label>FaceBook</label>                        <input type="text" value="<?php echo $messagesModel->_facebook;?>" name="FaceBook" id="FaceBook" />                        <input checked="checked" type="checkbox" value="0" name="status_FaceBook" id="status_FaceBook" />Надсилати повідомлення на цей мессенджер                             
                             </div>
 
+                                                       
+                            <div class="row">
+                    
+                        <label>Viber</label>                        <input type="text" value="<?php echo $messagesModel->_viber;?>" name="Viber" id="Viber" />                        <input type="checkbox" value="1" name="status_Viber" id="status_Viber" />Надсилати повідомлення на цей мессенджер                             
+                            </div>
+                                 <div class="row">
+                    
+                        <label>WhatsApp</label>                        <input type="text" value="<?php echo $messagesModel->_whatsapp;?>" name="whatsapp" id="Viber" />                        <input type="checkbox" value="1" name="status_Viber" id="status_Viber" />Надсилати повідомлення на цей мессенджер                             
+                            </div>
+                      
+                           <div class="row">
+                    
+                        <label>Twitter</label>                        <input type="text" value="<?php echo $messagesModel->_twitter;?>" name="twitter" id="twitter" />                        <input type="checkbox" value="1" name="status_Viber" id="status_Viber" />Надсилати повідомлення на цей мессенджер                             
+                            </div>
+                      
                              <?php
-                            }
+                          
                     echo CHtml::endForm(); 
              ?>
               </div>

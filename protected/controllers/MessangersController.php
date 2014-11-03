@@ -16,6 +16,8 @@ class MessangersController extends Controller
 		return array(
 			'userGroupsAccessControl', // perform access control for CRUD operations
 		);
+		
+		
 	}
 
 	/**
