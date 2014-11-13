@@ -27,7 +27,13 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			<div class="r">
 				<div class="add-by-user">
 					<span><?php echo Yii::t('template', 'DEFECT_ADDEDBY')?></span>
-					<?php echo CHtml::link(CHtml::encode($hole->user->getParam('showFullname') ? $hole->user->Fullname : $hole->user->username), array('/profile/view', 'id'=>$hole->user->id),array('class'=>""));?>
+					<?php $fullName = null; 
+                                         if ($hole->user != null ) { // иногда бывает так, что пользователя у ямы нет почему-то: пользователь удалился, а его ямы остались.
+						$fullName = $hole->user->getParam('showFullname') ? $hole->user->Fullname : $hole->user->username;
+					 } else {
+ 						$fullName = "The hole has no owner ...";
+					 }
+                                         echo CHtml::link(CHtml::encode($fullName), array('/profile/view', 'id'=>$hole->user->id),array('class'=>""));?>
 				</div>
 				<div class="control">
 					<!-- RIGHT PANEL -->

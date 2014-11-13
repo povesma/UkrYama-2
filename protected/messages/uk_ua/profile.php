@@ -37,7 +37,7 @@ return array(
    'PROFILE_MAIN' => 'Основне',
    'PROFILE_CHANGE_PASS' => 'Змінити пароль',
    'PROFILE_SECURE' => 'Налаштування безпеки',
-   'PROFILE_MESSAGERS' => 'Налаштування повідомленнь',
+   'PROFILE_MESSAGERS' => 'Налаштування повідомлень',
    
     //
     
