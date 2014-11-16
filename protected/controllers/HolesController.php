@@ -1,4 +1,4 @@
-<?php
+7<?php
 
 class HolesController extends Controller
 {
@@ -678,7 +678,7 @@ class HolesController extends Controller
 		));
 	}
 	
-	public function actionModerate($id)
+	public function actionModerate($id) // на первый взгляд оооочень корявая и неоптимальная функция
 	{
 		if (!isset($_GET['PREMODERATE_ALL'])){
 			$model=$this->loadModel($id);
@@ -690,12 +690,14 @@ class HolesController extends Controller
 						if ($model->ROAD_TYPE == 'highway') {
 							$this->sendMailToUkrautodor($model);
 						}
+						$this->sendMessage($model, "moderated", $this->user);
 					}
 				}else{
 					if ($model->update()) {
 						if ($model->ROAD_TYPE == 'highway') {
 							$this->sendMailToUkrautodor($model);
 						}
+						$this->sendMessage($model, "moderated", $this->user);
 						$this->redirect($_SERVER['HTTP_REFERER']);
 					}
 				}
@@ -714,6 +716,7 @@ class HolesController extends Controller
 					if ($model->ROAD_TYPE == 'highway') {
 						$this->sendMailToUkrautodor($model);
 					}
+					$this->sendMessage($model, "moderated", $this->user);
 					$ok++;
 				}
 			}
@@ -1219,4 +1222,37 @@ class HolesController extends Controller
 
 		return mail(Yii::app()->params['ukrautodorEmail'], 'УкрЯма: добавлена яма', $mailbody, $headers);
 	}
+
+	/**
+	 * Sends event notification to the User
+	 */
+	protected function sendMessage($hole, $event, $user)
+	{
+		$headers = "MIME-Version: 1.0\r\nFrom: " . Yii::app()->params['adminEmail'] . "\r\nReply-To: " . Yii::app()->params['adminEmail'] . "\r\nContent-Type: text/html; charset=utf-8";
+		Yii::app()->request->baseUrl = Yii::app()->request->hostInfo;
+
+		$mailbody = "";
+		$subj = "Empty - Unknown";
+		$email = ''; // Yii::app()->params['moderatorEmail'];
+		switch(strtolower($event)){
+			case "add": // добавлена яма. Нужно уведомить модератора
+				{
+				   $subj = 'УкрЯма: добавлена яма';
+				}
+			case "moderated": // ям отмодерирована. Нужно уведомить пользователя и предложить отправить по почте или заплатить
+				{
+				  $mailbody = $this->renderPartial(
+				   'application.views.ugmail.moderated',
+	   	  		   Array( 'model' => $hole, ), true);
+				   $email = $hole->user->email;
+				   $subj = 'УкрЯма: яма опублікована';
+
+				}
+		}
+
+		if ($email != '') {
+			return mail($email, $subj, $mailbody, $headers);
+		}
+	}
+
 }
