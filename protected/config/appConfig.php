@@ -74,6 +74,8 @@ $socials=array( // You can change the providers and their classes.
 
 $params=array(
     //------------------------------------------------------------------------//
+	    // payment notification email
+	    'paymentEmail'=>'info@ukryama.com', 
     	    // Set the admin's and moder's messangers UINs.
    
             // Set the admin's messangers

@@ -193,7 +193,7 @@ class PaymentsController extends Controller
         $model->currency = $_POST['currency'];
         // Імейл адміну якщо платіж прийшов і успішно збережений у БД
         if($model->save()) {
-        mail(Yii::app()->params['adminEmail'], Yii::t('template', 'EMAIL_ADMIN_PAYMANT_ADD_TITLE'), Yii::t('template', 'EMAIL_ADMIN_PAYMANT_ADD_TEXT'));
+        	mail(Yii::app()->params['paymentEmail'], Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TITLE'), Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TEXT'));
         }
 }
 /*
