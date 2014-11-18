@@ -24,10 +24,10 @@ $this->pageTitle=Yii::app()->name . ' :: '.$this->title;
 		<!-- Дата исправления -->
 		<div class="f clearfix">
 		<?php echo $form->labelEx($fixmodel,'date_fix'); ?>
-      <?php echo CHtml::textField('fixdate', date(C_DATEFORMAT, $fixmodel->date_fix)); ?>
+      <?php echo CHtml::textField('fixdate', date('d.m.Y')); ?>
 		<?php echo $form->error($fixmodel,'date_fix'); ?>
 		</div>
-      <script> $('#fixdate').datepicker({dateFormat: '<?php  echo C_DATEFORMAT_JS ?>'});</script>
+      <script> $('#fixdate').datepicker({dateFormat: 'dd.mm.yy'});</script>
             
 		<!-- фотки -->
 		<div class="f clearfix">

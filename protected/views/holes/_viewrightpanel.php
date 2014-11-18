@@ -44,17 +44,17 @@ $(window).keydown(function(e){
 	$requests=$hole->requests_user;
 	$status=0;
 	$req=false;
-	if(count($requests)>0){ // по крайней мере один запрос был
+	if(count($requests)>0){ // РїРѕ РєСЂР°Р№РЅРµР№ РјРµСЂРµ РѕРґРёРЅ Р·Р°РїСЂРѕСЃ Р±С‹Р»
 		$req=$requests[count($requests)-1];
-		if($req->answer){ // получен ответ на запрос
+		if($req->answer){ // РїРѕР»СѓС‡РµРЅ РѕС‚РІРµС‚ РЅР° Р·Р°РїСЂРѕСЃ
 			$answ=$req->answer;
 			$status=2;
-		}else{  // ответ не получен
+		}else{  // РѕС‚РІРµС‚ РЅРµ РїРѕР»СѓС‡РµРЅ
 			$status=1;
 		}
 	}
 
-	if($status!=1){ // или не отправлено, или отправлено и получен ответ
+	if($status!=1){ // РёР»Рё РЅРµ РѕС‚РїСЂР°РІР»РµРЅРѕ, РёР»Рё РѕС‚РїСЂР°РІР»РµРЅРѕ Рё РїРѕР»СѓС‡РµРЅ РѕС‚РІРµС‚
 	?>
          		<div class="lc">
        			<a href="#" onclick="var c=document.getElementById('pdf_form');if(c){c.style.display=c.style.display=='block'?'none':'block';c.focus()}return false;" class="button"><?= Yii::t('holes_view', 'PRINT_CLAIM') ?></a>
@@ -63,10 +63,10 @@ $(window).keydown(function(e){
 			<a href="#" onclick="var c=document.getElementById('pdf_form');if(c){c.style.display=c.style.display=='block'?'none':'block';}return false;" class="close">&times;</a>
 			<div id="gibdd_form"></div>
         <?php
-		if($status==0){ // запрос не отправлялся
-			$this->renderPartial('_form_request', array('hole'=>$hole, "first"=>1)); // 1 - первичный запрос
-		}elseif($status==2){ // получен ответ на запрос
-			$this->renderPartial('_form_request', array('hole'=>$hole, "first"=>31,'req'=>$req, 'answ'=>$answ)); // 31 - ответ с нарушением, жалоба в высший орган
+		if($status==0){ // Р·Р°РїСЂРѕСЃ РЅРµ РѕС‚РїСЂР°РІР»СЏР»СЃСЏ
+			$this->renderPartial('_form_request', array('hole'=>$hole, "first"=>1)); // 1 - РїРµСЂРІРёС‡РЅС‹Р№ Р·Р°РїСЂРѕСЃ
+		}elseif($status==2){ // РїРѕР»СѓС‡РµРЅ РѕС‚РІРµС‚ РЅР° Р·Р°РїСЂРѕСЃ
+			$this->renderPartial('_form_request', array('hole'=>$hole, "first"=>31,'req'=>$req, 'answ'=>$answ)); // 31 - РѕС‚РІРµС‚ СЃ РЅР°СЂСѓС€РµРЅРёРµРј, Р¶Р°Р»РѕР±Р° РІ РІС‹СЃС€РёР№ РѕСЂРіР°РЅ
 		}
 	?>
 		</div>
@@ -81,8 +81,14 @@ $(window).keydown(function(e){
 					</div>
 	<?php endif;
 
-	}else{ // отправлено, ответа не получено
-           if ($hole->daysWaitPast()<0) { // просрочено
+	}else{ // РѕС‚РїСЂР°РІР»РµРЅРѕ, РѕС‚РІРµС‚Р° РЅРµ РїРѕР»СѓС‡РµРЅРѕ
+	         ?>
+					<div class="cc">
+						<p><?php echo Yii::t('holes_view', 'INFO_IF_DEFECT_FIXED') ?></p>
+						<p><?php echo CHtml::link(Yii::t('holes_view', 'SET_AS_FIXED'), array('fix', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
+					</div>
+	    <?php
+           if ($hole->daysWaitPast()<0) { // РїСЂРѕСЃСЂРѕС‡РµРЅРѕ
 		?>
          		<div class="lc">
        			<a href="#" onclick="var c=document.getElementById('pdf_form');if(c){c.style.display=c.style.display=='block'?'none':'block';c.focus()}return false;" class="button"><?= Yii::t('holes_view', 'MISSED_ANSWER_CLAIM') ?></a>
@@ -91,7 +97,7 @@ $(window).keydown(function(e){
 			<a href="#" onclick="var c=document.getElementById('pdf_form');if(c){c.style.display=c.style.display=='block'?'none':'block';}return false;" class="close">&times;</a>
 			<div id="gibdd_form"></div>
         	<?php
-			$this->renderPartial('_form_request', array('hole'=>$hole, "first"=>30,'req'=>$req, 'past'=> $hole->daysWaitPast())); // 31 - ответ не получен в срок, жалоба в высший орган
+			$this->renderPartial('_form_request', array('hole'=>$hole, "first"=>30,'req'=>$req, 'past'=> $hole->daysWaitPast())); // 31 - РѕС‚РІРµС‚ РЅРµ РїРѕР»СѓС‡РµРЅ РІ СЃСЂРѕРє, Р¶Р°Р»РѕР±Р° РІ РІС‹СЃС€РёР№ РѕСЂРіР°РЅ
 		?>
 		</div> <?php
 	   } else {

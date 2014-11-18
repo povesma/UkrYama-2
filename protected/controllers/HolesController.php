@@ -1,4 +1,4 @@
-7<?php
+<?php
 
 class HolesController extends Controller
 {

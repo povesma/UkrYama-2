@@ -80,7 +80,7 @@ $usermodel=Yii::app()->user->userModel;
 <table id="ua_form"">
 <tr><td>
 <label><?=Yii::t('holes_view', 'HOLE_REQUEST_FORM_DEFECT_TYPE',array(),null,'uk_ua')?></label></td>
-<td><?= $mytype['ua']->name." <b>[".$first."]</b>";?>
+<td><?= $mytype['ua']->name;?>
 </td></tr>
 <tr><td>
 <label><?=Yii::t('holes_view', 'HOLE_REQUEST_FORM_AUTHORITY',array(),null,'uk_ua')?></label>
