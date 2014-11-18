@@ -122,12 +122,11 @@ function initialize() {
 									  if ($deliv->status == 1) { // якщо нарешті доставлено - інформуємо користувача.  Цей цикл треба в крон поставити 4 рази на добу, наприклад
                                                                                // власнику ями і адміну. У адміна окремого аккаунта немає, тому тут хардкод на користувача №228
                                                                                
-									       $msg = $this->renderPartial('application.views.ugmail.delivered',
+									       $mesg1 = $this->renderPartial('application.views.ugmail.delivered',
 						   	  		      Array( 'model' => $hole, 'deliv' => $deliv, 'request' => $request), true);
-                                                                               Messenger::send($request->user->id, "УкрЯма: заява доставлена ".$dt1, 
-										$msg);
-                                                                               Messenger::send(228, "УкрЯма: заява доставлена ".$dt1, 
-										$msg);
+                                                                               Messenger::send($request->user->id, "УкрЯма: заява доставлена ", 
+										$mesg1);
+                                                                               Messenger::send(228, "УкрЯма: заява доставлена ", $mesg1);
 									  }
 									} 
 

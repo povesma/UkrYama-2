@@ -42,7 +42,7 @@ class Messenger extends CComponent {
     {
         $this->_userid = $userid;
         
-        $messengerids = array(1,2,3,4,5,6); // ID месенджерів
+        $messengerids = array(1,2,3,4,5,6,7); // ID месенджерів
         
         $this->checkMessenger($messengerids); // Перевіряємо які месенджери є у користувача і на які можна відсидати нотифікацію
         
@@ -195,6 +195,9 @@ class Messenger extends CComponent {
                 case 6:
                     $this->_viber = $ms;
                     break;
+                case 7:
+                    $this->_vk = $ms;
+                    break;
                 default:
                     throw new CHttpException(500, 'Messengers check error');  
                     
@@ -236,7 +239,7 @@ public static function checkProf($userid)
     {
     	$this->_userid = $userid;
     
-    	$messengerids = array(1,2,3,4,5,6); // ID месенджерів
+    	$messengerids = array(1,2,3,4,5,6,7); // ID месенджерів
     
     	$this->checkMessengersProf($messengerids); // Перевіряємо які месенджери є у користувача і на які можна відсидати нотифікацію
     	
@@ -279,6 +282,10 @@ public static function checkProf($userid)
     				case 6:
     					$this->_viber = $ms->uin;
     					$this->_viber_status = $ms->status;
+    					break;
+    				case 7:
+    					$this->_vk = $ms->uin;
+    					$this->_vk_status = $ms->status;
     					break;
     				default:
     					throw new CHttpException(500, 'Messengers check error');
