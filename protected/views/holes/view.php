@@ -117,7 +117,11 @@ function initialize() {
 								$arr[] = array('name'=>CHtml::tag('b', array(), Yii::t('holes_view', 'HOLE_REQUEST_USER_TO', array('{0}'=>$request->user->getFullname(),'{1}'=>$request->$param->name))), 'date'=>Y::dateFromTime($request->date_sent));
 								$deliv=$request->req_sent;
 								if(count($deliv)){
-									if(!$deliv->status){$deliv->updateMail();}          
+									if(!$deliv->status) { // якщо статус був "не доставлено", перевіряємо, як воно зараз
+									  $deliv->updateMail();
+									  if ($deliv->status == 1) { // якщо нарешті доставлено - інформуємо користувача.  Цей цикл треба в крон поставити 4 рази на добу, наприклад
+									  }
+									} 
 
 									if($deliv->status){
 										if($deliv->status!=2){$arr[] = array('name'=>Yii::t('holes_view', 'HOLE_REQUEST_DELIVERED',array('{0}'=>$request->$param->name)), 'date'=>Y::dateFromTime($deliv->ddate));}

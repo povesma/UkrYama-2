@@ -1,6 +1,6 @@
 <?php
-/* @var $this MessangersController */
-/* @var $model Messangers */
+/* @var $this MessengersController */
+/* @var $model Messengers */
 /* @var $form CActiveForm */
 ?>
 
@@ -22,8 +22,8 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->label($model,'messanger'); ?>
-		<?php echo $form->textField($model,'messanger'); ?>
+		<?php echo $form->label($model,'messenger'); ?>
+		<?php echo $form->textField($model,'messenger'); ?>
 	</div>
 
 	<div class="row">

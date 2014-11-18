@@ -1,6 +1,6 @@
 <?php
-/* @var $this MessangersController */
-/* @var $model Messangers */
+/* @var $this MessengersController */
+/* @var $model Messengers */
 
 
 ?>
@@ -11,13 +11,13 @@
 </div><!-- search-form -->
 
 <?php $this->widget('zii.widgets.grid.CGridView', array(
-	'id'=>'messangers-grid',
+	'id'=>'messengers-grid',
 	'dataProvider'=>$model->search(),
 	'filter'=>$model,
 	'columns'=>array(
 		'id',
 		'user',
-		'messanger',
+		'messenger',
 		'uin',
 		'status',
 		array(

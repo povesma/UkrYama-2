@@ -1,13 +1,13 @@
 <?php
-/* @var $this MessangersController */
-/* @var $model Messangers */
+/* @var $this MessengersController */
+/* @var $model Messengers */
 /* @var $form CActiveForm */
 ?>
 
 <div class="form">
 
 <?php $form=$this->beginWidget('CActiveForm', array(
-	'id'=>'messangers-form',
+	'id'=>'messengers-form',
 	// Please note: When you enable ajax validation, make sure the corresponding
 	// controller action is handling ajax validation correctly.
 	// There is a call to performAjaxValidation() commented in generated controller code.
@@ -26,9 +26,9 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'messanger'); ?>
-		<?php echo $form->textField($model,'messanger'); ?>
-		<?php echo $form->error($model,'messanger'); ?>
+		<?php echo $form->labelEx($model,'messenger'); ?>
+		<?php echo $form->textField($model,'messenger'); ?>
+		<?php echo $form->error($model,'messenger'); ?>
 	</div>
 
 	<div class="row">

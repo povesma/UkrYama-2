@@ -1226,7 +1226,7 @@ class HolesController extends Controller
 	/**
 	 * Sends event notification to the User
 	 */
-	protected function sendMessage($hole, $event, $user)
+	public function sendMessage($hole, $event, $user)
 	{
 		$headers = "MIME-Version: 1.0\r\nFrom: " . Yii::app()->params['adminEmail'] . "\r\nReply-To: " . Yii::app()->params['adminEmail'] . "\r\nContent-Type: text/html; charset=utf-8";
 		Yii::app()->request->baseUrl = Yii::app()->request->hostInfo;

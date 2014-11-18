@@ -46,7 +46,12 @@ class HoleRequestSent extends CActiveRecord
 			$this->update();
 		}else{
 
+//			return 0;
+		}
+		if ($this->status != 1) { // не доставлено
 			return 0;
+		} else { // Було доставлено. інформувати користувача? тут або там, де викликається функція? Вирішив там, де викликається
+
 		}
 	}	
 }

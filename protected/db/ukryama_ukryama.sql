@@ -4332,51 +4332,51 @@ DELETE FROM `yii_jobs`;
 /*!40000 ALTER TABLE `yii_jobs` ENABLE KEYS */;
 
 
--- Dumping structure for table ukryama_ukryama.yii_messangers
-DROP TABLE IF EXISTS `yii_messangers`;
-CREATE TABLE IF NOT EXISTS `yii_messangers` (
+-- Dumping structure for table ukryama_ukryama.yii_messengers
+DROP TABLE IF EXISTS `yii_messengers`;
+CREATE TABLE IF NOT EXISTS `yii_messengers` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `user` bigint(20) DEFAULT NULL,
-  `messanger` int(10) DEFAULT NULL,
+  `messenger` int(10) DEFAULT NULL,
   `uin` varchar(50) DEFAULT NULL,
   `status` int(10) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK_yii_messangers_yii_usergroups_user` (`user`),
-  KEY `FK_yii_messangers_yii_messangers_items` (`messanger`),
-  CONSTRAINT `FK_yii_messangers_yii_messangers_items` FOREIGN KEY (`messanger`) REFERENCES `yii_messangers_items` (`id`),
-  CONSTRAINT `FK_yii_messangers_yii_usergroups_user` FOREIGN KEY (`user`) REFERENCES `yii_usergroups_user` (`id`)
+  KEY `FK_yii_messengers_yii_usergroups_user` (`user`),
+  KEY `FK_yii_messengers_yii_messengers_items` (`messenger`),
+  CONSTRAINT `FK_yii_messengers_yii_messengers_items` FOREIGN KEY (`messenger`) REFERENCES `yii_messengers_items` (`id`),
+  CONSTRAINT `FK_yii_messengers_yii_usergroups_user` FOREIGN KEY (`user`) REFERENCES `yii_usergroups_user` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COMMENT='Таблиця з налагодженням месенджерів для користувача';
 
--- Dumping data for table ukryama_ukryama.yii_messangers: ~0 rows (approximately)
-DELETE FROM `yii_messangers`;
-/*!40000 ALTER TABLE `yii_messangers` DISABLE KEYS */;
-INSERT INTO `yii_messangers` (`id`, `user`, `messanger`, `uin`, `status`) VALUES
+-- Dumping data for table ukryama_ukryama.yii_messengers: ~0 rows (approximately)
+DELETE FROM `yii_messengers`;
+/*!40000 ALTER TABLE `yii_messengers` DISABLE KEYS */;
+INSERT INTO `yii_messengers` (`id`, `user`, `messenger`, `uin`, `status`) VALUES
 	(1, 1, 4, '86565', 1),
 	(2, 1, 6, '+380978486092', 0),
 	(3, 2, 2, 'ugilguiuig', 1),
 	(4, NULL, 4, '2345235', NULL);
-/*!40000 ALTER TABLE `yii_messangers` ENABLE KEYS */;
+/*!40000 ALTER TABLE `yii_messengers` ENABLE KEYS */;
 
 
--- Dumping structure for table ukryama_ukryama.yii_messangers_items
-DROP TABLE IF EXISTS `yii_messangers_items`;
-CREATE TABLE IF NOT EXISTS `yii_messangers_items` (
+-- Dumping structure for table ukryama_ukryama.yii_messengers_items
+DROP TABLE IF EXISTS `yii_messengers_items`;
+CREATE TABLE IF NOT EXISTS `yii_messengers_items` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COMMENT='Довідник месенджерів';
 
--- Dumping data for table ukryama_ukryama.yii_messangers_items: ~6 rows (approximately)
-DELETE FROM `yii_messangers_items`;
-/*!40000 ALTER TABLE `yii_messangers_items` DISABLE KEYS */;
-INSERT INTO `yii_messangers_items` (`id`, `name`) VALUES
+-- Dumping data for table ukryama_ukryama.yii_messengers_items: ~6 rows (approximately)
+DELETE FROM `yii_messengers_items`;
+/*!40000 ALTER TABLE `yii_messengers_items` DISABLE KEYS */;
+INSERT INTO `yii_messengers_items` (`id`, `name`) VALUES
 	(1, 'Email'),
 	(2, 'WhatsApp'),
 	(3, 'Telegram'),
 	(4, 'FaceBook'),
 	(5, 'Twetter'),
 	(6, 'Viber');
-/*!40000 ALTER TABLE `yii_messangers_items` ENABLE KEYS */;
+/*!40000 ALTER TABLE `yii_messengers_items` ENABLE KEYS */;
 
 
 -- Dumping structure for table ukryama_ukryama.yii_news

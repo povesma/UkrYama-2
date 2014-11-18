@@ -1,21 +1,21 @@
 <?php
-/* @var $this MessangersController */
-/* @var $model Messangers */
+/* @var $this MessengersController */
+/* @var $model Messengers */
 
 $this->breadcrumbs=array(
-	'Messangers'=>array('index'),
+	'Messengers'=>array('index'),
 	$model->id=>array('view','id'=>$model->id),
 	'Update',
 );
 
 $this->menu=array(
-	array('label'=>'List Messangers', 'url'=>array('index')),
-	array('label'=>'Create Messangers', 'url'=>array('create')),
-	array('label'=>'View Messangers', 'url'=>array('view', 'id'=>$model->id)),
-	array('label'=>'Manage Messangers', 'url'=>array('admin')),
+	array('label'=>'List Messengers', 'url'=>array('index')),
+	array('label'=>'Create Messengers', 'url'=>array('create')),
+	array('label'=>'View Messengers', 'url'=>array('view', 'id'=>$model->id)),
+	array('label'=>'Manage Messengers', 'url'=>array('admin')),
 );
 ?>
 
-<h1>Update Messangers <?php echo $model->id; ?></h1>
+<h1>Update Messengers <?php echo $model->id; ?></h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>

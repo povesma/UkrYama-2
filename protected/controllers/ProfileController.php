@@ -40,9 +40,9 @@ class ProfileController extends Controller
 		$id=Yii::app()->user->id;
 		$miscModel=$this->loadModel($id, 'changeMisc');
 		$passModel= clone $miscModel;
-                		$CreateMesModel=new Messangers;
+                		$CreateMesModel=new Messengers;
 
-                 $messagesModel = Messanger::checkProf(Yii::app()->user->id);
+                 $messagesModel = Messenger::checkProf(Yii::app()->user->id);
                // var_dump($messagesModel);
 		$passModel->setScenario('changePassword');
 		$passModel->password = NULL;		

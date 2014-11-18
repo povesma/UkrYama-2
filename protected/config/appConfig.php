@@ -76,9 +76,9 @@ $params=array(
     //------------------------------------------------------------------------//
 	    // payment notification email
 	    'paymentEmail'=>'info@ukryama.com', 
-    	    // Set the admin's and moder's messangers UINs.
+    	    // Set the admin's and moder's messengers UINs.
    
-            // Set the admin's messangers
+            // Set the admin's messengers
     	    'adminEmail'=>'info@ukryama.com',
             'adminViber' => '',
             'adminVelegram' => '',
@@ -90,7 +90,7 @@ $params=array(
             // Activate the moderator role
             'enableModeratorRole' => false,
     
-            // Set the moderator's messangers
+            // Set the moderator's messengers
             'moderatorEmail' => 'moder@ukryama.com',
             'moderatorViber' => '',
             'moderatorTelegram' => '',
@@ -122,9 +122,9 @@ $params=array(
             'google_maps_api' => 'AIzaSyCTK4y073bUzvq0EGMPKskM57-3aN9JnsE', // Store here your own API-KEY. Get it on https://developers.google.com/maps/
             'google_maps_api_server' => 'AIzaSyCTK4y073bUzvq0EGMPKskM57-3aN9JnsE', // Server GoogleMap API-key
     
-            // Messages configuration. Please, set state to TRUE if you want use same messanger in system.
+            // Messages configuration. Please, set state to TRUE if you want use same messenger in system.
             
-            // Set core messangers state for
+            // Set core messengers state for
             'email' => false,
             'viber' => false,
             'telegram' => true,
