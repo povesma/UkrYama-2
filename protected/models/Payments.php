@@ -54,6 +54,7 @@ class Payments extends CActiveRecord
 	{
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
+                // Прямо сейчас в таблице плательщиков нет указания на пользователя. Нужно его сделать. Что возвращается в колбеке от платежной системы?
 		return array(
 			'user' => array(self::BELONGS_TO, 'UsergroupsUser', 'user_id'),
 		);

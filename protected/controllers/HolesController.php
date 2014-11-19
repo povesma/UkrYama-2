@@ -359,7 +359,15 @@ class HolesController extends Controller
 //				$answer->request_id=$req->id;
 				$answer->request_id=$_POST['req_id'];
 //			}else{return false;}
-			if($answer->save()){
+			if($answer->save()){ // Успішно зберегли відповідь
+				// повідомляемо зацікавленним, що завантажена відповідь:
+				$admin_id = 228;	
+				$owner_id = $hole->user->id; // власник ями. Тут би ще з'ясувати відправника, бо лише відправник може завантажувати, аби йому не відправляти
+			       $mesg1 = $this->renderPartial('application.views.ugmail.answer',
+   	  		      Array( 'model' => $hole,), true);
+                               Messenger::send($admin_id, "УкрЯма: завантажена відповідь", $mesg1);
+                               Messenger::send($owner_id, "УкрЯма: завантажена відповідь", $mesg1);
+				// переадресовуємо на сторінку
 				$this->redirect(array('view','id'=>$hole->ID));
 			}
 		}
@@ -820,6 +828,13 @@ class HolesController extends Controller
 				$hrs->status=0;
 			}
 			$hrs->save();
+			$admin_id = 228;
+			$owner_id = $model->user->id; // власник ями. Тут би ще з'ясувати відправника, бо лише відправник може завантажувати, аби йому не відправляти
+			$mesg1 = $this->renderPartial('application.views.ugmail.sent-request',
+   	  		      Array( 'model' => $model, 'request' => $model->request_last), true);
+                               Messenger::send($admin_id, "УкрЯма: скарга відправлена", $mesg1);
+                               Messenger::send($owner_id, "УкрЯма: скарга відправлена", $mesg1);
+
 		}
 			if(!isset($_GET['ajax']))
 				$this->redirect(array('view','id'=>$model->ID));

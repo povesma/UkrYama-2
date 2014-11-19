@@ -126,8 +126,11 @@ class Holes extends CActiveRecord
 			'not_sent'=>array(self::HAS_MANY, 'HoleRequests', 'hole_id','condition'=>'not_sent.id is null and DATE(FROM_UNIXTIME(`date_created`)) < (curdate() - interval 3 day)'),
 
 			'request_sent'=>array(self::HAS_MANY, 'HoleRequestSent', 'hole_id','order'=>'request_sent.ddate ASC'),
+			'last_request_sent'=>array(self::HAS_ONE, 'HoleRequestSent', 'hole_id','order'=>'request_sent.ddate DESC'),
 			'requests_user'=>array(self::HAS_MANY, 'HoleRequests', 'hole_id', 'condition'=>'requests_user.user_id='.Yii::app()->user->id,'order'=>'requests_user.id ASC'),
 			'requests'=>array(self::HAS_MANY, 'HoleRequests', 'hole_id', 'order'=>'requests.id ASC'),
+			'request_last'=>array(self::HAS_ONE, 'HoleRequests', 'hole_id', 'order'=>'request_last.id DESC'),
+			'payments'=>array(self::HAS_MANY, 'Payments', 'hole_id', 'condition' => 'status = "success"', 'order'=>'payments.id ASC'),
 
 			'fixeds'=>array(self::HAS_MANY, 'HoleFixeds', 'hole_id','order'=>'fixeds.date_fix DESC'),
 			'user_fix'=>array(self::HAS_ONE, 'HoleFixeds', 'hole_id', 'condition'=>'user_fix.user_id='.Yii::app()->user->id),

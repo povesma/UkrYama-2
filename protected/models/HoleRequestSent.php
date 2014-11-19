@@ -7,7 +7,7 @@ class HoleRequestSent extends CActiveRecord
 	}
 	public function relations(){
 		return array(
-			'user'=>array(self::BELONGS_TO, 'Hole', 'hole_id'),
+			'hole'=>array(self::BELONGS_TO, 'Hole', 'hole_id'),
 			'user'=>array(self::BELONGS_TO, 'UserGroupsUser', 'user_id'),
 		);
 	}

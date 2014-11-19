@@ -38,14 +38,17 @@ class Messenger extends CComponent {
     public $_instagram_status;
     
     // Єдина строчка відсилання нотифікації для усього сайту (Messenger::send($userid, $subject, $message)) 
-    public function condence($userid, $message, $subject = NULL)
+    public function condence($userid, $subject = NULL, $message)
     {
         $this->_userid = $userid;
         
         $messengerids = array(1,2,3,4,5,6,7); // ID месенджерів
         
         $this->checkMessenger($messengerids); // Перевіряємо які месенджери є у користувача і на які можна відсидати нотифікацію
+        $prm = Yii::app()->params['email'];
         
+        if(Yii::app()->params['email']) $this->email($subject, $message);
+
         if(Yii::app()->params['facebook']) $this->facebook($message);
         
         if(Yii::app()->params['viber']) $this->viber($message);
@@ -58,19 +61,20 @@ class Messenger extends CComponent {
         
         if(Yii::app()->params['instagram']) $this->instagram($message);
         
-        if(Yii::app()->params['email']) $this->email($subject, $message);
-        
     }
     
     // Відправляємо мило користувачу
     protected function email($subject, $message)
     {
-       $headers = "MIME-Version: 1.0\r\nFrom: " . Yii::app()->params['adminEmail'] . "\r\nReply-To: " . Yii::app()->params['adminEmail'] . "\r\nContent-Type: text/html; charset=utf-8";
-       Yii::app()->request->baseUrl = Yii::app()->request->hostInfo;
+	$headers = "MIME-Version: 1.0\r\nFrom: " . Yii::app()->params['adminEmail'] . "\r\nReply-To: " . Yii::app()->params['adminEmail'] . "\r\nContent-Type: text/html; charset=utf-8";
+//	Yii::app()->request->baseUrl = Yii::app()->request->hostInfo;
 
-       if($subject === NULL) $subject = "Від УкрЯми: повідомлення";
-       mail($this->_email->uin, $subject, $message, $headers); 
-      
+	if($subject === NULL) $subject = "Від УкрЯми: повідомлення";
+	$d1 = date('Y-m-d H:i:s');
+	error_log ($d1.": Mail to send: ".$this->_email->uin." <- ".$subject."\n", 3, "php-log.log");
+	$res = mail($this->_email->uin, $subject, $message, $headers);
+	error_log ("Send result: ".$res."\n", 3, "php-log.log");
+                                                   
     }
     
     // Відправляємо повідомлення користувачу в Фейсбук
@@ -176,6 +180,7 @@ class Messenger extends CComponent {
                                        array('user_id'=> $this->_userid, 'messengerID'=>$m));
          if($ms) 
          {
+          $sms = $ms->uin;
           switch ($m){
                 case 1:
                     $this->_email = $ms;
@@ -199,26 +204,28 @@ class Messenger extends CComponent {
                     $this->_vk = $ms;
                     break;
                 default:
+		    error_log ("Inapproprite messengerID: ".$m."\n", 3, "php-log.log");
                     throw new CHttpException(500, 'Messengers check error');  
                     
                     }
-            }
+            } else {
+	    }
     
         }
     }
 
     /**
      * Користувацька функція, що обробляє запит на відправку повідомлення
-     * Працює в любому місці сайту і викликається ось так:  Messenger::send(ID користувача, "Текст повідомлення", "Тема повідомлення або без теми");
+     * Працює в любому місці сайту і викликається ось так:  Messenger::send(ID користувача, "Тема повідомлення або без теми", "Текст повідомлення");
      * @param int $userid
-     * @param string $message
      * @param string $subject
+     * @param string $message
      */
     
-    public static function send($userid, $message, $subject = NULL)
+    public static function send($userid, $subject = NULL, $message)
     {
     	$mod = new Messenger;
-    	$mod->condence($userid, $message, $subject);
+    	$mod->condence($userid, $subject, $message);
     
     }
     

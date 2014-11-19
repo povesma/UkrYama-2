@@ -101,9 +101,9 @@ function initialize() {
 					<p class="status">
                                             
 	   					<span class="bull <?= $hole->STATE ?>">&bull;</span><b><?=CHtml::encode($hole->StateName)?></b><br />
-                                               <?php if($pays and $userGroup->level)
+                                               <?php if($pays and $userGroup->level>50)
                                                 {?>
-                                                <span class="money"></span><b>Оплачено.</b> Сума: <?php echo $pays->amount; if($currency == 'UAH') { echo 'грн.'; } else { echo '$'; }?> Дата: <?php echo $pays->date; } ?> 
+                                                <span class="money"></span><b>Оплачено.</b> Сума: <?php echo $pays->amount; if($pays->currency == 'UAH') { echo 'грн.'; } else { echo '$'; }?> Дата: <?php echo $pays->date; } ?> 
                                                 
 						<?php
 							$arr[] = array('name'=>CHtml::tag('b', array(), Yii::t('holes_view', 'HOLE_CREATED_INFO')));
@@ -121,18 +121,34 @@ function initialize() {
 									  $deliv->updateMail();
 									  if ($deliv->status == 1) { // якщо нарешті доставлено - інформуємо користувача.  Цей цикл треба в крон поставити 4 рази на добу, наприклад
                                                                                // власнику ями і адміну. У адміна окремого аккаунта немає, тому тут хардкод на користувача №228
-                                                                               
+                                                                               // ще треба тому, хто заплатив за яму і тому, что реально відправив
+                                                                               $owner_id = $hole->user->id;
+                                                                               $sender_id = $request->user->id;
+                                                                               $payer_id = $hole->payments->user_id;
+                                                                               $admin_id = 228;
+                                                                               error_log("IDs: Owner: ".$owner_id.", sender: ".$sender_id.", payer: ".$payer_id, 3, "php-log.log");
+                                                                               // оставляем только уникальных (тут все неправильно, нужно сделать метод getHoleRelatedUsers (hole_id) [], которая будет отдавать массив всех связанных
+                                                                               if ($owner_id == $sender_id) $sender_id =0;
+									       if ($owner_id == $payer_id) $payer_id =0;
+									       if ($owner_id == $admin_id) $admin_id =0;
+									       if ($sender_id == $admin_id) $admin_id =0;
+									       if ($sender_id == $payer_id) $payer_id =0;
+									       if ($admin_id == $payer_id) $payer_id =0;
 									       $mesg1 = $this->renderPartial('application.views.ugmail.delivered',
 						   	  		      Array( 'model' => $hole, 'deliv' => $deliv, 'request' => $request), true);
-                                                                               Messenger::send($request->user->id, "УкрЯма: заява доставлена ", 
-										$mesg1);
-                                                                               Messenger::send(228, "УкрЯма: заява доставлена ", $mesg1);
+
+                                                                               Messenger::send($admin_id, "УкрЯма: заява доставлена", $mesg1);
+                                                                               Messenger::send($sender_id, "УкрЯма: заява доставлена", $mesg1);
+                                                                               Messenger::send($payer_id, "УкрЯма: заява доставлена", $mesg1);
+                                                                               Messenger::send($owner_id, "УкрЯма: заява доставлена", $mesg1);
 									  }
 									} 
 
-									if($deliv->status){
-										if($deliv->status!=2){$arr[] = array('name'=>Yii::t('holes_view', 'HOLE_REQUEST_DELIVERED',array('{0}'=>$request->$param->name)), 'date'=>Y::dateFromTime($deliv->ddate));}
-									}else{
+									if($deliv->status){ // якщо доставлено
+										if($deliv->status!=2) { // і статус не 2 (тобто відправлено, і відповідь отримана)
+										  $arr[] = array('name'=>Yii::t('holes_view', 'HOLE_REQUEST_DELIVERED',array('{0}'=>$request->$param->name)), 'date'=>Y::dateFromTime($deliv->ddate));
+										}
+									}else{ // пишемо, що недоставлено
 										if(strlen($deliv->status)){$arr[] = array('name'=>Yii::t('holes_view', 'HOLE_REQUEST_DELIVERDATE',array('{0}'=>$request->$param->name)), 'date'=>Yii::t('holes_view', 'HOLE_REQUEST_NOTDELIVERED'));}
 									}
 								}

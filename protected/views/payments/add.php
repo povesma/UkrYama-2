@@ -7,8 +7,10 @@ $this->layout='//layouts/header_blank';
 echo Yii::t("template","PAYD_INTRO").'<br /><br />';
 foreach($holes as $hole)
 {
-echo Yii::t("template","PAYD_CHECK").'(<a href="/holes/update/'.$hole->ID.'">'.Yii::t("template","PAYD_UPDATE").'</a>)<br /><br />';
 
+if ($hole->USER_ID == $this->user->id || Yii::app()->user->level >=50) {
+  echo Yii::t("template","PAYD_CHECK").'(<a href="/holes/update/'.$hole->ID.'">'.Yii::t("template","PAYD_UPDATE").'</a>)<br /><br />';
+}                                               
 echo Yii::t("template","PAYD_ADDRESS").' '.$hole->ADDRESS.'<br /><br />';
 
 echo Yii::t("template","PAYD_COMMENT").' '.$hole->COMMENT1.'<br /><br />';

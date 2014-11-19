@@ -10,7 +10,7 @@ $param="auth_".Yii::app()->user->getLanguage();
 
 $answer = new HoleAnswers;
 ?>
-<script src="http://newtest.ukryama.com/js/highlight.js"></script>
+<script src="http://ukryama.com/js/highlight.js"></script>
 <script>
 function validate(form){
 		x = filez;

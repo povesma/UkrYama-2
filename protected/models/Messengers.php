@@ -120,6 +120,9 @@ class Messengers extends CActiveRecord
                 case 6:
                     $this->_viber = $ms;
                     break;
+                case 7:
+                    $this->_vk = $ms;
+                    break;
                 default:
                     throw new CHttpException(500, 'Messengers check error');  
                     
