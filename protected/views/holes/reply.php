@@ -3,7 +3,7 @@ $requests=$hole->requests_user;
 if(count($requests)>0){
 	$req=$requests[count($requests)-1];
 }
-$param="auth_".Yii::app()->user->getLanguage();
+$param="auth_ua"; // тут треба правильно визначити мову, поки - чарівна та солов'їна. Yii::app()->user->getLanguage();
 //$this->title = Yii::t('holes_view', 'HOLE_REPLY').$req->$param->name;
 //$this->pageTitle=Yii::app()->name . ' :: '.$this->title;
 

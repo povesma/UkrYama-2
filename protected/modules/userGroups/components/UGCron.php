@@ -426,6 +426,7 @@ class UGCJGarbageCollection extends UGCronJob {
 		$criteria->compare('activation_time <', date('Y-m-d', time() - (3600 * 24 * 7)).' 00:00:00');
 		// do not delete those who have holes!
 		$criteria->compare('id not in (select distinct user_id from yii_holes) and 1', 1);
+		$criteria->compare('id not in (select distinct user from yii_messengers) and 1', 1);
 		return $criteria;
 	}
 	
