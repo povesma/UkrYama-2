@@ -178,6 +178,12 @@ class Messenger extends CComponent {
      foreach ($messengerids as $m) {
          $ms = Messengers::model()->find("user = :user_id and messenger = :messengerID and status = 1", 
                                        array('user_id'=> $this->_userid, 'messengerID'=>$m));
+         // беремо емейл зі старої таблиці користувачів
+	 $user = UserGroupsUser::model()->findByPk($this->_userid);
+	 if ($user) {
+            $this->_email = $user->email;
+	 }
+
          if($ms) 
          {
           $sms = $ms->uin;
