@@ -19,7 +19,7 @@ class HoleRequestSent extends CActiveRecord
 	public function updateMail(){
 		$id=$this->rcpt;
 		$http=new Http;
-		$url="http://services.ukrposhta.com/barcodesingle/default.aspx?ctl00%24centerContent%24scriptManager=ctl00%24centerContent%24scriptManager%7Cctl00%24centerContent%24btnFindBarcodeInfo&__EVENTTARGET=&__EVENTARGUMENT=&ctl00%24centerContent%24txtBarcode=$id&__ASYNCPOST=true&ctl00%24centerContent%24btnFindBarcodeInfo=%D0%9F%D0%BE%D1%88%D1%83%D0%BA";
+		$url="http://services.ukrposhta.ua/barcodesingle/default.aspx?ctl00%24centerContent%24scriptManager=ctl00%24centerContent%24scriptManager%7Cctl00%24centerContent%24btnFindBarcodeInfo&__EVENTTARGET=&__EVENTARGUMENT=&ctl00%24centerContent%24txtBarcode=$id&__ASYNCPOST=true&ctl00%24centerContent%24btnFindBarcodeInfo=%D0%9F%D0%BE%D1%88%D1%83%D0%BA";
 		$data= $http->http_request(array('url'=>$url, 'cookie'=>true,'redirect'=>true));
 		$page=split("\n",$data);
 		$print=0;
