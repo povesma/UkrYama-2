@@ -79,6 +79,18 @@ $(window).keydown(function(e){
 						<p><?php echo Yii::t('holes_view', 'INFO_IF_DEFECT_FIXED') ?></p>
 						<p><?php echo CHtml::link(Yii::t('holes_view', 'SET_AS_FIXED'), array('fix', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
 					</div>
+		<!-- кнопка для жалобы на незаконный ответ. TODO: Не показывать, если после загрузки ответа прошло более 30 дней. -->
+         		<div class="lc2">
+       			<a href="#" onclick="var c=document.getElementById('pdf_form');if(c){c.style.display=c.style.display=='block'?'none':'block';c.focus()}return false;" class="button"><?= Yii::t('holes_view', 'ILLEGAL_FORWARD_CLAIM') ?></a>
+         		</div><br />
+		<div class="pdf_form" id="pdf_form_fw"<?= isset($_GET['show_pdf_form']) ? ' style="display: block;"' : '' ?>>
+			<a href="#" onclick="var c=document.getElementById('pdf_form_fw');if(c){c.style.display=c.style.display=='block'?'none':'block';}return false;" class="close">&times;</a>
+<!--			<div id="gibdd_form"></div> -->
+        	<?php
+			$this->renderPartial('_form_request', array('hole'=>$hole, 'first'=>32,'req'=>$req, 'past'=> $hole->daysWaitPast())); // 32 - неправомерно переслали, жалоба в высший орган
+		?>
+		</div>
+
 	<?php endif;
 
 	}else{ // отправлено, ответа не получено
@@ -97,7 +109,7 @@ $(window).keydown(function(e){
 			<a href="#" onclick="var c=document.getElementById('pdf_form');if(c){c.style.display=c.style.display=='block'?'none':'block';}return false;" class="close">&times;</a>
 			<div id="gibdd_form"></div>
         	<?php
-			$this->renderPartial('_form_request', array('hole'=>$hole, "first"=>30,'req'=>$req, 'past'=> $hole->daysWaitPast())); // 31 - ответ не получен в срок, жалоба в высший орган
+			$this->renderPartial('_form_request', array('hole'=>$hole, "first"=>30,'req'=>$req, 'past'=> $hole->daysWaitPast())); // 30 - ответ не получен в срок, жалоба в высший орган
 		?>
 		</div> <?php
 	   } else {

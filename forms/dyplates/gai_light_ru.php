@@ -6,7 +6,7 @@
 <table>
 <tr>
 	<td></td>
-	<td class="head" colspan=2><p>Кому <?= $to_name ?><br>Куда <?= $to_address ?><br>От <?= $from_name ?><br>Адрес <?= $from_address ?></p></td>
+	<td class="head" colspan=2><p>Кому: <?= $to_name ?><br>Куда: <?= $to_address ?><br>От: <?= $from_name ?><br>Адрес: <?= $from_address ?></p></td>
 </tr>
 <tr>
 <td class="ref"><div class="ref">Исх. №<?= $ref ?> от <?= $date ?> г.</div></td><td>&nbsp;</td>
@@ -51,7 +51,7 @@
 </tr>
 <tr><td colspan=2 class="v-spacer"></td></tr>
 <?php if($c_photos): ?>
-<tr><td class="attach">Приложение: <?= $c_photos ?> фотографии</td></tr>
+<tr><td class="attach">Приложение: <?= $c_photos ?> фото</td></tr>
 <?php endif;?>
 </table>
 <?php if($c_photos): ?>

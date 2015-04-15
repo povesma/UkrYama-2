@@ -514,6 +514,9 @@ class HolesController extends Controller
 		$to_index=$_POST[$lang.'_to_index'];
 		$from=$_POST[$lang.'_from'];
 		$postaddress=$_POST[$lang.'_postaddress'];
+		$response_from=$_POST[$lang.'_response_from'];
+		$response_date=$_POST[$lang.'_response_date'];
+		$forward_to=$_POST[$lang.'_forward_to'];
 		$signature=$_POST[$lang.'_signature'];
 
 		$model=$this->loadModel($id);

@@ -1,0 +1,42 @@
+.head{
+	float:right;
+	width:500px;
+
+}
+table td{
+}
+.v-spacer{
+	height:50px;
+}
+.smv-spacer{
+	height:20px;
+}
+.mdv-spacer{
+	height:200px;
+}
+.title{
+	text-align:center;
+	font-size:24px;
+	font-weight:bold;
+}
+table{
+	width:1000px;
+	margin-left:50px;
+	margin-right:50px;
+
+}
+.a-body{
+}
+.date{
+	margin-left:50px;
+	font-weight:bold;
+	width:500px;
+	float:left;
+}
+.init{
+	font-weight:bold;
+	text-align:right;
+}
+.ref{
+	float:left;
+}
