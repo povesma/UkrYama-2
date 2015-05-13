@@ -108,7 +108,7 @@ $params=array(
     	    // Add a page name title (string)
  	    'langtitle' => 'УкрЯма - ',   
   	    'ukrautodorEmail' => 'povesma@gmail.com', // on live site should be ukryama@ukravtodor.gov.ua
-            
+            'saiEmail' => 'povesma@gmail.com', // on live site should be info@sai.gov.ua
             // These params used in paid-hole form (donate page)
             'public_key' => 'i8596801856', // LigPay public_pay param. You should get it on the LiqPay off-site https://www.liqpay.com/ru/admin/business/buttons
             'paymant_system' => 'LiqPay',

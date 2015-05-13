@@ -312,6 +312,7 @@ $cs->registerCssFile($baseUrl.'/css/bootstrap-responsive.min.css');
 				<ul>
 					<li>badroad — разбитая дорога;</li>
 					<li>holeonroad — яма на дороге;</li>
+					<li>holeinyard — яма во дворе;</li>
 					<li>hatch — люк;</li>
 					<li>crossing — переезд (не используется);</li>
 					<li>nomarking — отсутствие разметки (не используется);</li>
