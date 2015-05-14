@@ -326,6 +326,7 @@ class UserGroupsUser extends CActiveRecord
 		$relations = array(
 			'relUserGroupsGroup' => array(self::BELONGS_TO, 'UserGroupsGroup', 'group_id'),
 			'holes' => array(self::HAS_MANY, 'Holes', 'USER_ID'),
+			'messengers' => array(self::HAS_MANY, 'Messengers', 'USER_ID'),
 			'holes_cnt' => array(self::STAT, 'Holes', 'USER_ID'),
 			'holes_fixed_cnt' => array(self::STAT, 'Holes', 'USER_ID', 'condition'=>'STATE="fixed"'),
 			'holes_fresh_cnt' => array(self::STAT, 'Holes', 'USER_ID', 'condition'=>'STATE="fresh"'),

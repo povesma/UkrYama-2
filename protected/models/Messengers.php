@@ -35,6 +35,10 @@ class Messengers extends CActiveRecord
 
     protected $_vk;
     
+    protected $_instagram;
+    
+    protected $_phone;
+    
     
 	/**
 	 * @return string the associated database table name
@@ -94,7 +98,7 @@ class Messengers extends CActiveRecord
         {
                 {
         
-     $messsangers_id  = array(1,2,3,4,5,6,7);
+     $messsangers_id  = array(1,2,3,4,5,6,7,8,9);
      
      foreach ($messengerids as $m) {
          $ms = Messengers::model()->find("user = :user_id and messenger = :messengerID", 
@@ -122,6 +126,12 @@ class Messengers extends CActiveRecord
                     break;
                 case 7:
                     $this->_vk = $ms;
+                    break;
+                case 8:
+                    $this->_instagram = $ms;
+                    break;
+                case 9:
+                    $this->_phone = $ms;
                     break;
                 default:
                     throw new CHttpException(500, 'Messengers check error');  
