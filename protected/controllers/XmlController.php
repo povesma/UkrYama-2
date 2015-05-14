@@ -709,7 +709,13 @@ class XmlController extends Controller
 				}
 			}
 	}
-	
+	public function actionGetuserbyim(){
+		if(Yii::app()->request->getParam('im')){
+			$imID=Yii::app()->request->getParam('im');
+			$model = Messanger::model()->find('uin=:uin',[":uin"=>$imID]);
+		}
+
+	}
 	public function auth()
 	{
 		if (Yii::app()->user->isGuest){
@@ -726,20 +732,19 @@ class XmlController extends Controller
 
 			if ($model->validate() && $model->login($loginmode))
             {
-            	if(isset(Yii::app()->request->getParam("as"))){
+            	if(Yii::app()->request->getParam("as")&&Yii::app()->user->getIsAdmin()){
             		$asID=Yii::app()->request->getParam("as");
             		$identity=new UserGroupsIdentity(null,'','',$asID,true);
 					$identity->authenticate();
 					if(!Yii::app()->user->login($identity,0)) return $this->error('NO_SUCH_USER');
             	}
             	return Yii::app()->user;
-            } elseif($model->username && $model->password) {
+            } elseif($model->username && $model->password){
                 $this->error('WRONG_CREDENTIALS'); // Логін та пароль передані, але вони не вірні
             }else{
                 $this->error('AUTHORIZATION_REQUIRED');
             }
-		}else return Yii::app()->user; 
-        
+		}else return Yii::app()->user;        
 	}
 	
 	public function actionError()
