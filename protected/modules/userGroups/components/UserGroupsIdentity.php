@@ -81,10 +81,10 @@ class UserGroupsIdentity extends CUserIdentity
 	public function authenticate()
 	{
 		if ($this->username) {
-			print_r ("Finding by username: " . $this->username . "\n");
+			//print_r ("Finding by username: " . $this->username . "\n");
 			$model=UserGroupsUser::model()->findByAttributes(array('username' => $this->username));
 		} else {
-			print_r ("Finding by id: " . $this->id . "\n");
+			//print_r ("Finding by id: " . $this->id . "\n");
 			$model=UserGroupsUser::model()->findByAttributes(array('id' => $this->id));
 		}
 		if(!$this->_nopassword){ // не проверям пароль, если не хотим
@@ -112,7 +112,7 @@ class UserGroupsIdentity extends CUserIdentity
 		
 		if(!count($model)) {
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
-			print_r ("User not found: " . $this->username . "\n");	
+			//print_r ("User not found: " . $this->username . "\n");	
 		} else if((int)$model->status === UserGroupsUser::WAITING_ACTIVATION)
 			$this->errorCode=self::ERROR_USER_INACTIVE;
 		else if(!$this->_nopassword && (!$this->hash && ($user_password!==$db_password) || $this->hash && ($model->password!=$this->hash)))
