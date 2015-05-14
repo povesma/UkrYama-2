@@ -715,12 +715,11 @@ class XmlController extends Controller
 		if(Yii::app()->request->getParam('im')){
 			$imID=Yii::app()->request->getParam('im');
 			$model = Messengers::model()->find("uin=:uin",array(":uin"=>$imID));
-			$targetUser=$model->user;
+			$targetUser=$model->user0;
 			$tags[]=CHtml::tag('user', array ('id'=>$targetUser->id), false, false);
-			$tags[]=CHtml::tag('username', array ('full'=>$targetUser->Fullname), false, false);
-				$tags[]=CHtml::tag('name', array (), CHtml::encode($targetUser->userModel->name), true);
-				$tags[]=CHtml::tag('secondname', array (), CHtml::encode($targetUser->userModel->second_name), true);
-				$tags[]=CHtml::tag('lastname', array (), CHtml::encode($targetUser->userModel->last_name), true);	
+			$tags[]=CHtml::tag('username', array ('username'=>$targetUser->username), false, false);
+				$tags[]=CHtml::tag('name', array (), CHtml::encode($targetUser->name), true);
+				$tags[]=CHtml::tag('fullname', array (), CHtml::encode($targetUser->fullname), true);
 			$tags[]=CHtml::closeTag('username');
 			$tags[]=CHtml::closeTag('user');
 			$this->renderXml($tags);
@@ -745,8 +744,11 @@ class XmlController extends Controller
             	if(Yii::app()->request->getParam("as")&&Yii::app()->user->getIsAdmin()){
             		$asID=Yii::app()->request->getParam("as");
             		$identity=new UserGroupsIdentity(null,'','',$asID,true);
-					$identity->authenticate();
-					if(!Yii::app()->user->login($identity,0)) return $this->error('NO_SUCH_USER');
+			$identity->authenticate();
+			if(!Yii::app()->user->login($identity,0)) {
+				// perhaps, here's some error
+				// return $this->error('NO_SUCH_USER');
+			}
             	}
             	return Yii::app()->user;
             } elseif($model->username && $model->password){
