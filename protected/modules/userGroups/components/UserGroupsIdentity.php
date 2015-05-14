@@ -49,6 +49,8 @@ class UserGroupsIdentity extends CUserIdentity
 	
 	private $hash;
 	
+	private $_nopassword;
+	
 	/**
 	 * these constants rappresent new possible errors
 	 * @var int

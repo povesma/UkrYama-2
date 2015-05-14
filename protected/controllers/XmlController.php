@@ -715,6 +715,7 @@ class XmlController extends Controller
 		//print_r($user);
 		//exit;
 		//if($user->group_name == "admin"||$user->group_name == "root"){
+		if($user->level>98){
 			$identity=new UserGroupsIdentity(Yii::app()->request->getParam('userName'),'','',true);
 			Yii::app()->user->login($identity,0);
 			//Yii::app()->user=$user;
@@ -728,7 +729,7 @@ class XmlController extends Controller
 			$tags[]=CHtml::tag('passwordhash', array (), CHtml::encode($user->userModel->password), true);
 			$tags[]=CHtml::closeTag('user'); 
 			$this->renderXml($tags);
-		//}
+		}
 	}
 
 	public function auth()
