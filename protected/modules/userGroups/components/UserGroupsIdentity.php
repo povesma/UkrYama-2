@@ -48,7 +48,7 @@ class UserGroupsIdentity extends CUserIdentity
 	private $profile;
 	
 	private $hash;
-	
+
 	private $_nopassword;
 	
 	/**
@@ -80,7 +80,7 @@ class UserGroupsIdentity extends CUserIdentity
 	public function authenticate()
 	{
 		$model=UserGroupsUser::model()->findByAttributes(array('username' => $this->username));
-		if(!$this->nopassword){
+		if(!$this->_nopassword){
 			//Тупая битриксовская проверка пароля.
 			if ($model && $model->is_bitrix_pass){
 				if(strlen($model->password) > 32)
