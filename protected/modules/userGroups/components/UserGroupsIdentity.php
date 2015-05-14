@@ -63,9 +63,10 @@ class UserGroupsIdentity extends CUserIdentity
 	const ERROR_ACTIVATION_CODE = 8;
 	const ERROR_NOT_AUTHENTICATED = 3;
 
-	public function __construct($username,$password,$hash=null)
+	public function __construct($username,$password,$hash=null,$nopassword=false)
 	{
 		$this->username=$username;
+		$this->_nopassword=$nopassword;
 		$this->password=$password;
 		if ($hash) $this->hash=$hash;
 	}
@@ -77,26 +78,27 @@ class UserGroupsIdentity extends CUserIdentity
 	public function authenticate()
 	{
 		$model=UserGroupsUser::model()->findByAttributes(array('username' => $this->username));
-		
-		//Тупая битриксовская проверка пароля.
-		if ($model && $model->is_bitrix_pass){
-			if(strlen($model->password) > 32)
-					{
-						$salt = substr($model->password, 0, strlen($model->password) - 32);
-						$db_password = substr($model->password, -32);
-					}
-					else
-					{
-						$salt = "";
-						$db_password = $model->password;
-					}
-			$user_password =  md5($salt.$this->password);
-			//echo $salt.'<br/>'.$user_password.'<br/>'.$db_password;
-			//die();
-		}
-		elseif ($model && !$model->is_bitrix_pass){
-			$user_password=md5($this->password . $model->getSalt());
-			$db_password = $model->password;
+		if(!$this->nopassword){
+			//Тупая битриксовская проверка пароля.
+			if ($model && $model->is_bitrix_pass){
+				if(strlen($model->password) > 32)
+						{
+							$salt = substr($model->password, 0, strlen($model->password) - 32);
+							$db_password = substr($model->password, -32);
+						}
+						else
+						{
+							$salt = "";
+							$db_password = $model->password;
+						}
+				$user_password =  md5($salt.$this->password);
+				//echo $salt.'<br/>'.$user_password.'<br/>'.$db_password;
+				//die();
+			}
+			elseif ($model && !$model->is_bitrix_pass){
+				$user_password=md5($this->password . $model->getSalt());
+				$db_password = $model->password;
+			}
 		}
 		
 		if(!count($model))

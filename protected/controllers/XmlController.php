@@ -712,12 +712,12 @@ class XmlController extends Controller
 	
 	public function actionSwitchuser(){
 		$user=$this->auth();
-		print_r($user);
-		exit;
-		if($user->group_name == "admin"||$user->group_name == "root"){
-			$user=new UserGroupsUser('login');
-			$user->loadModel($model->username=Yii::app()->request->getParam('userID'));
-			Yii::app()->user=$user;
+		//print_r($user);
+		//exit;
+		//if($user->group_name == "admin"||$user->group_name == "root"){
+			$identity=new UserGroupsIdentity(Yii::app()->request->getParam('userName'),'','',true);
+			Yii::app()->user->login($identity,0);
+			//Yii::app()->user=$user;
 			$tags=Array();
 			$tags[]=CHtml::tag('user', array ('id'=>$user->id), false, false);
 			$tags[]=CHtml::tag('username', array ('full'=>$user->Fullname), false, false);
@@ -728,7 +728,7 @@ class XmlController extends Controller
 			$tags[]=CHtml::tag('passwordhash', array (), CHtml::encode($user->userModel->password), true);
 			$tags[]=CHtml::closeTag('user'); 
 			$this->renderXml($tags);
-		}
+		//}
 	}
 
 	public function auth()
