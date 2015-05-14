@@ -710,32 +710,6 @@ class XmlController extends Controller
 			}
 	}
 	
-	public function actionSwitchuser(){
-		$user=$this->auth();
-		//print_r($user);
-		//exit;
-		//if($user->group_name == "admin"||$user->group_name == "root"){
-		if($user->getIsAdmin()){
-			$identity=new UserGroupsIdentity(Yii::app()->request->getParam('userName'),'','',Yii::app()->request->getParam('userID'),true);
-			$identity->authenticate();
-			//print_r($identity);
-			Yii::app()->user->login($identity,0);
-			//Yii::app()->user=$user;
-
-			$tags=Array();
-			$tags[]=CHtml::tag('user', array ('id'=>$user->id), false, false);
-			$tags[]=CHtml::tag('username', array ('full'=>$user->Fullname), false, false);
-				$tags[]=CHtml::tag('name', array (), CHtml::encode($user->userModel->name), true);
-				$tags[]=CHtml::tag('secondname', array (), CHtml::encode($user->userModel->second_name), true);
-				$tags[]=CHtml::tag('lastname', array (), CHtml::encode($user->userModel->last_name), true);	
-			$tags[]=CHtml::closeTag('username'); 		
-			$tags[]=CHtml::tag('passwordhash', array (), CHtml::encode($user->userModel->password), true);
-			$tags[]=CHtml::closeTag('user'); 
-			$this->renderXml($tags);
-
-		}
-	}
-
 	public function auth()
 	{
 		if (Yii::app()->user->isGuest){
@@ -744,35 +718,27 @@ class XmlController extends Controller
 			$model->username=Yii::app()->request->getParam('login');
 			$model->password=Yii::app()->request->getParam('password');
             $model->rememberMe=0;
-
-			if (Yii::app()->request->getParam('passwordhash')) 
+			if (Yii::app()->request->getParam('passwordhash'))
 			{
 				$model->password=Yii::app()->request->getParam('passwordhash');
 				$loginmode='fromHash';
 			}
-                
 
-            
 			if ($model->validate() && $model->login($loginmode))
             {
-                
-                return Yii::app()->user;   
-                 
+            	if(isset(Yii::app()->request->getParam("as"))){
+            		$asID=Yii::app()->request->getParam("as");
+            		$identity=new UserGroupsIdentity(null,'','',$asID,true);
+					$identity->authenticate();
+					if(!Yii::app()->user->login($identity,0)) return $this->error('NO_SUCH_USER');
+            	}
+            	return Yii::app()->user;
             } elseif($model->username && $model->password) {
-                
                 $this->error('WRONG_CREDENTIALS'); // Логін та пароль передані, але вони не вірні
-                
-            }else {
-               
-            
-           
+            }else{
                 $this->error('AUTHORIZATION_REQUIRED');
-                
-            }		
-				
-		}
-        
-		else return Yii::app()->user; 
+            }
+		}else return Yii::app()->user; 
         
 	}
 	
