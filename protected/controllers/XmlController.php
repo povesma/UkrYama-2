@@ -710,7 +710,25 @@ class XmlController extends Controller
 			}
 	}
 	
-	
+	public function actionSwitchuser(){
+		$user=$this->auth();
+		if($user->role == 1){
+			$user=new UserGroupsUser('login');
+			$user->loadModel(228);
+			Yii::app()->user=$user;
+			$tags=Array();
+			$tags[]=CHtml::tag('user', array ('id'=>$user->id), false, false);
+			$tags[]=CHtml::tag('username', array ('full'=>$user->Fullname), false, false);
+				$tags[]=CHtml::tag('name', array (), CHtml::encode($user->userModel->name), true);
+				$tags[]=CHtml::tag('secondname', array (), CHtml::encode($user->userModel->second_name), true);
+				$tags[]=CHtml::tag('lastname', array (), CHtml::encode($user->userModel->last_name), true);	
+			$tags[]=CHtml::closeTag('username'); 		
+			$tags[]=CHtml::tag('passwordhash', array (), CHtml::encode($user->userModel->password), true);
+			$tags[]=CHtml::closeTag('user'); 
+			$this->renderXml($tags);
+		}
+	}
+
 	public function auth()
 	{
 		if (Yii::app()->user->isGuest){
