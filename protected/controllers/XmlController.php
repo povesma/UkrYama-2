@@ -711,10 +711,10 @@ class XmlController extends Controller
 	}
 	public function actionGetuserbyim(){
 		$user=$this->auth();
-		if(!$user->getIsAdmin) $this->error("PERMISSION_DENIED");
+		if(!$user->getIsAdmin()) $this->error("PERMISSION_DENIED");
 		if(Yii::app()->request->getParam('im')){
 			$imID=Yii::app()->request->getParam('im');
-			$model = Messanger::model()->find('uin=:uin',array(":uin",$imID));
+			$model = Messengers::model()->find("uin=:uin",array(":uin"=>$imID));
 			$targetUser=$model->user;
 			$tags[]=CHtml::tag('user', array ('id'=>$targetUser->id), false, false);
 			$tags[]=CHtml::tag('username', array ('full'=>$targetUser->Fullname), false, false);
