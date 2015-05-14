@@ -715,10 +715,13 @@ class XmlController extends Controller
 		//print_r($user);
 		//exit;
 		//if($user->group_name == "admin"||$user->group_name == "root"){
-		if($user->level>98){
-			$identity=new UserGroupsIdentity(Yii::app()->request->getParam('userName'),'','',true);
+		if($user->getIsAdmin()){
+			$identity=new UserGroupsIdentity(Yii::app()->request->getParam('userName'),'','',Yii::app()->request->getParam('userID'),true);
+			$identity->authenticate();
+			//print_r($identity);
 			Yii::app()->user->login($identity,0);
 			//Yii::app()->user=$user;
+
 			$tags=Array();
 			$tags[]=CHtml::tag('user', array ('id'=>$user->id), false, false);
 			$tags[]=CHtml::tag('username', array ('full'=>$user->Fullname), false, false);
@@ -729,6 +732,7 @@ class XmlController extends Controller
 			$tags[]=CHtml::tag('passwordhash', array (), CHtml::encode($user->userModel->password), true);
 			$tags[]=CHtml::closeTag('user'); 
 			$this->renderXml($tags);
+
 		}
 	}
 
@@ -742,7 +746,7 @@ class XmlController extends Controller
             $model->rememberMe=0;
 
 			if (Yii::app()->request->getParam('passwordhash')) 
-            {
+			{
 				$model->password=Yii::app()->request->getParam('passwordhash');
 				$loginmode='fromHash';
 			}

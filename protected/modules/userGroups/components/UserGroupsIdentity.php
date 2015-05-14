@@ -65,12 +65,13 @@ class UserGroupsIdentity extends CUserIdentity
 	const ERROR_ACTIVATION_CODE = 8;
 	const ERROR_NOT_AUTHENTICATED = 3;
 
-	public function __construct($username,$password,$hash=null,$nopassword=false)
+	public function __construct($username,$password,$hash=null,$user_id = null, $nopassword=false)
 	{
 		$this->username=$username;
 		$this->_nopassword=$nopassword;
 		$this->password=$password;
 		if ($hash) $this->hash=$hash;
+		if ($user_id) $this->id=$user_id;
 	}
 
 	/**
@@ -79,8 +80,14 @@ class UserGroupsIdentity extends CUserIdentity
 	 */
 	public function authenticate()
 	{
-		$model=UserGroupsUser::model()->findByAttributes(array('username' => $this->username));
-		if(!$this->_nopassword){
+		if ($this->username) {
+			print_r ("Finding by username: " . $this->username . "\n");
+			$model=UserGroupsUser::model()->findByAttributes(array('username' => $this->username));
+		} else {
+			print_r ("Finding by id: " . $this->id . "\n");
+			$model=UserGroupsUser::model()->findByAttributes(array('id' => $this->id));
+		}
+		if(!$this->_nopassword){ // не проверям пароль, если не хотим
 			//Тупая битриксовская проверка пароля.
 			if ($model && $model->is_bitrix_pass){
 				if(strlen($model->password) > 32)
@@ -103,9 +110,10 @@ class UserGroupsIdentity extends CUserIdentity
 			}
 		}
 		
-		if(!count($model))
+		if(!count($model)) {
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
-		else if((int)$model->status === UserGroupsUser::WAITING_ACTIVATION)
+			print_r ("User not found: " . $this->username . "\n");	
+		} else if((int)$model->status === UserGroupsUser::WAITING_ACTIVATION)
 			$this->errorCode=self::ERROR_USER_INACTIVE;
 		else if(!$this->_nopassword && (!$this->hash && ($user_password!==$db_password) || $this->hash && ($model->password!=$this->hash)))
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
