@@ -42,7 +42,7 @@ class Messenger extends CComponent {
     {
         $this->_userid = $userid;
         
-        $messengerids = array(1,2,3,4,5,6,7); // ID месенджерів
+        $messengerids = array(1,2,3,4,5,6,7,8,9); // ID месенджерів
         
         $this->checkMessenger($messengerids); // Перевіряємо які месенджери є у користувача і на які можна відсидати нотифікацію
         $prm = Yii::app()->params['email'];
@@ -252,7 +252,7 @@ public static function checkProf($userid)
     {
     	$this->_userid = $userid;
     
-    	$messengerids = array(1,2,3,4,5,6,7); // ID месенджерів
+    	$messengerids = array(1,2,3,4,5,6,7,8,9); // ID месенджерів
     
     	$this->checkMessengersProf($messengerids); // Перевіряємо які месенджери є у користувача і на які можна відсидати нотифікацію
     	
