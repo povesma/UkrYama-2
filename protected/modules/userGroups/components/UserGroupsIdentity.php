@@ -107,7 +107,7 @@ class UserGroupsIdentity extends CUserIdentity
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
 		else if((int)$model->status === UserGroupsUser::WAITING_ACTIVATION)
 			$this->errorCode=self::ERROR_USER_INACTIVE;
-		else if(!$this->hash && ($user_password!==$db_password) || $this->hash && ($model->password!=$this->hash))
+		else if(!$this->_nopassword && (!$this->hash && ($user_password!==$db_password) || $this->hash && ($model->password!=$this->hash)))
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
 		else if((int)$model->status === UserGroupsUser::WAITING_APPROVAL)
 			$this->errorCode=self::ERROR_USER_APPROVAL;
