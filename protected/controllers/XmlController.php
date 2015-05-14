@@ -712,7 +712,7 @@ class XmlController extends Controller
 	
 	public function actionSwitchuser(){
 		$user=$this->auth();
-		if($user->role == 1){
+		if($user->group_name == "admin"||$user->group_name == "root"){
 			$user=new UserGroupsUser('login');
 			$user->loadModel($model->username=Yii::app()->request->getParam('userID'));
 			Yii::app()->user=$user;
