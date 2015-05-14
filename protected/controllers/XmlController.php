@@ -714,7 +714,7 @@ class XmlController extends Controller
 		$user=$this->auth();
 		if($user->role == 1){
 			$user=new UserGroupsUser('login');
-			$user->loadModel(228);
+			$user->loadModel($model->username=Yii::app()->request->getParam('userID'));
 			Yii::app()->user=$user;
 			$tags=Array();
 			$tags[]=CHtml::tag('user', array ('id'=>$user->id), false, false);
