@@ -26,7 +26,7 @@ div#ymapcontainer_big_map { height: 600px; width: 960px; }
 */
 div.rCol .h p { margin-bottom:0.31em }
 div.rCol .h .date { color: #637280; font-size: 12px; margin:3px 0 10px; display: inline-block;}
-div.rCol .h .type { font-size: 18px; padding: 0 0 0 32px; background-repeat: no-repeat; color:#000; background-position: left; height: 22px; line-height: 22px; margin-bottom:11px; }
+div.rCol .h .type { font-size: 18px; padding: 0 0 0 32px; background-repeat: no-repeat; color:#000; background-position: left; height: 42px; line-height: 22px; margin-bottom:11px; }
 /*div.rCol .h*/ 
 .address { background: url(../images/marker.png) no-repeat 2px center; padding-left: 19px;}
 
