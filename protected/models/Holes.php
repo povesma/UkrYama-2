@@ -657,8 +657,11 @@ class Holes extends CActiveRecord
 	public function region(){
 		$address=preg_split("/,/",$this->ADDRESS);
 			$sub=$address[0];
-			if(strpos($sub,"місто")!==false){
-				$sub=mb_substr($sub,6,20,'UTF-8');
+			foreach ($address as $addrpart) {
+				if(strpos($addrpart,"місто")){ // якщо десь між комами написано "місто"
+					$sub=mb_substr($addrpart,6,20,'UTF-8');
+					break;
+				}
 			}
 			$name=mb_strtolower($sub,'UTF-8');
 			$region=Region::model()->find('LOWER(name) like :name',array(':name'=>$name));

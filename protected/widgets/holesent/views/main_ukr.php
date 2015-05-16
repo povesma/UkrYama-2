@@ -1,6 +1,6 @@
 <div id="holesent" name="holesent" style="display:none">
 <?php
-	if($req){
+	if($req){ // first request (claim) has already been sent. Look for parents
 		$choices=$req->auth_ua->parents("ua");
 		$ref=$req->id;
 	}else{
