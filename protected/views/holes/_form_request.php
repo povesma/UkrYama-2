@@ -9,6 +9,7 @@ $usermodel=Yii::app()->user->userModel;
 $model=new RequestForm;
 //			$mytype=$hole->type->findAll("id=:id",array(':id'=>$hole->TYPE_ID));
 $mytype=array();
+$authority=array();
 
 	$mytype['ru']=$hole->type->findByPk(array("id"=>$hole->TYPE_ID,"lang"=>"ru"));
 	$mytype['ua']=$hole->type->findByPk(array("id"=>$hole->TYPE_ID,"lang"=>"ua"));
@@ -16,23 +17,23 @@ $mytype=array();
 if($first!=1){
 	$mytype['ru']=$hole->type->findByPk(array("id"=>$first,"lang"=>"ru"));
 	$mytype['ua']=$hole->type->findByPk(array("id"=>$first,"lang"=>"ua"));
-	
-	$auth['ru']=$req->auth_ru;
-	$auth['ua']=$req->auth_ua;
-	$authid=$auth['ua']->id;
-	$mytype['ru']->name = $auth['ru']->name . ", ".$mytype['ru']->name;
-	$mytype['ua']->name = $auth['ua']->name . ", ".$mytype['ua']->name;
+	$authority['ru']=$req->auth_ru;
+	$authority['ua']=$req->auth_ua;
+	$authid=$authority['ua']->id;
+	$mytype['ru']->name = $authority['ru']->name . ", ".$mytype['ru']->name;
+	$mytype['ua']->name = $authority['ua']->name . ", ".$mytype['ua']->name;
 }
 
 $region=$hole->region();
 $choices=array();
-if($first==1){
+if($first==1){ // если первичная жалоба, то выбираем список органов, которые ответствены за этот тип ямы (связана таблица yii_authority_relation)
 	$choices['ua']=$hole->getAllAuth($region,$mytype['ua'],"ua");
 	$choices['ru']=$hole->getAllAuth($region,$mytype['ru'],"ru");
 }else{
+	print_r ("AUTH_UA: " . $authority);
 
-	$choices['ua']=$auth['ua']->parents("ua");
-	$choices['ru']=$auth['ru']->parents("ru");
+	$choices['ua']=$authority['ua']->parents("ua");
+	$choices['ru']=$authority['ru']->parents("ru");
 }
 $usermodel=Yii::app()->user->userModel;
 ?>
