@@ -77,6 +77,7 @@ return array(
    'COMMENTS'=>'Коментарі',
    'COMMENT'=>'Комментар: ',
    'NOCOMMENTS'=>'Нема коментарiв',
+   'REPLYING_TO_RESPONSE_FROM'=>'Відповідь на запит до',
    'COMMENTS_IF_NEED'=>'Коментарі (за бажанням)',
 
    

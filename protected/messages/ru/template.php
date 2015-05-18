@@ -79,6 +79,7 @@ return array(
    'COMMENTS'=>'Комментарии',
    'COMMENT'=>'Комментарий: ',
    'NOCOMMENTS'=>'Нет комментариев',
+   'REPLYING_TO_RESPONSE_FROM'=>'Ответ на запрос в',
    'COMMENTS_IF_NEED'=>'Комментарии (по желанию)',
    
    'HOW_WORKS'=>'Как работает УкрЯма',

@@ -26,7 +26,7 @@ form.submit();
 <form method="POST" enctype="multipart/form-data" onSubmit="validate(this);return false" id="ansform" name="ansform">
 <table>
 <tr><td></td><td></td></tr>
-<tr><td>Ответ на запрос в:</td><td>
+<tr><td><?=Yii::t('template', 'REPLYING_TO_RESPONSE_FROM')?>:</td><td>
 <?php
 	foreach($requests as $request){
 		echo "<span onClick='req_".$request->id.".checked=true'><input type='radio' name='req_id' id='req_".$request->id."' value='".$request->id."'>".$request->$param->name."</span><br>";
