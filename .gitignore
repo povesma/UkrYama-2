@@ -19,3 +19,4 @@ themes/classic/views/
 .htaccess
 upload/
 /nbproject/private/
+.idea

@@ -1,11 +1,13 @@
-UkrYama-2
+UkrYama-2 - яму мені запили!
 ===========
+УкрЯма - це ефективний інструмент реалізації ваших законних прав на хорошу дорогу і все що з цим пов'язано.
+Проблематика. Судячі з "роботи" державної компанії Укравтодор за 20 з гаком років, менеджмент цієї монополії впевнений, що "хороший асфальт на дорозі не валяється" (с)
+і чітко слідує цій догмі :). Ми, у свою чергу, зробимо усе аби отримати якісні дороги в Україні.
 
-UkrYama.com service
+Як проект працює?
 
-1) Fresh database dump with all basic settings and data is stored in /protected/db/ukryama_ukryama.sql.gz
-   Just import it with you phpmyadmin or similar database client software.
+//TODO: дописати оглядове рідмі.
+1. ...
 
-2) In database there is one admin user account for the website - login: "admin" and password "admin123"
 
-3) Website's main config (db-connections, social networks auth private keys etc.) can be found in /protected/config/appConfig.php
+//TODO: дописати технологічне рідмі.

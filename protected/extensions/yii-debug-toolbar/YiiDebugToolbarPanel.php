@@ -20,12 +20,14 @@
 abstract class YiiDebugToolbarPanel extends CWidget
 implements YiiDebugToolbarPanelInterface
 {
+	
+	public $i = 'n';
 
     const VIEWS_PATH = '/views/panels';
 
     private $_enabled = true;
     private $_id;
-    private static $_counter;
+    private static $_counter = 0;
 
     /**
      * Returns the ID of the panel or generates a new one if requested.
@@ -38,7 +40,7 @@ implements YiiDebugToolbarPanelInterface
         if($this->_id!==null)
             return $this->_id;
         elseif($autoGenerate)
-            return $this->_id='dt'.self::$_counter++;
+            return $this->_id='ydtb-panel-'.self::$_counter++;
     }
 
     /**
