@@ -348,6 +348,19 @@ div.rCol .before:after, div.rCol .after:after {
 
 }
 
+.holes_pict_p:hover .rotate{
+    display: block;
+    text-align: right;
+
+}
+.holes_pict_p .rotate{
+    position:absolute;
+    top:0;
+    left:0;
+    display:none;
+}
+
+
 span.zoom-pic {
     background-image: url('../images/zoom-pic.png');
     height: 52px;

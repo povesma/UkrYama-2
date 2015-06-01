@@ -220,6 +220,7 @@ function initialize() {
             if($hole->pictures_fresh){  // было
                echo CHtml::tag('h2', array(), Yii::t('holes_view', 'HOLE_ITWAS'));
    			   foreach($hole->pictures_fresh as $i=>$picture){
+
 				echo "<p class='holes_pict_p'>";
 				echo CHtml::link(CHtml::image($picture->small), 
 					$picture->medium, 
@@ -227,6 +228,7 @@ function initialize() {
 						'rel'=>'hole',
 						'title'=>CHtml::encode($hole->ADDRESS))
 					);
+                   echo CHtml::image('/images/rotate.png', 'Rotate', array('class'=>'rotate'));
 				echo "</p>";
                } 
             }
@@ -242,9 +244,12 @@ function initialize() {
 			echo CHtml::tag('h2', array(), Yii::t('holes_view', 'HOLE_ITBECAME'));
 			foreach($hole->pictures_fixed as $i=>$picture){
 				echo "<p class='holes_pict_p'>";
+
 				if ($picture->user_id==Yii::app()->user->id || Yii::app()->user->level > 80 || $hole->IsUserHole)
 					echo CHtml::link(Yii::t('template', 'DELETE_IMAGE'), Array('delpicture','id'=>$picture->id), Array('class'=>'declarationBtn')).'<br />';
-				echo CHtml::link(CHtml::image($picture->medium), 
+
+				echo CHtml::link(CHtml::image($picture->medium),
+
 					$picture->original, 
 					array('class'=>'holes_pict',
 						'rel'=>'hole_fixed',

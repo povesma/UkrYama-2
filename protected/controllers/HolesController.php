@@ -35,7 +35,7 @@ class HolesController extends Controller
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('delete', 'moderate', 'test','test2'),
+				'actions'=>array('delete', 'moderate', 'test','test2','rotate'),
 				'groups'=>array('root', 'admin', 'moder'), 
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -1312,4 +1312,58 @@ class HolesController extends Controller
 			return mail($email, $subj, $mailbody, $headers);
 		}
 	}
+
+    /*
+     * Функція для перевертання зображення
+     * Використовується в \protected\views\holes\view.php
+     * Return: bool
+     * Poremhuck Evgeniy 2015
+     */
+    public function actionRotate($image,$holeid){
+        
+        $degrees = 180;
+
+        $patches = array(
+            YiiBase::getPathOfAlias("webroot")."\\upload\\st1234\\medium\\".$holeid."\\".$image, // Шлях до оригінального зображення
+            YiiBase::getPathOfAlias("webroot")."\\upload\\st1234\\small\\".$holeid."\\".$image, //  Шлях до мініатюри
+                    );
+
+        foreach($patches as $patch) {
+
+            $src = $patch;
+
+            $extension = explode(".", $src);
+
+            if (preg_match("/jpg|jpeg/", $extension[2])) {
+
+                $src_img = imagecreatefromjpeg($src);
+            }
+
+            if (preg_match("/png/", $extension[2])) {
+
+                $src_img = imagecreatefrompng($src);
+            }
+
+            if (preg_match("/gif/", $extension[2])) {
+
+                $src_img = imagecreatefromgif($src);
+            }
+
+            $rotate = imagerotate($src_img, $degrees, 0);
+
+            if (preg_match("/png/", $extension[2])) {
+                imagepng($rotate, $patch);
+            } else if (preg_match("/gif/", $extension[2])) {
+                imagegif($rotate, $patch);
+            } else {
+                imagejpeg($rotate, $patch);
+            }
+
+            imagedestroy($rotate);
+            imagedestroy($src_img);
+
+            return true;
+        }
+
+    }
 }
