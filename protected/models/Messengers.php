@@ -91,7 +91,42 @@ class Messengers extends CActiveRecord
 	}
 
         
-                
+    public function getMessangerID($name){
+		switch ($name){
+		    case "email":
+		        return 1;
+		        break;
+		    case "whatsapp":
+		        return 2;
+		        break;
+		    case "telegram":
+		        return 3;
+		        break;
+		    case "facebook":
+		        return 4;
+		        break;
+		    case "twitter":
+		        return 5;
+		        break;
+		    case "viber":
+		        return 6;
+		        break;
+		    case "vk":
+		        return 7;
+		        break;
+		    case "instagram":
+		        return 8;
+		        break;
+		    case "phone":
+		        return 9;
+		        break;
+		    case "sms":
+		        return 9;
+		        break;
+		    default:throw new CHttpException(500, 'Messengers check error');		        
+		        }
+		}
+    }
         protected function getUsersMessenger($userid)
         {
                 {
