@@ -129,35 +129,42 @@ class UserController extends Controller
 			$this->render('index',array('model'=>$model), false, true);
 	}
 	public function actionCheckcode(){
-		$http=new Http;
-		$url="https://chat.ingenia.name/auth/code";
-		$a= $http->http_request(array('url'=>$url,'return'=>'content', 'data'=>array('session'=>Yii::app()->request->cookies['PHPSESSID'])));
-		$json = json_decode($a);
-		if($json["status"]=="login-ok"){
-			$imID=$json["socialID"];
-			$messenger=Messengers::model()->getMessangerID($json["social"]);
-			$model = Messengers::model()->find("uin=:uin and messenger=:messenger",array(":uin"=>$imID,":messenger"=>$messenger));
-			$targetUser=$model->user0;
-    		$asID=$targetUser->id;
-    		$identity=new UserGroupsIdentity(null,'','',$asID,true);
-			$identity->authenticate();
-			if(!Yii::app()->user->login($identity,0)) {
-				// perhaps, here's some error
-				// return $this->error('NO_SUCH_USER');
+		header("Content-Type: application/json");
+		if (Yii::app()->user->isGuest){
+			$http=new Http;
+			$url="https://chat.ingenia.name/auth/code";
+			$a= $http->http_request(array('url'=>$url,'return'=>'content', 'data'=>array('session'=>Yii::app()->request->cookies['PHPSESSID'])));
+			$json = json_decode($a);
+			if($json["status"]=="login-ok"){
+				$imID=$json["socialID"];
+				$messenger=Messengers::model()->getMessangerID($json["social"]);
+				$model = Messengers::model()->find("uin=:uin and messenger=:messenger",array(":uin"=>$imID,":messenger"=>$messenger));
+				$targetUser=$model->user0;
+	    		$asID=$targetUser->id;
+	    		$identity=new UserGroupsIdentity(null,'','',$asID,true);
+				$identity->authenticate();
+				if(!Yii::app()->user->login($identity,0)) {
+					// perhaps, here's some error
+					// return $this->error('NO_SUCH_USER');
+				}
+				echo '{"status":"ok"}';
+	        	//return Yii::app()->user;
+	        	return Yii::app()->user;
 			}
+			if($json["status"]=="awaiting"){
+				echo '{"status":"wait"}';
+				return;
+			}
+			if($json["status"]=="new"){
+				echo '{"status":"new","code":"'.$json["code"].'"}';
+				return;
+			}
+			echo '{"status":"500"}';
+			return;
+		}else{
 			echo '{"status":"ok"}';
-        	//return Yii::app()->user;
-        	return;
+			return Yii::app()->user; 
 		}
-		if($json["status"]=="awaiting"){
-			echo '{"status":"wait"}';
-			return;
-		}
-		if($json["status"]=="new"){
-			echo '{"status":"new","code":"'.$json["code"].'"}';
-			return;
-		}
-		echo "500";
 	}
 
 	public function actionDelete($id)
