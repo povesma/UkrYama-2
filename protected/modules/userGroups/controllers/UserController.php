@@ -126,7 +126,7 @@ class UserController extends Controller
 		if (Yii::app()->request->isAjaxRequest)
 			$this->renderPartial('index',array('model'=>$model,), false, true);
 		else
-			$this->render('index',array('model'=>$model,), false, true);
+			$this->render('index',array('model'=>$model), false, true);
 	}
 	public function actionCheckcode(){
 		$http=new Http;
@@ -135,13 +135,17 @@ class UserController extends Controller
 		$json = json_decode($a);
 		if($a["status"]=="login-ok"){
 			echo '{"status":"ok"}';
+			return;
 		}
 		if($a["status"]=="awaiting"){
 			echo '{"status":"wait"}';
+			return;
 		}
 		if($a["status"]=="new"){
 			echo '{"status":"new","code":"'.$json["code"].'"}';
+			return;
 		}
+		echo "500";
 	}
 
 	public function actionDelete($id)
