@@ -1312,19 +1312,4 @@ class HolesController extends Controller
 			return mail($email, $subj, $mailbody, $headers);
 		}
 	}
-
-    #For test purposes only
-
-    public function actionSai(){
-        $model= Holes::model()->findByPk(26);
-        $dep = Authority::model()->find(array(
-            'select'=>'o_email',
-            'condition'=>'region_id=:region_id and lang=:lang',
-            'params' => array(':region_id' => $model->region_id, ':lang'=>'ua')
-            ));
-
-        echo $dep->o_email;
-        //$this->sendMailToSai($model);
-    }
-
 }

@@ -343,7 +343,7 @@ class Holes extends CActiveRecord
 	}	
 
 	public function sendRequest($date,$auth,$ref){
-			echo "here";
+			//echo "here";
 			$request=new HoleRequests;
 			$request->attributes=Array(
 					'hole_id'=>$this->ID,

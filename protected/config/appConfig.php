@@ -132,4 +132,11 @@ $params=array(
             'facebook' => true,
             'twetter' => false,
             'instagram' => false,
-    );
+
+            //Set UkrPost Tracking API variables
+            'guid' => 'fcc8d9e1-b6f9-438f-9ac8-b67ab44391dd',
+            'culture' => 'uk',
+
+
+
+);
