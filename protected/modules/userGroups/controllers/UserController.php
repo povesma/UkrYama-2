@@ -33,7 +33,7 @@ class UserController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow',  // just guest can perform 'activate', 'login' and 'passRequest' actions
-				'actions'=>array('login', 'passRequest'),
+				'actions'=>array('login', 'passRequest', 'checkcode'),
 				'ajax'=>false,
 				'users'=>array('?'),
 			),
@@ -128,7 +128,22 @@ class UserController extends Controller
 		else
 			$this->render('index',array('model'=>$model,), false, true);
 	}
-	
+	public function actionCheckcode(){
+		$http=new Http;
+		$url="https://chat.ingenia.name/auth/code";
+		$a= $http->http_request(array('url'=>$url,'return'=>'content', 'data'=>array('session'=>Yii::app()->request->cookies['PHPSESSID'])));
+		$json = json_decode($a);
+		if($a["status"]=="login-ok"){
+			"ok";
+		}
+		if($a["status"]=="awaiting"){
+			echo "wait";
+		}
+		if($a["status"]=="new"){
+			echo "new";
+		}
+	}
+
 	public function actionDelete($id)
 	{
 		if(Yii::app()->request->isPostRequest)
