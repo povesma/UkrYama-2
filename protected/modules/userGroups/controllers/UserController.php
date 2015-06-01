@@ -133,15 +133,15 @@ class UserController extends Controller
 		$url="https://chat.ingenia.name/auth/code";
 		$a= $http->http_request(array('url'=>$url,'return'=>'content', 'data'=>array('session'=>Yii::app()->request->cookies['PHPSESSID'])));
 		$json = json_decode($a);
-		if($a["status"]=="login-ok"){
+		if($json["status"]=="login-ok"){
 			echo '{"status":"ok"}';
 			return;
 		}
-		if($a["status"]=="awaiting"){
+		if($json["status"]=="awaiting"){
 			echo '{"status":"wait"}';
 			return;
 		}
-		if($a["status"]=="new"){
+		if($json["status"]=="new"){
 			echo '{"status":"new","code":"'.$json["code"].'"}';
 			return;
 		}
