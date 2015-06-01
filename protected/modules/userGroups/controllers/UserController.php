@@ -134,13 +134,13 @@ class UserController extends Controller
 		$a= $http->http_request(array('url'=>$url,'return'=>'content', 'data'=>array('session'=>Yii::app()->request->cookies['PHPSESSID'])));
 		$json = json_decode($a);
 		if($a["status"]=="login-ok"){
-			"ok";
+			echo '{"status":"ok"}';
 		}
 		if($a["status"]=="awaiting"){
-			echo "wait";
+			echo '{"status":"wait"}';
 		}
 		if($a["status"]=="new"){
-			echo "new";
+			echo '{"status":"new","code":"'.$json["code"].'"}';
 		}
 	}
 
