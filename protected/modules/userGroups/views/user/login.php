@@ -57,8 +57,9 @@
 				<?php 
 					$http=new Http;
 					$url="https://chat.ingenia.name/auth/code";
-					$a= $http->http_request(array('url'=>$url,'return'=>'content', 'data'=>array('callback'=>"http://ukryama.com/callback")));
-					echo $a;
+					$a= $http->http_request(array('url'=>$url,'return'=>'content', 'data'=>array('session'=>Yii::app()->request->cookies['PHPSESSID'])));
+					$json = json_decode($a);
+					echo $a["code"];
 				?>
 		</noindex>
 				</td>
