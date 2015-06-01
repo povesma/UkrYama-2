@@ -116,7 +116,7 @@ $params=array(
             'liqpay_server_url'=>'http://newtest.ukryama.com/payments/callback', // Change in producting server.
              
             // Current version
-            'version' => '2.2',
+            'version' => '2.3',
     
             // Google Maps Geolocation API-Key
             'google_maps_api' => 'AIzaSyCTK4y073bUzvq0EGMPKskM57-3aN9JnsE', // Store here your own API-KEY. Get it on https://developers.google.com/maps/

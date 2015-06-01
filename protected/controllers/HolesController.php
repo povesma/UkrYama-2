@@ -27,7 +27,7 @@ class HolesController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('add','smallhole','index','view', 'findRegion', 'findCity', 'map','map2', 'ajaxMap'),
+				'actions'=>array('add','smallhole','index','view', 'findRegion', 'findCity', 'map','map2', 'ajaxMap','sai','test2'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -125,6 +125,7 @@ class HolesController extends Controller
 		return;
 	}
 	public function actionTest2(){
+        /*
 	echo "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script><style>span{cursor:pointer;}</style>";
 	$holes = Holes::model()->findAll(array('order'=>'ADDRESS'));
 	foreach($holes as $hole){
@@ -138,6 +139,7 @@ class HolesController extends Controller
 		}
 	}
 		return;
+        */
 	}
 
 	public function actionFindCity()
@@ -1252,6 +1254,19 @@ class HolesController extends Controller
 	 */
 	protected function sendMailToSai($hole)
 	{
+        $dep = Authority::model()->find(array(
+            'select'=>'o_email',
+            'condition'=>'region_id=:region_id and lang=:lang',
+            'params' => array(':region_id' => $hole->region_id, ':lang'=>'ua')
+        ));
+
+        if($dep->o_email){
+            $email = $dep->o_email;
+        }else{
+            $email = Yii::app()->params['saiEmail'];
+        }
+
+
 		$headers = "MIME-Version: 1.0\r\nFrom: " . Yii::app()->params['adminEmail'] . "\r\nReply-To: " . Yii::app()->params['adminEmail'] . "\r\nContent-Type: text/html; charset=utf-8";
 		Yii::app()->request->baseUrl = Yii::app()->request->hostInfo;
 
@@ -1263,7 +1278,7 @@ class HolesController extends Controller
 			true
 		);
 
-		return mail(Yii::app()->params['saiEmail'], 'Повідомлення по порушення законодавства', $mailbody, $headers);
+		return mail($email, 'Повідомлення по порушення законодавства', $mailbody, $headers);
 	}
 
 	/**
@@ -1297,5 +1312,19 @@ class HolesController extends Controller
 			return mail($email, $subj, $mailbody, $headers);
 		}
 	}
+
+    #For test purposes only
+
+    public function actionSai(){
+        $model= Holes::model()->findByPk(26);
+        $dep = Authority::model()->find(array(
+            'select'=>'o_email',
+            'condition'=>'region_id=:region_id and lang=:lang',
+            'params' => array(':region_id' => $model->region_id, ':lang'=>'ua')
+            ));
+
+        echo $dep->o_email;
+        //$this->sendMailToSai($model);
+    }
 
 }
