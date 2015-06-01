@@ -1,19 +1,28 @@
 <div class="progress">
-   <?php if($hole->daysWaitPast() >= 0): ?>
+
+   <?php if($hole->daysWaitPast() > 0 || $hole->daysWaitPast() === 0  )  { ?>
    <div class="lc">
       <div class="wait">
          <span class="days"><?php echo $hole->daysWaitPast() ?></span>
+
          <span class="day-note"><?php echo Yii::t('template', 'INFO_COUNT_DAYS_WAIT', array('{0}'=>Y::declOfDays($hole->daysWaitPast(), false))) ?></span>
      </div>
    </div>
-   <?php elseif($hole->daysWaitPast()<0): ?>
+   <?php } elseif($hole->daysWaitPast() < 0) { ?>
    <div class="lc">
       <div class="wait">
          <span class="days"><?php echo abs($hole->daysWaitPast()) ?></span>
          <span class="day-note"><?php echo Yii::t('template', 'INFO_COUNT_PAST_DAYS', array('{0}'=>Y::declOfDays(abs($hole->daysWaitPast()), false))) ?></span>
       </div>
    </div>
-   <?php endif; ?>
+
+       <?php } else { ?>
+       <div class="lc">
+           <div class="wait">
+               <span class="days_notsent"><?php echo Yii::t('template', 'INFO_NOTSENT', false) ?></span><br/>
+           </div>
+       </div>
+   <?php } ?>
 <script>
 $(window).keydown(function(e){
 	if (e.keyCode==80 && e.ctrlKey){

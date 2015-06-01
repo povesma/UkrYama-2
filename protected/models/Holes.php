@@ -408,20 +408,25 @@ class Holes extends CActiveRecord
 			return false;
 		}
 
-	}		
+	}
 
+    /**
+     * Функція повертає реальну кількість днів відведених законом "Про звернення громадян"
+     * Якщо дефект не відправлено - поверає false
+     * Використовується в \protected\views\holes\_viewrightpanel.php
+     * @return bool|int
+     *
+     */
+	public function daysWaitPast(){
 
-	public function daysWaitPast(){  // 100 - неприменимо (не отправлено ничего, время ожидания не больше 31 дня), >0 - осталось ждать, <0 - просрочено
+           if($this->STATE != Holes::STATE_INPROGRESS || !$this->getFirstSentDate() || !$this->DATE_FIRST_SENT ) {
 
-           if($this->STATE != Holes::STATE_INPROGRESS) {
-              return 100;
+              return (string)'notsent';
+
+           }else{
+
+               return 31 - ceil((time() - $this->DATE_FIRST_SENT) / 86400);
            }
-	   if (!$this->DATE_FIRST_SENT) {
-		if(!$this->getFirstSentDate()) {
-			return 100;
-		}
-	   }
-           return 31 - ceil((time() - $this->DATE_FIRST_SENT) / 86400);
         }
 	
 /*	

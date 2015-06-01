@@ -134,6 +134,7 @@ return array(
    'INFO_CANDELETEPHOTO'=>'Можно удалить загруженные фотографии',
    'INFO_COUNT_DAYS_WAIT'=>'{0} ждать, когда отремонтируют',
    'INFO_COUNT_PAST_DAYS'=>'{0} просрочено',
+   'INFO_NOTSENT'=>'Не отправлено',
    'INFO_COUNT_DAYS_WAIT_SHORT'=>'ждать {0}',   
    'INFO_COUNT_PAST_DAYS_SHORT'=>'просрочено {0}',
    'SHOW_DEFECTS_STATE'=>'Показать дефекты со статусом',

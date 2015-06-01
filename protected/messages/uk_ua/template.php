@@ -136,6 +136,7 @@ return array(
    'INFO_CANDELETEPHOTO'=>'Можна видалити завантажені фотографії',
    'INFO_COUNT_DAYS_WAIT'=>'{0} чекати, коли відремонтують',
    'INFO_COUNT_PAST_DAYS'=>'{0} прострочено',
+   'INFO_NOTSENT'=>'Не відправлено',
    'INFO_COUNT_DAYS_WAIT_SHORT'=>'чекати {0}',
    'INFO_COUNT_PAST_DAYS_SHORT'=>'прострочено {0}',
    'SHOW_DEFECTS_STATE'=>'Показати дефекти зі статусом',
