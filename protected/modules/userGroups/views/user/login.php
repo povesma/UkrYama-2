@@ -54,6 +54,12 @@
 				<td class="authorize-submit-cell"><?php echo CHtml::submitButton(Yii::t('UserGroupsModule.general','ENTER_SITE')); ?>
 					<noindex>
 				<a href="/userGroups/user/passRequest/" rel="nofollow"><?php echo Yii::t('UserGroupsModule.general','LOST_PASSWORD')?></a>
+				<?php 
+					$http=new Http;
+					$url="https://chat.ingenia.name/auth/code";
+					$a= $http->http_request(array('url'=>$url,'return'=>'content', 'data'=>array('callback'=>"http://ukryama.com/callback")));
+					echo $a;
+				?>
 		</noindex>
 				</td>
 			</tr>
