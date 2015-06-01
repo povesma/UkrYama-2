@@ -111,8 +111,6 @@ return array (
   'REQUIRED_FILDS' => 'Обов\'язкові поля',
   'OR_EMAIL' => 'або',
   'TYPE_USERNAME' => 'Вкажіть',
-  'TYPE_USERNAME' => 'Вкажіть',
-  'TYPE_USERNAME' => 'Вкажіть',
   
   
 );

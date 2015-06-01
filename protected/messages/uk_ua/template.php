@@ -1,7 +1,7 @@
 <?php
 return array(
    'MENU_TOP_ABOUT' => 'Про проект',
-   'MENU_TOP_MAP' => 'Карта',
+   'MENU_TOP_MAP' => 'Мапа',
    'MENU_TOP_STANDARDS' => 'Нормативи',
    'MENU_TOP_STATISTICS' => 'Статистика',
    'MENU_TOP_FAQ' => 'FAQ',
