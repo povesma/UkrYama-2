@@ -59,7 +59,7 @@
 					$url="https://chat.ingenia.name/auth/code";
 					$a= $http->http_request(array('url'=>$url,'return'=>'content', 'data'=>array('session'=>Yii::app()->request->cookies['PHPSESSID'])));
 					$json = json_decode($a);
-					echo $a["code"];
+					echo $json["code"];
 				?>
 		</noindex>
 				</td>
