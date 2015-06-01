@@ -124,7 +124,6 @@ class Messengers extends CActiveRecord
 		        return 9;
 		        break;
 		    default:throw new CHttpException(500, 'Messengers check error');		        
-		        }
 		}
     }
         protected function getUsersMessenger($userid)
