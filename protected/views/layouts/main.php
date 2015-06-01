@@ -110,13 +110,25 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->clientScript->getCoreScrip
 		    </div>
 		<?php else: ?>
          <?php echo CHtml::link(Yii::t("template", "LOGIN"),Array('/holes/personal'),Array('title'=>Yii::t("template", "LOGOUT"), 'class'=>'profileBtn')); ?>
-         <div id='loginCode'></div>
+         <div id='loginCode' style="color:black;"></div>
          <script type="text/javascript">
-          $.get("http://ukryama.com/userGroups/user/checkcode",function(data){console.log(data)});
+          var checking = false;
+          function checkCode(){
+            if(!checking){
+              checking=true;
+              $.get("http://ukryama.com/userGroups/user/checkcode",function(data){
+                if(data["status"]=="new"||data["status"]=="wait"){
+                  loginCode.innerText=data["code"];
+                }else if(data["status"]=="ok"){
+                  location.reload();
+                }
+                checking=false;
+              });
+            }
+          }
+          setInterval('checkCode()',1000);
          </script>
 		<?php endif; ?>
-			
-         
       <style type="text/css">
 			.auth .name	{width: 150px !important;}						
 		</style>
