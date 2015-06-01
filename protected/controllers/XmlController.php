@@ -744,11 +744,11 @@ class XmlController extends Controller
             	if(Yii::app()->request->getParam("as")&&Yii::app()->user->getIsAdmin()){
             		$asID=Yii::app()->request->getParam("as");
             		$identity=new UserGroupsIdentity(null,'','',$asID,true);
-			$identity->authenticate();
-			if(!Yii::app()->user->login($identity,0)) {
-				// perhaps, here's some error
-				// return $this->error('NO_SUCH_USER');
-			}
+					$identity->authenticate();
+					if(!Yii::app()->user->login($identity,0)) {
+						// perhaps, here's some error
+						// return $this->error('NO_SUCH_USER');
+					}
             	}
             	return Yii::app()->user;
             } elseif($model->username && $model->password){

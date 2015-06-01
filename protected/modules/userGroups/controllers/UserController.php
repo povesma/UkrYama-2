@@ -134,7 +134,7 @@ class UserController extends Controller
 			$http=new Http;
 			$url="https://chat.ingenia.name/auth/code";
 			$a= $http->http_request(array('url'=>$url,'return'=>'content', 'data'=>array('session'=>Yii::app()->request->cookies['PHPSESSID'])));
-			$json = json_decode($a);
+			$json = json_decode($a, true);
 			if($json["status"]=="login-ok"){
 				$imID=$json["socialID"];
 				$messenger=Messengers::model()->getMessangerID($json["social"]);
