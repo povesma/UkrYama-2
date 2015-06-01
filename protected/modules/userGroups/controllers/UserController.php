@@ -152,7 +152,7 @@ class UserController extends Controller
 	        	return Yii::app()->user;
 			}
 			if($json["status"]=="awaiting"){
-				echo '{"status":"wait"}';
+				echo '{"status":"wait","code":"'.$json["code"].'"}';
 				return;
 			}
 			if($json["status"]=="new"){
