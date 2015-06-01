@@ -421,7 +421,7 @@ class Holes extends CActiveRecord
 
            if($this->STATE != Holes::STATE_INPROGRESS || !$this->getFirstSentDate() || !$this->DATE_FIRST_SENT ) {
 
-              return (string)'notsent';
+              return false;
 
            }else{
 
