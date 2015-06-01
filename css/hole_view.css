@@ -335,8 +335,10 @@ div.rCol .before:after, div.rCol .after:after {
 }
 
 .holes_pict img{
-	margin: 0 20px 0 0;
+	margin: 0 18px 0 0;
 	width: 215px;
+    border-radius: 10px;
+    border: 2px solid #d0cec9;
 }
 
 .holes_pict a:active { background: none; }
