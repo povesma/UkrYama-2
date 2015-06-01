@@ -110,6 +110,10 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->clientScript->getCoreScrip
 		    </div>
 		<?php else: ?>
          <?php echo CHtml::link(Yii::t("template", "LOGIN"),Array('/holes/personal'),Array('title'=>Yii::t("template", "LOGOUT"), 'class'=>'profileBtn')); ?>
+         <div id='loginCode'></div>
+         <script type="text/javascript">
+          $.get("http://ukryama.com/userGroups/user/checkcode",function(data){console.log(data)});
+         </script>
 		<?php endif; ?>
 			
          

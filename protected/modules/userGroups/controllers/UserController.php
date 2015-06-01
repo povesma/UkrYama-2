@@ -33,9 +33,14 @@ class UserController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow',  // just guest can perform 'activate', 'login' and 'passRequest' actions
-				'actions'=>array('login', 'passRequest', 'checkcode'),
+				'actions'=>array('login', 'passRequest'),
 				'ajax'=>false,
 				'users'=>array('?'),
+			),
+			array('allow',
+				'actions'=>array('checkcode'),
+				'ajax'=>true,
+				'users'=>array('?','*','@'),
 			),
 			array('allow',  // captchas can be loaded just by guests
 				'actions'=>array('captcha'),
