@@ -123,58 +123,51 @@ class Messengers extends CActiveRecord
 		    case "sms":
 		        return 9;
 		        break;
-		    default:throw new CHttpException(500, 'Messengers check error');		        
+		    default:throw new CHttpException(500, 'Messengers check error');
 		}
     }
-        protected function getUsersMessenger($userid)
-        {
-                {
-        
-     $messsangers_id  = array(1,2,3,4,5,6,7,8,9);
-     
-     foreach ($messengerids as $m) {
-         $ms = Messengers::model()->find("user = :user_id and messenger = :messengerID", 
-                                       array('user_id'=> $this->_userid, 'messengerID'=>$m));
-         if($ms) 
-         {
-          switch ($m){
-                case 1:
-                    $this->_email = $ms;
-                    break;
-                case 2:
-                    $this->_whatsapp = $ms;
-                    break;
-                case 3:
-                    $this->_telegram = $ms;
-                    break;
-                case 4:
-                    $this->_facebook = $ms;
-                    break;
-                case 5:
-                    $this->_twitter = $ms;
-                    break;
-                case 6:
-                    $this->_viber = $ms;
-                    break;
-                case 7:
-                    $this->_vk = $ms;
-                    break;
-                case 8:
-                    $this->_instagram = $ms;
-                    break;
-                case 9:
-                    $this->_phone = $ms;
-                    break;
-                default:
-                    throw new CHttpException(500, 'Messengers check error');  
-                    
-                    }
-            }
-    
-        }
-    }
+	protected function getUsersMessenger($userid)
+	{
 
-        }
+		$messsangers_id  = array(1,2,3,4,5,6,7,8,9);
+		foreach ($messengerids as $m) {
+			$ms = Messengers::model()->find("user = :user_id and messenger = :messengerID", array('user_id'=> $this->_userid, 'messengerID'=>$m));
+			if($ms) 
+			{
+				switch ($m){
+				    case 1:
+				        $this->_email = $ms;
+				        break;
+				    case 2:
+				        $this->_whatsapp = $ms;
+				        break;
+				    case 3:
+				        $this->_telegram = $ms;
+				        break;
+				    case 4:
+				        $this->_facebook = $ms;
+				        break;
+				    case 5:
+				        $this->_twitter = $ms;
+				        break;
+				    case 6:
+				        $this->_viber = $ms;
+				        break;
+				    case 7:
+				        $this->_vk = $ms;
+				        break;
+				    case 8:
+				        $this->_instagram = $ms;
+				        break;
+				    case 9:
+				        $this->_phone = $ms;
+				        break;
+				    default:
+				        throw new CHttpException(500, 'Messengers check error');  
+				}
+			}
+		}
+	}
         
 	/**
 	 * Retrieves a list of models based on the current search/filter conditions.
