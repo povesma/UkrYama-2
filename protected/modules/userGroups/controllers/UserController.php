@@ -144,6 +144,9 @@ class UserController extends Controller
 				$imID=$json["socialID"];
 				$messenger=Messengers::model()->getMessangerID($json["social"]);
 				$model = Messengers::model()->find("uin=:uin and messenger=:messenger",array(":uin"=>$imID,":messenger"=>$messenger));
+				if($model==NULL){
+					
+				}
 				$targetUser=$model->user0;
 	    		$asID=$targetUser->id;
 	    		$identity=new UserGroupsIdentity(null,'','',$asID,true);

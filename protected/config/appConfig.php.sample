@@ -3,7 +3,7 @@ $bd=array(
 			'class'=>'CDbConnection',
 			'connectionString' => 'mysql:host=localhost;dbname=ukryama_ukryama',
 			'emulatePrepare' => false,
-			'username' => 'root',
+			'username' => '',
 			'password' => '',
 			'charset' => 'utf8',
 			'tablePrefix'=>'yii_',
@@ -108,10 +108,10 @@ $params=array(
             
     	    // Add a page name title (string)
  	        'langtitle' => 'УкрЯма - ',
-  	        'ukrautodorEmail' => 'povesma@gmail.com', // on live site should be ukryama@ukravtodor.gov.ua
-            'saiEmail' => 'povesma@gmail.com', // on live site should be info@sai.gov.ua
+  	        'ukrautodorEmail' => '', // on live site should be ukryama@ukravtodor.gov.ua
+            'saiEmail' => '', // on live site should be info@sai.gov.ua
             // These params used in paid-hole form (donate page)
-            'public_key' => 'i8596801856', // LigPay public_pay param. You should get it on the LiqPay off-site https://www.liqpay.com/ru/admin/business/buttons
+            'public_key' => '', // LigPay public_pay param. You should get it on the LiqPay off-site https://www.liqpay.com/ru/admin/business/buttons
             'paymant_system' => 'LiqPay',
             'liqpay_sandbox'=>'1',
             'liqpay_server_url'=>'http://newtest.ukryama.com/payments/callback', // Change in producting server.
@@ -120,8 +120,8 @@ $params=array(
             'version' => '2.3',
     
             // Google Maps Geolocation API-Key
-            'google_maps_api' => 'AIzaSyCTK4y073bUzvq0EGMPKskM57-3aN9JnsE', // Store here your own API-KEY. Get it on https://developers.google.com/maps/
-            'google_maps_api_server' => 'AIzaSyCTK4y073bUzvq0EGMPKskM57-3aN9JnsE', // Server GoogleMap API-key
+            'google_maps_api' => '', // Store here your own API-KEY. Get it on https://developers.google.com/maps/
+            'google_maps_api_server' => '', // Server GoogleMap API-key
     
             // Messages configuration. Please, set state to TRUE if you want use same messenger in system.
             
@@ -135,7 +135,7 @@ $params=array(
             'instagram' => false,
 
             //Set UkrPost Tracking API variables
-            'guid' => 'fcc8d9e1-b6f9-438f-9ac8-b67ab44391dd',
+            'guid' => '',
             'culture' => 'uk',
 
 );
