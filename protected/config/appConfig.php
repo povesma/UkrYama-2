@@ -71,7 +71,7 @@ $socials=array( // You can change the providers and their classes.
 				),
 			);
 
-
+// using Yii::app()->params['paramName']
 $params=array(
     //------------------------------------------------------------------------//
 	    // payment notification email
@@ -106,8 +106,8 @@ $params=array(
             'longitude'=>'30.4707367',
             
     	    // Add a page name title (string)
- 	    'langtitle' => 'УкрЯма - ',   
-  	    'ukrautodorEmail' => 'povesma@gmail.com', // on live site should be ukryama@ukravtodor.gov.ua
+ 	        'langtitle' => 'УкрЯма - ',
+  	        'ukrautodorEmail' => 'povesma@gmail.com', // on live site should be ukryama@ukravtodor.gov.ua
             'saiEmail' => 'povesma@gmail.com', // on live site should be info@sai.gov.ua
             // These params used in paid-hole form (donate page)
             'public_key' => 'i8596801856', // LigPay public_pay param. You should get it on the LiqPay off-site https://www.liqpay.com/ru/admin/business/buttons
@@ -136,7 +136,5 @@ $params=array(
             //Set UkrPost Tracking API variables
             'guid' => 'fcc8d9e1-b6f9-438f-9ac8-b67ab44391dd',
             'culture' => 'uk',
-
-
 
 );

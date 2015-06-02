@@ -23,17 +23,17 @@ return array(
 		'application.classes.*',
 		'application.modules.userGroups.*',
 		'application.modules.userGroups.models.*',
-                'application.modules.userGroups.components.*',
-                'application.modules.comments.models.*',
+        'application.modules.userGroups.components.*',
+        'application.modules.comments.models.*',
 		'application.extensions.nestedset.*',
 		'application.extensions.fpdf.*',
 		'application.extensions.*',
 		'application.helpers.*',
-                'ext.eoauth.*',
+        'ext.eoauth.*',
 		'ext.eoauth.lib.*',
 		'ext.lightopenid.*',
 		'ext.eauth.services.*',
-                'ext.YiiMailer.YiiMailer',
+        'ext.YiiMailer.YiiMailer',
 	),
 	'modules'=>array(
 		
@@ -180,7 +180,7 @@ return array(
 		),
 
 		'db'=>$bd,
-		       /*  'log' => array(
+		        'log' => array(
              'class' => 'CLogRouter',
              'routes' => array(
                  array(
@@ -192,19 +192,7 @@ return array(
                      'class' => 'CWebLogRoute',
                  ),
              ),
-         ),*/
-         'log'=>array(
-          'class'=>'CLogRouter',
-          'routes'=>array(
-              array(
-                  'class'=>'ext.yii-debug-toolbar.YiiDebugToolbarRoute',
-                  'ipFilters'=>array('127.0.0.1'),
-              ),
-          ),
-   ),
-                   
-
-		
+         ),
 		'cache'=>array(
             'class'=>'system.caching.CDummyCache',          
         ),
@@ -214,19 +202,9 @@ return array(
             'errorAction'=>'site/error',
         ),			
 
-
 		 'widgetFactory'=>array(
 			'enableSkin'=>true,
             'widgets'=>array(
-                /*'CGridView'=>array(
-                    'cssFile'=>'/css/gridview/styles.css',
-                ),
-                'CTabView'=>array(
-                    'cssFile'=>'/css/CTabView/styles.css',
-                ),
-                'CDetailView'=>array(
-                    'cssFile'=>'/css/CDetailView/styles.css',
-                ),*/
                 'CJuiDatePicker'=>array(
                     'language'=>'ru',
                 ),
@@ -238,15 +216,11 @@ return array(
 					'prevPageLabel'=>'&larr;',
 					'cssFile'=>false,
 					'header'=>false,
-                    //'cssFile'=>false,
+
                 ),
             ),
         ),
-
-
 	),
 
-	// application-level parameters that can be accessed
-	// using Yii::app()->params['paramName']
 	'params'=>array_merge($params, array("upload_ext"=>array('mp4','flv', 'ogv', 'jpg', 'png', 'jpeg', 'mov', 'webm'), "upload_path"=>'/upload/events/')),
 );
