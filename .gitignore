@@ -21,3 +21,4 @@ upload/
 /nbproject/private/
 .idea
 .st1234
+protected/config/appConfig.php
