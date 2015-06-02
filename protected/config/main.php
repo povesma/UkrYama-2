@@ -180,19 +180,20 @@ return array(
 		),
 
 		'db'=>$bd,
-		        'log' => array(
+        /*
+        'log' => array(
              'class' => 'CLogRouter',
              'routes' => array(
                  array(
                      'class' => 'CFileLogRoute',
                      'categories' => 'system.db.CDbCommand',
-                     'levels' => 'trace, info, error, warning',
+                     'levels' => 'error, warning',
                  ),
                  array(
                      'class' => 'CWebLogRoute',
                  ),
              ),
-         ),
+         ),*/
 		'cache'=>array(
             'class'=>'system.caching.CDummyCache',          
         ),

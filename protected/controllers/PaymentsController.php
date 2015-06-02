@@ -27,7 +27,7 @@ class PaymentsController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view','add','done','callback'),
+				'actions'=>array('view','add','done','callback','test'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -108,6 +108,11 @@ class PaymentsController extends Controller
 		));
 	}
 
+    public function actionTest(){
+        $str = 'In My Cart : 11 items';
+        $int = filter_var($str, FILTER_SANITIZE_NUMBER_INT);
+        echo $int;
+    }
 	/**
 	 * Deletes a particular model.
 	 * If deletion is successful, the browser will be redirected to the 'admin' page.
@@ -175,15 +180,7 @@ class PaymentsController extends Controller
    public function actionCallback()
 {
     $model=new Payments;
-        /*
-        // Дані для тесту платіжних систем
-        $model->hole_id = 6;
-        $model->user_id = Yii::app()->user->id;
-        $model->transaction_id = 122121;
-        $model->status = 21212;
-        $model->amount =12323;
-        $model->save();
-        */
+
         // Продакшен заповнення моделі
         if (isset($_POST)) {
         $model->description = $_POST['description'];
@@ -191,9 +188,11 @@ class PaymentsController extends Controller
         $model->status = $_POST['status'];
         $model->amount = $_POST['amount'];
         $model->currency = $_POST['currency'];
-        // Імейл адміну якщо платіж прийшов і успішно збережений у БД
+        $model->hole_id =  filter_var($_POST['description'], FILTER_SANITIZE_NUMBER_INT);
+        // Імейл адміну та юристу якщо платіж прийшов і успішно збережений у БД
         if($model->save()) {
-        	mail(Yii::app()->params['paymentEmail'], Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TITLE'), Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TEXT'));
+        	mail(Yii::app()->params['paymentEmail'], Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TITLE'), Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TEXT',array('{0}'=>$model->hole_id,'{1}' => $model->amount,'{2}' => $model->currency)));
+            mail(Yii::app()->params['paymentEmailLawyer'], Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TITLE'), Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TEXT',array('{0}'=>$model->hole_id,'{1}' => $model->amount,'{2}' => $model->currency)));
         }
 }
 /*

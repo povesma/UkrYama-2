@@ -11,7 +11,7 @@ return array(
    'MANUALS_GIBDD'=>'Довідники ДАI',
    // Email адміну про успішне проходження платежу
    'EMAIL_ADMIN_PAYMENT_ADD_TITLE' => 'Зарахований новий платіж з УкрЯми',
-   'EMAIL_ADMIN_PAYMENT_ADD_TEXT' => 'Доброго дня! Відбувся новий платіж на УкрЯма. Перевірте тут - http://ukryama.com/payments/admin/',
+   'EMAIL_ADMIN_PAYMENT_ADD_TEXT' => 'Доброго дня! Відбувся новий платіж за дефект № {0} у сумі {1} {2}. Перевірте тут - http://ukryama.com/payments/admin/',
    // Сторінка з оплатою дефекту
    'PAYD_TITLE' => 'Ми все зробимо за вас!',
    'PAYD_ADDRESS' => '<strong>Адреса:</strong>',
