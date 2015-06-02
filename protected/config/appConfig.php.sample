@@ -137,5 +137,5 @@ $params=array(
             //Set UkrPost Tracking API variables
             'guid' => '',
             'culture' => 'uk',
-
+            'social_auth_url'=>"",
 );

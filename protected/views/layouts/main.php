@@ -116,11 +116,13 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->clientScript->getCoreScrip
           function checkCode(){
             if(!checking){
               checking=true;
-              $.get("http://ukryama.com/userGroups/user/checkcode",function(data){
+              $.get("/userGroups/user/checkcode",function(data){
                 if(data["status"]=="new"||data["status"]=="wait"){
                   loginCode.innerText=data["code"];
                 }else if(data["status"]=="ok"){
                   location.reload();
+                }else if(data["status"]=="new-ok"){
+                  document.location="/profile/update/";
                 }
                 checking=false;
               });

@@ -60,6 +60,8 @@ public function http_request($params)
     }else{
         $fp = @fsockopen($scheme.$url['host'], $port, $errno, $errstr, $timeout);
     }
+    //DEBUG
+    //if($errno>0) echo $errno.":".$errstr;
     if( $fp )
     {
         /* Mozilla */
@@ -85,8 +87,10 @@ public function http_request($params)
         {
             if( isset($params['data']) && is_array($params['data']) )
             {
-                foreach($params['data'] AS $k => $v)
+                $data="";
+                foreach($params['data'] AS $k => $v){
                     $data .= urlencode($k).'='.urlencode($v).'&';
+                }
                 if( substr($data, -1)=='&' ) $data = substr($data,0,-1);
             }
             $data .= "\r\n\r\n";

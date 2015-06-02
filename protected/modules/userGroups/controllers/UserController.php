@@ -40,7 +40,7 @@ class UserController extends Controller
 			array('allow',
 				'actions'=>array('checkcode'),
 				'ajax'=>true,
-				'users'=>array('?','*','@'),
+				'users'=>array('?'),
 			),
 			array('allow',  // captchas can be loaded just by guests
 				'actions'=>array('captcha'),
@@ -137,25 +137,48 @@ class UserController extends Controller
 		header("Content-Type: application/json");
 		if (Yii::app()->user->isGuest){
 			$http=new Http;
-			$url="https://chat.ingenia.name/auth/code";
+			//$url="https://chat.ingenia.name/auth/code";
+			$url=Yii::App()->params['social_auth_url'];
 			$a= $http->http_request(array('url'=>$url,'return'=>'content', 'data'=>array('session'=>Yii::app()->request->cookies['PHPSESSID'])));
+			if($a===FALSE) {
+				echo '{"status":"500"}';
+				return;
+			}
 			$json = json_decode($a, true);
 			if($json["status"]=="login-ok"){
 				$imID=$json["socialID"];
 				$messenger=Messengers::model()->getMessangerID($json["social"]);
 				$model = Messengers::model()->find("uin=:uin and messenger=:messenger",array(":uin"=>$imID,":messenger"=>$messenger));
+				$newUser=false;
+				$asID=0;
 				if($model==NULL){
-					
+					$newUser=true;
+					$targetUser=new UserGroupsUser();
+					$targetUser->username=$json["socialID"];
+					$targetUser->group_id=2;
+					$targetUser->save();
+					$model=new Messengers();
+					$model->messenger=$messenger;
+					$model->user=$targetUser->primaryKey;
+					$model->uin=$json["socialID"];
+					$model->status=1;
+					$model->save();
+					$asID=$targetUser->primaryKey;
+				}else{
+					$targetUser=$model->user0;
+					$asID=$targetUser->id;
 				}
-				$targetUser=$model->user0;
-	    		$asID=$targetUser->id;
 	    		$identity=new UserGroupsIdentity(null,'','',$asID,true);
 				$identity->authenticate();
 				if(!Yii::app()->user->login($identity,0)) {
 					// perhaps, here's some error
 					// return $this->error('NO_SUCH_USER');
 				}
-				echo '{"status":"ok"}';
+				if($newUser){
+					echo '{"status":"new-ok"}';
+				}else{
+					echo '{"status":"ok"}';
+				}
 	        	//return Yii::app()->user;
 	        	return Yii::app()->user;
 			}
@@ -167,7 +190,7 @@ class UserController extends Controller
 				echo '{"status":"new","code":"'.$json["code"].'"}';
 				return;
 			}
-			echo '{"status":"500"}';
+			echo '{"status":"501"}';
 			return;
 		}else{
 			echo '{"status":"ok"}';
