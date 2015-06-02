@@ -11,15 +11,6 @@
 ?>
 
 <div class="rCol">
-<?
-    if (Yii::app()->user->id == 6) {
-?>
-<div name=warning>  Шановний <h1>openid.yandex.ru/demchmax</h1> Зв'яжіться, будь ласка, з УкрЯмою: 
-<a href=mailto:info@ukryama.com>info@ukryama.com</a><br>
-<p align=right>Дмитро Повесьма<p></div>
-<?      
-    }
-?>
 	<div class="aboutProject-placeholder" <?php echo $showBlock ? 'hidden' : ''?>><a href="#" id="show-about"><?php echo Yii::t('template', 'HOW_WORKS') ?>?</a></div>
 	<div class="aboutProject-wrap <?php echo !$showBlock ? 'hidden' : ''?>">
 		<h2><?php echo Yii::t('template', 'HOW_WORKS') ?></h2>
