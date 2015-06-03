@@ -313,8 +313,8 @@ $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 		</div>
 
 
-         	
-		<!-- фотки -->
+        //TODO: Додати
+		<!-- фотки-------------------------------------------------------------------------- -->
 		<div class="f clearfix">
 			<?php echo $form->labelEx($model,'upploadedPictures'); ?>
 			<?php $this->widget('CMultiFileUpload', array('accept'=>'gif|jpg|png|jpeg', 'model'=>$model, 'attribute'=>'upploadedPictures', 'htmlOptions'=>array('class'=>'mf'), 'denied'=>Yii::t('mf','Невозможно загрузить этот файл'),'duplicate'=>Yii::t('mf','Файл уже существует'),'remove'=>Yii::t('mf','удалить'),'selected'=>Yii::t('mf','Файлы: $file'),)); ?>			
@@ -335,7 +335,7 @@ $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 					echo '</div></div>';
 				} ?>
 
-		<!-- камент -->
+		<!-- камент ---------------------------------------------------------------------------->
 		<div class="f">
 			<?php echo $form->labelEx($model,'COMMENT1'); ?>
 			<?php echo $form->textArea($model,'COMMENT1',array('height'=>"150px")); ?>
@@ -354,3 +354,12 @@ $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 	</div>
 	<!-- /левая колоночка -->
 <?php $this->endWidget(); ?>
+
+                        //функція-міст для перевертання фотографії
+<script>
+                        $("user_images").click(function(){
+                        $.ajax({url: "/holes/rotate", success: function(result){
+                                 $("#user_images").load(location.href + " #user_images");
+                        }});
+                        });
+</script>
