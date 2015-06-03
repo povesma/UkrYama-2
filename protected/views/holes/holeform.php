@@ -313,7 +313,7 @@ $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 		</div>
 
 
-        //TODO: Додати
+
 		<!-- фотки-------------------------------------------------------------------------- -->
 		<div class="f clearfix">
 			<?php echo $form->labelEx($model,'upploadedPictures'); ?>
@@ -330,7 +330,9 @@ $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 					<?php
 					foreach($model->pictures_fresh as $i=>$picture){				
 						echo '<br>'.$form->checkBox($model,"deletepict[$i]", array('class'=>'filter_checkbox','value'=>$picture->id)).' ';
-						echo $form->labelEx($model,"deletepict[$i]", array('label'=>Yii::t('template', 'DELETEPICT'))).'<br><img src="'.$picture->medium.'"><br><br>';
+						echo $form->labelEx($model,"deletepict[$i]", array('label'=>Yii::t('template', 'DELETEPICT'))).'<br><img src="'.$picture->medium.'" class ="hole_update" />';
+                        echo CHtml::image('/images/rotate.png', 'Rotate', array('class'=>'rotate'));
+                        echo "<br><br>";
 					}
 					echo '</div></div>';
 				} ?>
@@ -355,7 +357,7 @@ $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 	<!-- /левая колоночка -->
 <?php $this->endWidget(); ?>
 
-                        //функція-міст для перевертання фотографії
+                        <!--функція-міст для перевертання фотографії-->
 <script>
                         $("user_images").click(function(){
                         $.ajax({url: "/holes/rotate", success: function(result){

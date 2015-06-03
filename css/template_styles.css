@@ -2717,3 +2717,18 @@ a.button{
 }
 
 /* /comment list on main page */
+.rotate{
+    position:absolute;
+    top:0;
+    left:0;
+}
+
+.hole_update{
+    position: relative;
+}
+
+.hole_update:hover {
+    display: block;
+    text-align: right;
+
+}

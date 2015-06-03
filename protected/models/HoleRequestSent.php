@@ -25,7 +25,7 @@ class HoleRequestSent extends CActiveRecord
         $xml=simplexml_load_file($response);
         //print_r($xml->code); //for testing purposes only
         if(in_array($xml->code,  $this->ukrpostcodes())){
-            $this->ddate = $xml->eventdate;
+            $this->ddate = date("Y-m-d", strtotime($xml->eventdate));
             $this->status=1;
             $this->update();
         }else{
