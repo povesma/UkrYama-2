@@ -328,15 +328,34 @@ $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 					?>
 					<div id="overshadow"><span class="command" onclick="document.getElementById('picts').style.display=document.getElementById('picts').style.display=='block'?'none':'block';"><?php echo Yii::t('template', 'INFO_CANDELETEPHOTO')?></span><div class="picts" id="picts">
 					<?php
-					foreach($model->pictures_fresh as $i=>$picture){				
+					foreach($model->pictures_fresh as $i=>$picture){
 						echo '<br>'.$form->checkBox($model,"deletepict[$i]", array('class'=>'filter_checkbox','value'=>$picture->id)).' ';
-						echo $form->labelEx($model,"deletepict[$i]", array('label'=>Yii::t('template', 'DELETEPICT'))).'<br><img src="'.$picture->medium.'" class ="hole_update" />';
+						echo $form->labelEx($model,"deletepict[$i]", array('label'=>Yii::t('template', 'DELETEPICT'))).'<br><a href="#" data-imagename="'.$picture->filename.'" data-holeid="'.$model->ID.'" class ="hole_update"><img src="'.$picture->medium.'" /></a>';
                         echo CHtml::image('/images/rotate.png', 'Rotate', array('class'=>'rotate'));
                         echo "<br><br>";
 					}
 					echo '</div></div>';
 				} ?>
+                            <!--функція-міст для перевертання фотографії-->
+                            <script type="application/javascript">
 
+                                $("hole_update").click(function(){
+                                    console.log("Клік по фото")
+                                    var imagename = $(this).attr("data-imagename");
+                                    var holeid = $(this).attr("data-holeid");
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/holes/rotate',
+                                        data: 'image='+imagename+'&holeid='+holeid,
+                                        success: function(data){
+
+                                            $("#hole_update").load(location.href + " #hole_update");
+
+                                        }
+
+                                    });
+                                });
+                            </script>
 		<!-- камент ---------------------------------------------------------------------------->
 		<div class="f">
 			<?php echo $form->labelEx($model,'COMMENT1'); ?>
@@ -357,11 +376,3 @@ $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 	<!-- /левая колоночка -->
 <?php $this->endWidget(); ?>
 
-                        <!--функція-міст для перевертання фотографії-->
-<script>
-                        $("user_images").click(function(){
-                        $.ajax({url: "/holes/rotate", success: function(result){
-                                 $("#user_images").load(location.href + " #user_images");
-                        }});
-                        });
-</script>

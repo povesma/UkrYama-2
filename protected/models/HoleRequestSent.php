@@ -32,15 +32,6 @@ class HoleRequestSent extends CActiveRecord
             return false;
         }
 
-
-        /* TODO: Для чого код знизу?
-
-		if ($this->status != 1) { // не доставлено
-			return 0;
-		} else { // Було доставлено. інформувати користувача? тут або там, де викликається функція? Вирішив там, де викликається
-
-		}
-*/
 	}
 
     protected function ukrpostcodes(){
