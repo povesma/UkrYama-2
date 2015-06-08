@@ -28,7 +28,9 @@
 </td>
 	<input type="hidden" name="mailtype" id="mailtype">
 	<input name="ref" type="hidden" value="<?= $ref ?>">
-	<tr><td><div style="display:none" id="wd" name="wd">Коли:<br><input type="date" max="<?= date('Y-m-d',time()) ?>" name="when" id="when"><br><input id="subwd" name="subwd" type="submit" value="OК"></div></td></tr>
+	<tr><td><div style="display:none" id="wd" name="wd">Коли:<br>
+                    <input type="text"  placeholder="напр. 2015-11-25" onfocus="this.placeholder = ''" onblur="this.placeholder = 'напр. 2015-11-25' />
+                    <input type="date" max="<?= date('Y-m-d',time())?>"  name="when" id="when"><br><input id="subwd" name="subwd" type="submit" value="OК"></div></td></tr>
 	</form>
 </tr>
 	<tr>
