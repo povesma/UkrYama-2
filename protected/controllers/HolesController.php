@@ -620,18 +620,19 @@ class HolesController extends Controller
 					$first_auth = $fType->name;
 				}
 
+   
 		$_data = array(
 			"ref" => "$id",
 			"to_name" =>$to_name,
 			"to_address"=>$to_address,
 			"from_name"=>$from,
 			"first_auth"=>$first_auth,
-			"sent_date"=>date("Y-m-d", $sent_date),
+			//"sent_date"=>date("Y-m-d", $sent_date),
 			"delivery_date"=>$delivery_date,
 			"from_address"=>$postaddress,
-			"when"=>strftime("%e ".Yii::t('month', date("n"))." %Y", $model->DATE_CREATED ? $model->DATE_CREATED : time()),
+            "when"=>date("d ".Yii::t('month',date("n",$model->DATE_CREATED) )." Y", $model->DATE_CREATED),
 			"where"=>$model->ADDRESS,
-			"date"=>strftime("%e ".Yii::t('month', date("n"))." %Y", time()),
+            "date"=>date("d ".Yii::t('month',date("n",time()) )." Y", time()),
 			"init"=>$signature,
 			"c_photos"=>count($pics),
 			"files"=>$photos,
