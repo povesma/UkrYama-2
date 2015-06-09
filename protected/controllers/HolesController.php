@@ -31,7 +31,7 @@ class HolesController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('getauth','TrackMail','update', 'personal','personalDelete','requestForm','sent','notsent','reply','fix', 'defix', 'delanswerfile','myarea', 'delpicture','selectHoles','review'),
+				'actions'=>array('getauth','TrackMail','update', 'personal','personalDelete','requestForm','sent','notsent','reply','fix', 'defix', 'delanswerfile','myarea', 'delpicture','selectHoles','review','test2'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -125,21 +125,7 @@ class HolesController extends Controller
 		return;
 	}
 	public function actionTest2(){
-        /*
-	echo "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script><style>span{cursor:pointer;}</style>";
-	$holes = Holes::model()->findAll(array('order'=>'ADDRESS'));
-	foreach($holes as $hole){
-		$region=$hole->region();
-		if(!count($region)){
-			$holetype=$hole->type->findByPk(array("id"=>$hole->TYPE_ID,"lang"=>"ru"));
-			echo "<div id='hid_".$hole->ID."'><hr>Hole ID:".$hole->ID."<br>\nAddress: ".$hole->ADDRESS."<br>\nType: ".$holetype->alias."<br>\n Best guess for Region is: ".$region->name.$top."<br>\nAuthority suggested: ".$auth[0]->name."<br>\n";
-			echo CHtml::link(Yii::t('holes_view', 'EDIT'), array('update', 'id'=>$hole->ID), array('target'=>'_blank'));
-			echo "<div><span onClick='$(\"#hid_".$hole->ID."\").remove();' style='background-color:green'>FIXED</span></div>";
-			echo "</div>";
-		}
-	}
-		return;
-        */
+       echo Yii::app()->user->id;
 	}
 
 	public function actionFindCity()
@@ -620,7 +606,7 @@ class HolesController extends Controller
 					$first_auth = $fType->name;
 				}
 
-   
+
 		$_data = array(
 			"ref" => "$id",
 			"to_name" =>$to_name,
@@ -1161,7 +1147,7 @@ class HolesController extends Controller
 			'model'=>$model,
 		));
 	}
-	
+
 	public function actionItemsSelected()
 	{
 	if (isset ($_POST['submit_mult']) && isset($_POST['itemsSelected'])) {
@@ -1367,4 +1353,6 @@ class HolesController extends Controller
         }
 
     }
+
+
 }
