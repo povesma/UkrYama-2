@@ -17,27 +17,27 @@
 class Messengers extends CActiveRecord
 {
     
-    protected $_userid;
+    public $_userid;
     
-    protected $_facebook;
+    public $_facebook;
        
-    protected $_viber;
+    public $_viber;
     
-    protected $_telegram;
+    public $_telegram;
       
-    protected $_whatsapp;
+    public $_whatsapp;
        
-    protected $_twitter;
+    public $_twitter;
     
-    protected $_instagram;
+    public $_instagram;
     
-    protected $_email;
+    public $_email;
 
-    protected $_vk;
+    public $_vk;
     
-    protected $_instagram;
+    public $_instagram;
     
-    protected $_phone;
+    public $_phone;
     
     
 	/**
