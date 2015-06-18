@@ -35,8 +35,6 @@ class Messengers extends CActiveRecord
 
     public $_vk;
     
-    public $_instagram;
-    
     public $_phone;
     
     
