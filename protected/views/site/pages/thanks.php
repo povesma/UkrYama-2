@@ -14,8 +14,6 @@
    			
     <li>Команда веб-студии &laquo;<a href="http://greensight.ru/" alt="Главная страница сайта студии «Гринсайт&raquo;" target="_blank" >Greensight</a>» <i>(отдельное спасибо Дмитрию Никифорову)</i>;</li>
    			
-    <li>Сергей Рыжиков — генеральный директор «<a href="http://www.1c-bitrix.ru/" alt="Система управления интернет-проектами" target="_blank" >1С-Битрикс</a>»;</li>
-   			
     <li>Хостинг-компания — «<a href="http://ukraine.com.ua/" alt="Профессиональный хостинг" target="_blank" >Украина</a>», <noindex>«<a href="http://ihc.com.ua/" target="_blank" >Интернет-хостинг центр</a>»</noindex>;</li>
    			
     <li><a href="http://www.free-lance.ru/users/anmari" alt="Ан Мари" target="_blank" >Марианна</a> нарисовала отличный логотип;</li>
@@ -39,6 +37,7 @@
     <tbody>
       <tr> 		<td style="border-image: initial; "><strong>Имя</strong></td> 		<td style="border-image: initial; "><strong>Сумма&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td> 		<td style="border-image: initial; "><strong>Примечание&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></td> 		<td style="border-image: initial; "><strong>Дата</strong></td> 	</tr>
      	
+      <tr> 		<td style="border-image: initial; ">Пользователь ID 6600</td> 		<td style="border-image: initial; ">10000 грн</td> 		<td style="border-image: initial; ">donate</td> 		<td style="border-image: initial; ">27.05.2015 <a href=../reportjune2015>отчет<a/></td> 	</tr>
       <tr> 		<td style="border-image: initial; ">Петр Нек</td> 		<td style="border-image: initial; ">100 грн</td> 		<td style="border-image: initial; ">donate</td> 		<td style="border-image: initial; ">26.12.2011</td> 	</tr>
      	
       <tr> 		<td style="border-image: initial; ">Сергей Думинский</td> 		<td style="border-image: initial; ">&nbsp;&nbsp;20 грн</td> 		<td style="border-image: initial; ">donate</td> 		<td style="border-image: initial; ">12.12.2011</td> 	</tr>
