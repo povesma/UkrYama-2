@@ -23,6 +23,11 @@ class ProfileController extends Controller
 				#'ajax'=>false,
 				'users'=>array('@'),
 			),
+			array('allow',
+				'actions'=>array('checkcode'),
+				'ajax'=>true,
+				'users'=>array('?'),
+			),
 			array('deny',  // deny all users
 				'users'=>array('*'),
 			),
@@ -118,7 +123,58 @@ class ProfileController extends Controller
 		}		
 		$this->render('update',array('miscModel'=>$miscModel,'passModel'=>$passModel, 'profiles' => $profile_models,'messagesModel'=>$messagesModel,'CreateMesModel'=>$CreateMesModel), false, true);
 	}
-	
+
+	public function actionCheckcode(){
+		header("Content-Type: application/json");
+		if (!Yii::app()->user->isGuest){
+			$http=new Http;
+			$url=Yii::App()->params['social_auth_url'];
+			$a= $http->http_request(array('url'=>$url,'return'=>'content', 'data'=>array('session'=>Yii::app()->request->cookies['PHPSESSID'])));
+			if($a===FALSE) {
+				echo '{"status":"500"}';
+				return;
+			}
+			$json = json_decode($a, true);
+			if($json["status"]=="login-ok"){
+				$imID=$json["socialID"];
+				$messenger=Messengers::model()->getMessangerID($json["social"]);
+				$model = Messengers::model()->find("uin=:uin and messenger=:messenger",array(":uin"=>$imID,":messenger"=>$messenger));
+
+				if($model==NULL){
+					$model = Messengers::model()->find("user=:user and messenger=:messenger",array(":user"=>Yii::app()->user->id,":messenger"=>$messenger));
+					if($model==NULL){
+						$model=new Messengers();
+						$model->messenger=$messenger;
+						$model->user=Yii::app()->user->id;
+						$model->uin=$json["socialID"];
+						$model->status=1;
+						$model->save();
+					}else{
+						$model->uin=$json["socialID"];
+						$model->status=1;
+						$model->update();
+					}
+					echo '{"status":"ok", "social":"'.$json["social"].'","socialID":"'.$json["socialID"].'"}';
+					return;
+				}else{
+					echo '{"status":"used"}';
+				}
+				return;
+			}
+			if($json["status"]=="awaiting"){
+				echo '{"status":"wait","code":"'.$json["code"].'"}';
+				return;
+			}
+			if($json["status"]=="new"){
+				echo '{"status":"new","code":"'.$json["code"].'"}';
+				return;
+			}
+			echo '{"status":"501"}';
+			return;
+		}else{
+			echo '{"status":"502"}';
+		}
+	}
 	public function actionMyarea()
 	{
 	    $this->pageTitle = Yii::t('titles', 'PROFILE_AREA');

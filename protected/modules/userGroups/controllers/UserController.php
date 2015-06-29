@@ -137,7 +137,6 @@ class UserController extends Controller
 		header("Content-Type: application/json");
 		if (Yii::app()->user->isGuest){
 			$http=new Http;
-			//$url="https://chat.ingenia.name/auth/code";
 			$url=Yii::App()->params['social_auth_url'];
 			$a= $http->http_request(array('url'=>$url,'return'=>'content', 'data'=>array('session'=>Yii::app()->request->cookies['PHPSESSID'])));
 			if($a===FALSE) {
@@ -163,7 +162,7 @@ class UserController extends Controller
 					$model->uin=$json["socialID"];
 					$model->status=1;
 					$model->save();
-					$asID=$targetUser->primaryKey;
+					$asID=(int)$targetUser->primaryKey;
 				}else{
 					$targetUser=$model->user0;
 					$asID=$targetUser->id;

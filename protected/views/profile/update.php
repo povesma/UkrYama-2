@@ -249,29 +249,47 @@
         echo CHtml::beginForm(array('id'=>'user-groups-misc-form')); ?>
 
                                   <div class="row">
-                    
-                        <label>Telegram</label>                        <input type="text" value="<?php echo $messagesModel->_telegram;?>" name="Telegram" id="Telegram" />                        <input checked="checked" type="checkbox" value="0" name="status_FaceBook" id="status_FaceBook" />Надсилати повідомлення на цей мессенджер                             
+<div id='socialCode' style="color:black;font-weigt:bold;"></div>
+                        <label>Telegram</label>                        <input type="text" value="<?php echo $messagesModel->_telegram;?>" name="Telegram" id="telegram" />                        <input checked="checked" type="checkbox" value="0" name="status_FaceBook" id="status_FaceBook" />Надсилати повідомлення на цей мессенджер                             
                             </div>
                             <div class="row">
                     
-                        <label>FaceBook</label>                        <input type="text" value="<?php echo $messagesModel->_facebook;?>" name="FaceBook" id="FaceBook" />                        <input checked="checked" type="checkbox" value="0" name="status_FaceBook" id="status_FaceBook" />Надсилати повідомлення на цей мессенджер                             
+                        <label>FaceBook</label>                        <input type="text" value="<?php echo $messagesModel->_facebook;?>" name="FaceBook" id="facebook" />                        <input checked="checked" type="checkbox" value="0" name="status_FaceBook" id="status_FaceBook" />Надсилати повідомлення на цей мессенджер                             
                             </div>
 
                                                        
                             <div class="row">
                     
-                        <label>Viber</label>                        <input type="text" value="<?php echo $messagesModel->_viber;?>" name="Viber" id="Viber" />                        <input type="checkbox" value="1" name="status_Viber" id="status_Viber" />Надсилати повідомлення на цей мессенджер                             
+                        <label>Viber</label>                        <input type="text" value="<?php echo $messagesModel->_viber;?>" name="Viber" id="viber" />                        <input type="checkbox" value="1" name="status_Viber" id="status_Viber" />Надсилати повідомлення на цей мессенджер                             
                             </div>
                                  <div class="row">
                     
-                        <label>WhatsApp</label>                        <input type="text" value="<?php echo $messagesModel->_whatsapp;?>" name="whatsapp" id="Viber" />                        <input type="checkbox" value="1" name="status_Viber" id="status_Viber" />Надсилати повідомлення на цей мессенджер                             
+                        <label>WhatsApp</label>                        <input type="text" value="<?php echo $messagesModel->_whatsapp;?>" name="whatsapp" id="viber" />                        <input type="checkbox" value="1" name="status_Viber" id="status_Viber" />Надсилати повідомлення на цей мессенджер                             
                             </div>
                       
                            <div class="row">
                     
                         <label>Twitter</label>                        <input type="text" value="<?php echo $messagesModel->_twitter;?>" name="twitter" id="twitter" />                        <input type="checkbox" value="1" name="status_Viber" id="status_Viber" />Надсилати повідомлення на цей мессенджер                             
                             </div>
-                      
+         <script type="text/javascript">
+          var checking = false;
+          function checkCode(){
+            if(!checking){
+              checking=true;
+              $.get("/profile/checkcode",function(data){
+                if(data["status"]=="new"||data["status"]=="wait"){
+                  socialCode.innerText=data["code"];
+                }else if(data["status"]=="ok"){
+                  $("#"+data["social"]).val(data["socialID"]);
+                }else if(data["status"]=="used"){
+                  alert("Эта учетная запись социальной сети уже привязана!");
+                }
+                checking=false;
+              });
+            }
+          }
+          setInterval('checkCode()',1000);
+         </script>
                              <?php
                           
                     echo CHtml::endForm(); 
