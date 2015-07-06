@@ -293,9 +293,9 @@ class XmlController extends Controller
 			$typemodel=HoleTypes::model()->find('alias="'.$type.'"');
 			if (!$typemodel) $this->error('INCORRECT_TYPE');
 			elseif (!$typemodel->published) $this->error('DEPRECATED_TYPE'); 
-			}
+		}
 		
-	//	$addressArr    = RfSubjects::model()->Address($address);
+		$addressArr    = RfSubjects::model()->Address($address);
 	//	$subject_rf = $addressArr['subject_rf'];
 		$city       = $addressArr['city'];
 		$address    = $addressArr['address'];
@@ -316,14 +316,14 @@ class XmlController extends Controller
  * 		if(!$subject_rf || $subject_rf==0) $this->error('CANNOT_REALISE_SUBJECTRF');
  */
 	
-		if(!$city) $this->error('CANNOT_REALISE_CITY');
+		// if(!$city) $this->error('CANNOT_REALISE_CITY');
 		
 		$tags=Array();
 		$model=new Holes;		
 		$model->USER_ID=$user->id;	
 		$model->DATE_CREATED=time();
 		//$model->region_id=$subject_rf;
-		$model->ADR_CITY=trim($city);
+		// $model->ADR_CITY=trim($city);
 		$model->ADDRESS=trim($address);
 		if ($user->level > 50) $model->PREMODERATED=1;
 		else $model->PREMODERATED=0;
