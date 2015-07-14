@@ -377,11 +377,14 @@ class HolesController extends Controller
   
 
 		if (!$model->isUserHole && Yii::app()->user->level < 50){
-			if ($model->STATE==Holes::STATE_FIXED || !$model->requests || !$model->requests_user[0]->answers || $model->user_fix)
-				throw new CHttpException(403,'Доступ запрещен.');
+			if ($model->STATE==Holes::STATE_FIXED || !$model->requests ||  $model->user_fix) { // !$model->requests_user[0]->answers || - требование ответов на запросы - лишнее
+				$all_conds= '$model.STATE: '.$model->STATE.', $model->requests: '.$model->requests.',  $model->requests_user[0]->answers: '.$model->requests_user[0]->answers.', $model->user_fix: '.$model->user_fix;
+				throw new CHttpException(403,'Доступ запрещен ибо не админ и не владелец ямы, или яма уже исправлена или запросы не отправлены, или ответы не получены. '.$all_conds);
+			}
 		}		
-		elseif ($model->STATE==Holes::STATE_FIXED && $model->user_fix)
-				throw new CHttpException(403,'Доступ запрещен.');		
+		elseif ($model->STATE==Holes::STATE_FIXED && $model->user_fix) {
+				throw new CHttpException(403,'Доступ запрещен, т.к. уже отмечена исправленной.');		
+		}
 			
 		$model->scenario='fix';
 		
