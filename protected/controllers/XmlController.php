@@ -295,10 +295,10 @@ class XmlController extends Controller
 			elseif (!$typemodel->published) $this->error('DEPRECATED_TYPE'); 
 		}
 		
-		$addressArr    = RfSubjects::model()->Address($address);
+	//	$addressArr    = RfSubjects::model()->Address($address);
 	//	$subject_rf = $addressArr['subject_rf'];
-		$city       = $addressArr['city'];
-		$address    = $addressArr['address'];
+	//	$city       = $addressArr['city'];
+	//	$address    = $addressArr['address'];
 		
 /**
  * 		if((!$subject_rf || !$city || !$address) && ($latitude && $longitude)){
