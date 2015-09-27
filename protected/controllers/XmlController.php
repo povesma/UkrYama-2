@@ -340,7 +340,7 @@ class XmlController extends Controller
  * 		else $model->gibdd_id=$gibdd_id;
  */
 		
-		if (!$model->upploadedPictures) $this->error('NO_FILES'); 
+		if (empty($model->upploadedPictures)) $this->error('NO_FILES'); 
 		
 		$model->validate();
 		if ($model->getError('upploadedPictures')) $this->getUploadError($model->getError('upploadedPictures'));  
