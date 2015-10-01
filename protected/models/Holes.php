@@ -204,8 +204,35 @@ class Holes extends CActiveRecord
 		return null;
 	}		
 	
+	private $_files = [];
+	
 	public function getUpploadedPictures(){
-		return CUploadedFile::getInstancesByName('');
+	    if(empty($this->_files)){
+		if(!empty($_FILES)){
+		    foreach ($_FILES as $file){
+			if(is_array($file['name'])){
+			    for($i=0; $i < count($file['name']); $i++)
+				$this->_files []= $this->_getInstanseFromFile ([
+				    'name' => $file['name'][$i], 
+				    'tmp_name' => $file['tmp_name'][$i], 
+				    'type' => $file['type'][$i], 
+				    'size' => $file['size'][$i], 
+				    'error' => $file['error'][$i]
+				]);
+			}else
+			    $this->_files []= $this->_getInstanseFromFile($file);
+		    }
+		}
+	    }
+	    return $this->_files;
+	}
+	
+	private function _getInstanseFromFile($fileInfo){
+	    return new CUploadedFile( $fileInfo['name'], 
+				    $fileInfo['tmp_name'], 
+				    $fileInfo['type'], 
+				    $fileInfo['size'], 
+				    $fileInfo['error']);
 	}
 	
 	public function savePictures(){				
@@ -214,7 +241,7 @@ class Holes extends CActiveRecord
 			if ($pictmodel)$pictmodel->delete();
 		}
 
-		$imagess = CUploadedFile::getInstancesByName('Holes[upploadedPictures]');
+		$imagess = $this->getUpploadedPictures();
 
 		//print_r($imagess);exit;
 		$id=$this->ID;
