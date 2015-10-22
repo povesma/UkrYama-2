@@ -235,13 +235,17 @@ class Holes extends CActiveRecord
 				    $fileInfo['error']);
 	}
 	
+	public function countUpploadFiles(){
+	    return count($this->_files);
+	}
+	
 	public function savePictures(){				
 		foreach ($this->deletepict as $pictid) {
 			$pictmodel=HolePictures::model()->findByPk((int)$pictid);  
 			if ($pictmodel)$pictmodel->delete();
 		}
 
-		$imagess = $this->getUpploadedPictures();
+			$imagess = $this->getUpploadedPictures();
 
 		//print_r($imagess);exit;
 		$id=$this->ID;
@@ -417,7 +421,7 @@ class Holes extends CActiveRecord
 		}
 
 	}		
-	
+
 /*	
 	public function afterFind(){
 		//вычисляем количество дней с момента отправки
@@ -648,12 +652,24 @@ class Holes extends CActiveRecord
 				)
 		));
 	}
+	
+	public function xmlSearch(){
+	    $dataProvider = $this->search();
+	    $dataProvider->pagination = false;	    
+	    $dataProvider->criteria->with = [];
+	    
+	    $dataProvider->criteria->offset = (int) $this->offset;//$billpage == null ? 0 : ($billpage - 1) * setting('defaultPageSize') - 2;
+	    $dataProvider->criteria->limit = (int) $this->limit;//setting('defaultPageSize') + 4;
+
+	    return $dataProvider;
+	}
+	
 	public function region(){
 		$address=preg_split("/,/",$this->ADDRESS);
 			$sub=$address[0];
 			if(strpos($sub,"місто")!==false){
 				$sub=mb_substr($sub,6,20,'UTF-8');
-			}
+				}
 			$name=mb_strtolower($sub,'UTF-8');
 			$region=Region::model()->find('LOWER(name) like :name',array(':name'=>$name));
 			if(strlen($region->id)>0) 

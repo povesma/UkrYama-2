@@ -67,15 +67,17 @@ class XmlController extends Controller
 		if (Yii::app()->request->getParam('filter_city')) $model->ADR_CITY=Yii::app()->request->getParam('filter_city');
 		if (Yii::app()->request->getParam('filter_status')) $model->STATE=Yii::app()->request->getParam('filter_status');
 		if (Yii::app()->request->getParam('filter_type')) $model->type_alias=Yii::app()->request->getParam('filter_type');
-		$page=Yii::app()->request->getParam('page');
+//		$page=Yii::app()->request->getParam('page');
 		if (!$model->limit) $model->limit=30;
-		$offset=Yii::app()->request->getParam('offset');
-		if (!$offset) $offset=0;
-		$data=$model->search();
+		$model->offset = (int) (Yii::app()->request->getParam('offset') ? : 0);
 		
-		if (!$page)
-			$data->pagination->currentPage=(int)($offset/$model->limit);
-		else $data->pagination->currentPage=$page;
+		$data=$model->xmlSearch();
+		
+//		if (!$page)
+//			$data->pagination->currentPage=(int)($offset/$model->limit);
+//		else $data->pagination->setCurrentPage ($page);
+		//else $data->pagination->currentPage=$page;
+
 		$tags=Array();
 		if (!$model->ID){
 		$tags[]=CHtml::tag('sort', array (), false, false);
@@ -90,7 +92,7 @@ class XmlController extends Controller
 		$tags[]=CHtml::closeTag('filter');
 		$tags[]=CHtml::tag('navigation', array (), false, false);
 			$tags[]=CHtml::tag('item', array ('code'=>'limit'), CHtml::encode($model->limit), true);
-			$tags[]=CHtml::tag('item', array ('code'=>'offset'), CHtml::encode($offset/$model->limit), true);
+			$tags[]=CHtml::tag('item', array ('code'=>'offset'), CHtml::encode($model->offset), true);
 		$tags[]=CHtml::closeTag('navigation');
 		}
 		$tags[]=CHtml::tag('defectslist', array (), false, false);
@@ -293,12 +295,12 @@ class XmlController extends Controller
 			$typemodel=HoleTypes::model()->find('alias="'.$type.'"');
 			if (!$typemodel) $this->error('INCORRECT_TYPE');
 			elseif (!$typemodel->published) $this->error('DEPRECATED_TYPE'); 
-			}
+		}
 		
 	//	$addressArr    = RfSubjects::model()->Address($address);
 	//	$subject_rf = $addressArr['subject_rf'];
-		$city       = $addressArr['city'];
-		$address    = $addressArr['address'];
+//		$city       = $addressArr['city'];
+//		$address    = $addressArr['address'];
 		
 /**
  * 		if((!$subject_rf || !$city || !$address) && ($latitude && $longitude)){
@@ -316,14 +318,14 @@ class XmlController extends Controller
  * 		if(!$subject_rf || $subject_rf==0) $this->error('CANNOT_REALISE_SUBJECTRF');
  */
 	
-		if(!$city) $this->error('CANNOT_REALISE_CITY');
+		// if(!$city) $this->error('CANNOT_REALISE_CITY');
 		
 		$tags=Array();
 		$model=new Holes;		
 		$model->USER_ID=$user->id;	
 		$model->DATE_CREATED=time();
 		//$model->region_id=$subject_rf;
-		$model->ADR_CITY=trim($city);
+		// $model->ADR_CITY=trim($city);
 		$model->ADDRESS=trim($address);
 		if ($user->level > 50) $model->PREMODERATED=1;
 		else $model->PREMODERATED=0;
@@ -340,14 +342,16 @@ class XmlController extends Controller
  * 		else $model->gibdd_id=$gibdd_id;
  */
 		
-		if (empty($model->upploadedPictures)) $this->error('NO_FILES'); 
+		if (!$model->upploadedPictures) $this->error('NO_FILES'); 
+		
+		if ($model->countUpploadFiles() > 5) $this->error('TOO_MANY_FILES');
 		
 		$model->validate();
 		if ($model->getError('upploadedPictures')) $this->getUploadError($model->getError('upploadedPictures'));  
 		
 			if($model->save() && $model->savePictures())
 				$tags[]=CHtml::tag('callresult', array ('result'=>1, 'inserteddefectid'=>$model->ID), 'ok', true);
-			else $this->error('CANNOT_ADD_DEFECT');			
+			else $this->error('CANNOT_ADD_DEFECT');
 		
 		$this->renderXml($tags);
 	}
@@ -720,18 +724,18 @@ class XmlController extends Controller
 			$model->password=Yii::app()->request->getParam('password');
             $model->rememberMe=0;
 
-			if (Yii::app()->request->getParam('passwordhash')) 
-            {
+			if (Yii::app()->request->getParam('passwordhash'))
+			{
 				$model->password=Yii::app()->request->getParam('passwordhash');
 				$loginmode='fromHash';
 			}
-                
+
 
             
 			if ($model->validate() && $model->login($loginmode))
             {
                 
-                return Yii::app()->user;   
+            	return Yii::app()->user;
                  
             } elseif($model->username && $model->password) {
                 
@@ -743,10 +747,10 @@ class XmlController extends Controller
            
                 $this->error('AUTHORIZATION_REQUIRED');
                 
-            }		
+            }
 				
-		}
-        
+	}
+	
 		else return Yii::app()->user; 
         
 	}
