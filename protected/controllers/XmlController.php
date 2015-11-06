@@ -66,16 +66,19 @@ class XmlController extends Controller
 		if (Yii::app()->request->getParam('filter_rf_subject_id')) $model->region_id=(int)Yii::app()->request->getParam('filter_rf_subject_id');
 		if (Yii::app()->request->getParam('filter_city')) $model->ADR_CITY=Yii::app()->request->getParam('filter_city');
 		if (Yii::app()->request->getParam('filter_status')) $model->STATE=Yii::app()->request->getParam('filter_status');
-		if (Yii::app()->request->getParam('filter_type')) $model->type_alias=Yii::app()->request->getParam('filter_type');
-		$page=Yii::app()->request->getParam('page');
+		if (Yii::app()->request->getParam('filter_type')) $model->TYPE_ID = Yii::app()->db->createCommand()->select('id')->from(HoleTypes::model()->tableName())->where('alias =:alias',[ ':alias' => Yii::app()->request->getParam('filter_type')])->queryScalar();
+		//if (Yii::app()->request->getParam('filter_type')) $model->type_alias=Yii::app()->request->getParam('filter_type');
+//		$page=Yii::app()->request->getParam('page');
 		if (!$model->limit) $model->limit=30;
-		$offset=Yii::app()->request->getParam('offset');
-		if (!$offset) $offset=0;
-		$data=$model->search();
+//		$offset=Yii::app()->request->getParam('offset');
+//		if (!$offset) $offset=0;
+//		$data=$model->search();
+		$model->offset = (int) (Yii::app()->request->getParam('offset') ? : 0);
 		
-		if (!$page)
-			$data->pagination->currentPage=(int)($offset/$model->limit);
-		else $data->pagination->currentPage=$page;
+//		if (!$page)
+//			$data->pagination->currentPage=(int)($offset/$model->limit);
+//		else $data->pagination->currentPage=$page;
+		$data=$model->xmlSearch();
 		$tags=Array();
 		if (!$model->ID){
 		$tags[]=CHtml::tag('sort', array (), false, false);
@@ -86,11 +89,11 @@ class XmlController extends Controller
 			$tags[]=CHtml::tag('item', array ('code'=>'filter_rf_subject_id'), CHtml::encode($model->region_id), true);
 			$tags[]=CHtml::tag('item', array ('code'=>'filter_city'), CHtml::encode($model->ADR_CITY), true);
 			$tags[]=CHtml::tag('item', array ('code'=>'filter_status'), CHtml::encode($model->STATE), true);
-			$tags[]=CHtml::tag('item', array ('code'=>'filter_type'), CHtml::encode($model->type_alias), true);			
+			$tags[]=CHtml::tag('item', array ('code'=>'filter_type'), CHtml::encode(Yii::app()->request->getParam('filter_type')), true);			
 		$tags[]=CHtml::closeTag('filter');
 		$tags[]=CHtml::tag('navigation', array (), false, false);
 			$tags[]=CHtml::tag('item', array ('code'=>'limit'), CHtml::encode($model->limit), true);
-			$tags[]=CHtml::tag('item', array ('code'=>'offset'), CHtml::encode($offset/$model->limit), true);
+			$tags[]=CHtml::tag('item', array ('code'=>'offset'), CHtml::encode($model->offset), true);
 		$tags[]=CHtml::closeTag('navigation');
 		}
 		$tags[]=CHtml::tag('defectslist', array (), false, false);
@@ -342,12 +345,14 @@ class XmlController extends Controller
 		
 		if (!$model->upploadedPictures) $this->error('NO_FILES'); 
 		
+		if ($model->countUpploadFiles() > 5) $this->error('TOO_MANY_FILES');
+		
 		$model->validate();
 		if ($model->getError('upploadedPictures')) $this->getUploadError($model->getError('upploadedPictures'));  
 		
 			if($model->save() && $model->savePictures())
 				$tags[]=CHtml::tag('callresult', array ('result'=>1, 'inserteddefectid'=>$model->ID), 'ok', true);
-			else $this->error('CANNOT_ADD_DEFECT');			
+			else $this->error('CANNOT_ADD_DEFECT');
 		
 		$this->renderXml($tags);
 	}
