@@ -200,16 +200,16 @@ class Holes extends CActiveRecord
 		return false;	
 	}	
 	
-	public function getFixByUser($id)	
-	{	
+	public function getFixByUser($id)
+	{
 		foreach ($this->fixeds as $fix){
 			if ($fix->user_id==$id) return $fix;
 		}
 		return null;
-	}		
-	
+	}
+
 	private $_files = [];
-	
+
 	public function getUpploadedPictures(){
 	    if(empty($this->_files)){
 		if(!empty($_FILES)){
