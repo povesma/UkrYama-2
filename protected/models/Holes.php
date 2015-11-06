@@ -208,7 +208,7 @@ class Holes extends CActiveRecord
 		return null;
 	}
 
-	private $_files = [];
+	private $_files = array();
 
 	public function getUpploadedPictures(){
 	    if(empty($this->_files)){
