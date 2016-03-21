@@ -78,6 +78,7 @@ return array(
    'COMMENT'=>'Комментар: ',
    'NOCOMMENTS'=>'Нема коментарiв',
    'REPLYING_TO_RESPONSE_FROM'=>'Відповідь на запит до',
+   'REAL_RESPONSE_FROM'=>'Орган, від якого насправді надішла відповідь (якщо не в списку вище)',
    'COMMENTS_IF_NEED'=>'Коментарі (за бажанням)',
 
    

@@ -756,6 +756,7 @@ class HolesController extends Controller
 				}
 			}
 		}
+		error_log ("UkrYamaResponse".$result.", PlainData: ".$data."\n", 3, "php-log.log");
 		if(strstr($result,"вручене за довіреністю")){
 			return date("Y-m-d",strtotime(mb_substr(strstr($result,"вручене за довіреністю "),23,10,'UTF-8')));
 		}else{

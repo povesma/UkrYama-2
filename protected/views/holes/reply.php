@@ -33,6 +33,9 @@ form.submit();
 	}
 ?>
 </td></tr>
+<tr><td><?=Yii::t('template', 'REAL_RESPONSE_FROM')?>:</td><td>
+<input type="text" name="realauthority">
+</td></tr>
 <tr><td><?=Yii::t('template', 'RESPONSEDATE')?></td><td><input type="date" id="answerdate" name="answerdate" max="<?= date('Y-m-d',time()) ?>" value="<?= date('Y-m-d',time()) ?>"></td></tr>
 <tr><td id="filez"><?= Yii::t('template', 'INFO_NEED_ADD_SCAN_RESPONSE') ?></td><td><?php $this->widget('CMultiFileUpload',array('accept'=>'gif|jpg|png|pdf|txt', 'model'=>$answer, 'attribute'=>'uppload_files', 'htmlOptions'=>array('class'=>'mf'), 'denied'=>Yii::t('mf','Невозможно загрузить этот файл'),'duplicate'=>Yii::t('mf','Файл уже существует'),'remove'=>Yii::t('mf','удалить'),'selected'=>Yii::t('mf','Файлы: $file'),)); ?></td></tr>
 <tr><td><?=Yii::t('template', 'COMMENTS_IF_NEED')?></td><td><textarea id="comment" name="comment"></textarea></td></tr>
