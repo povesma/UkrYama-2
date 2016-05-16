@@ -215,14 +215,19 @@ class Holes extends CActiveRecord
 		if(!empty($_FILES)){
 		    foreach ($_FILES as $file){
 			if(is_array($file['name'])){
-			    for($i=0; $i < count($file['name']); $i++)
+			    error_log ("Count of files: ".count($file['name'])."\n", 3, "php-log.log");
+			    error_log ("Contents: ".print_r($file,true)."\n", 3, "php-log.log");
+			    for($i=0; $i < count($file['name']['upploadedPictures']); $i++){
+				$f_name = $file['name']['upploadedPictures'][$i];
+			  	error_log ("Filename: ".$f_name."\n", 3, "php-log.log");
 				$this->_files []= $this->_getInstanseFromFile ([
-				    'name' => $file['name'][$i], 
-				    'tmp_name' => $file['tmp_name'][$i], 
-				    'type' => $file['type'][$i], 
-				    'size' => $file['size'][$i], 
-				    'error' => $file['error'][$i]
+				    'name' => $f_name, 
+				    'tmp_name' => $file['tmp_name']['upploadedPictures'][$i], 
+				    'type' => $file['type']['upploadedPictures'][$i], 
+				    'size' => $file['size']['upploadedPictures'][$i], 
+				    'error' => $file['error']['upploadedPictures'][$i]
 				]);
+			    }
 			}else
 			    $this->_files []= $this->_getInstanseFromFile($file);
 		    }

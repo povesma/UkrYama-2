@@ -8,6 +8,7 @@
 $usermodel=Yii::app()->user->userModel;
 $model=new RequestForm;
 //			$mytype=$hole->type->findAll("id=:id",array(':id'=>$hole->TYPE_ID));
+$authid="";
 $mytype=array();
 
 	$mytype['ru']=$hole->type->findByPk(array("id"=>$hole->TYPE_ID,"lang"=>"ru"));

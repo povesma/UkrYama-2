@@ -14,6 +14,8 @@ $authority=array();
 	$mytype['ru']=$hole->type->findByPk(array("id"=>$hole->TYPE_ID,"lang"=>"ru"));
 	$mytype['ua']=$hole->type->findByPk(array("id"=>$hole->TYPE_ID,"lang"=>"ua"));
 
+$authid="";
+
 if($first!=1){
 	$mytype['ru']=$hole->type->findByPk(array("id"=>$first,"lang"=>"ru"));
 	$mytype['ua']=$hole->type->findByPk(array("id"=>$first,"lang"=>"ua"));
