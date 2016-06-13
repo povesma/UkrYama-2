@@ -1,13 +1,27 @@
 <div id="holesent" name="holesent" style="display:none">
 <?php
+	error_log("Auth selection Logging here\n", 3, "php-log.log");
+
+	$mytype=$hole->type->findByPk(array("id"=>$hole->TYPE_ID,"lang"=>"ua"));
+	try {
+		error_log("Auth selection for the primary claim: RegionID: ".strval($hole->region()->name).", mytype: ".strval($mytype->name)."\n", 3, "php-log.log");
+	} catch (Exception $e) {
+		$e = "some error ".$e->getMessage();
+		error_log("Auth selection err: ".$err."\n", 3, "php-log.log");
+	} 
+
+	$choices=$hole->getAllAuth($hole->region(),$mytype,"ua");
+	$ref=0;
+
+ 	$superiors = array();
+
 	if($req){ // first request (claim) has already been sent. Look for parents
-		$choices=$req->auth_ua->parents("ua");
+		error_log("Auth selection req exists ".strval($req->auth_ua->id)."\n", 3, "php-log.log");
+		$superiors=$req->auth_ua->parents("ua");
 		$ref=$req->id;
-	}else{
-		$mytype=$hole->type->findByPk(array("id"=>$hole->TYPE_ID,"lang"=>"ua"));
-		$choices=$hole->getAllAuth($hole->region(),$mytype,"ua");
-		$ref=0;
 	}
+	
+	$choices = array_merge($choices, $superiors);
 ?>
 <table>
 	<form name="simple" action="/holes/sent/<?=$hole->ID?>/" method="POST" onSubmit="if(when.value.length<8){ $('#when').effect('highlight', {}, 3000); when.focus(); return false;}">

@@ -711,8 +711,9 @@ class Holes extends CActiveRecord
 		$address=preg_split("/,/",$this->ADDRESS);
 			$sub=$address[0];
 			foreach ($address as $addrpart) {
-				if(strpos($addrpart,"місто")){ // якщо десь між комами написано "місто"
-					$sub=mb_substr($addrpart,6,20,'UTF-8');
+				if(strpos($addrpart,"місто ")){ // якщо десь між комами написано "місто"
+					$sub=trim(mb_substr($addrpart,6,20,'UTF-8'));
+					error_log ($addrpart." contains Місто. Sub now: <" . $sub.">\n", 3, "php-log.log");
 					break;
 				}
 			}

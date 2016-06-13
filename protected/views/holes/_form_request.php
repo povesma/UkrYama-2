@@ -15,12 +15,17 @@ $authority=array();
 	$mytype['ua']=$hole->type->findByPk(array("id"=>$hole->TYPE_ID,"lang"=>"ua"));
 
 $authid="";
+$d1 = date('Y-m-d H:i:s');
 
-if($first!=1){
+if($first!=1){ // повторная жалоба, уже есть запрос
 	$mytype['ru']=$hole->type->findByPk(array("id"=>$first,"lang"=>"ru"));
 	$mytype['ua']=$hole->type->findByPk(array("id"=>$first,"lang"=>"ua"));
-	$authority['ru']=$req->auth_ru;
-	$authority['ua']=$req->auth_ua;
+	if ($authority['ru']->gibdd != 0) {
+		$authority['ru']=$req->auth_ru;
+		$authority['ua']=$req->auth_ua;
+	} else {
+		error_log ($d1.": _form_request: GIBDD_ID is 0! req.id: " . $req->id.", holeid: ".$req->hole_id."\n", 3, "php-log.log");
+	}
 	$authid=$authority['ua']->id;
 	$mytype['ru']->name = $authority['ru']->name . ", ".$mytype['ru']->name;
 	$mytype['ua']->name = $authority['ua']->name . ", ".$mytype['ua']->name;
@@ -28,14 +33,17 @@ if($first!=1){
 
 $region=$hole->region();
 $choices=array();
-if($first==1){ // если первичная жалоба, то выбираем список органов, которые ответствены за этот тип ямы (связана таблица yii_authority_relation)
+if($first==1 ){ // если первичная жалоба, то выбираем список органов, которые ответствены за этот тип ямы (связана таблица yii_authority_relation)
 	$choices['ua']=$hole->getAllAuth($region,$mytype['ua'],"ua");
 	$choices['ru']=$hole->getAllAuth($region,$mytype['ru'],"ru");
-}else{
-	print_r ("AUTH_UA: " . $authority);
-
-	$choices['ua']=$authority['ua']->parents("ua");
-	$choices['ru']=$authority['ru']->parents("ru");
+}else{ // повторная жалоба - выбираем вышестоящие органы
+	//error_log ("AUTH_UA: " . print_r($authority,true), 3, "php-log.log");
+	if ($authority['ua']) {
+		$choices['ua']=$authority['ua']->parents("ua");
+	}
+	if ($authority['ru']) {
+		$choices['ru']=$authority['ru']->parents("ru");
+	}
 }
 $usermodel=Yii::app()->user->userModel;
 ?>
