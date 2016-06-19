@@ -822,14 +822,8 @@ class HolesController extends Controller
 			$hrs->rcpt=$data['rcpt'];
 			$hrs->mailme=$data['mailme'];
 			$hrs->hole_id=$data['hole'];
-			$date=$this->trackMail($data['rcpt']);
-			if($date){
-				$hrs->status=1;
-				$hrs->ddate=$date;
-			}else{
-				$hrs->status=0;
-			}
 			$hrs->save();
+			$hrs->updateMail();
 			$admin_id = 228;
 			$owner_id = $model->user->id; // власник ями. Тут би ще з'ясувати відправника, бо лише відправник може завантажувати, аби йому не відправляти
 			$mesg1 = $this->renderPartial('application.views.ugmail.sent-request',
@@ -1269,7 +1263,7 @@ class HolesController extends Controller
 			true
 		);
 
-		return mail($email, 'Повідомлення по порушення законодавства', $mailbody, $headers);
+		return mail($email, 'ч. 1 ст. 140 КУпАП: Повідомлення по порушення законодавства', $mailbody, $headers);
 	}
 
 	/**

@@ -28,6 +28,7 @@ class HoleRequestSent extends CActiveRecord
         if(in_array($xml->code,  $this->ukrpostcodes())){
             $this->ddate = date("Y-m-d", strtotime($xml->eventdate));
             $this->status=1;
+            $this->description = $xml->eventdescription;
             $this->update();
         }else{
             return false;
@@ -39,6 +40,7 @@ class HoleRequestSent extends CActiveRecord
         return array(
             '41004', //Вручення за довіренністю
             '41002', //Вручення адресату особисто
+            '41003', //Члену родини
             '41022'  //Вручення кур'єру
         );
     }
