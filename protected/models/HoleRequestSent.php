@@ -22,15 +22,17 @@ class HoleRequestSent extends CActiveRecord
         $guid = Yii::app()->params['guid'];
         $culture = Yii::app()->params['culture'];
         $response = "http://services.ukrposhta.ua/barcodestatistic/barcodestatistic.asmx/GetBarcodeInfo?guid=$guid&barcode=$barcode&culture=$culture";
-	error_log ("UkrYamaResponse".$result.", PlainData: ".$data."\n", 3, "php-log.log");
+	error_log ("Ukrposhta delivery check for: ".$barcode."\n", 3, "php-log.log");
         $xml=simplexml_load_file($response);
         //print_r($xml->code); //for testing purposes only
         if(in_array($xml->code,  $this->ukrpostcodes())){
             $this->ddate = date("Y-m-d", strtotime($xml->eventdate));
             $this->status=1;
             $this->description = $xml->eventdescription;
+ 	    error_log ("Ukrposhta: delivered on ".$this->ddate."\n", 3, "php-log.log");
             $this->update();
         }else{
+	    error_log ("Ukrposhta: incorrect reponse / not delivered\n", 3, "php-log.log");
             return false;
         }
 
