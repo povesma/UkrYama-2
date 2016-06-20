@@ -31,7 +31,7 @@ class HolesController extends Controller
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('getauth','TrackMail','update', 'personal','personalDelete','requestForm','sent','notsent','reply','fix', 'defix', 'delanswerfile','myarea', 'delpicture','selectHoles','review','test2'),
+				'actions'=>array('getauth',/*'TrackMail',*/'update', 'personal','personalDelete','requestForm','sent','notsent','reply','fix', 'defix', 'delanswerfile','myarea', 'delpicture','selectHoles','review','test2'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -732,7 +732,7 @@ class HolesController extends Controller
 			if ($ok==count($holes))  echo 'ok';
 		}
 	}
-
+/*
 	public function trackMail($id){
 		$http=new Http;
 		$url="http://services.ukrposhta.ua/barcodesingle/default.aspx?ctl00%24centerContent%24scriptManager=ctl00%24centerContent%24scriptManager%7Cctl00%24centerContent%24btnFindBarcodeInfo&__EVENTTARGET=&__EVENTARGUMENT=&ctl00%24centerContent%24txtBarcode=$id&__ASYNCPOST=true&ctl00%24centerContent%24btnFindBarcodeInfo=%D0%9F%D0%BE%D1%88%D1%83%D0%BA";
@@ -767,7 +767,7 @@ class HolesController extends Controller
 		$date=$this->trackMail($id);
 		echo $date;
 	}	
-
+*/
 	public function actionSent($id)
 	{
 		$model=$this->loadModel($id);
