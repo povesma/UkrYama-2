@@ -4,13 +4,36 @@
 	width: 700px;
 }
 </style>
-<div class="form">
+<div class="form" id="addForm">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'holes-form',
 	'enableAjaxValidation'=>false,
 	'htmlOptions'=>array('enctype'=>'multipart/form-data'),
 )); 
 echo $form->errorSummary($model); ?>
+<script>
+$(document).ready(function(){
+	$('#holes-form').on('submit', (function () {
+
+	    // Get the Login Name value and trim it
+	    var name = $.trim($('#Holes_FIRST_NAME').val());
+	    var email = $.trim($('#Holes_EMAIL').val());
+
+	    // Check if empty of not
+	    if (name  === '') {
+	        alert("Вкажіть своє ім'я, будь ласка.");
+	        return false;
+	    }
+	    var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+	    var is_email=re.test(email);
+	    if (!is_email) {
+	        alert('Вкажіть правильний EMAIL');
+	        return false;
+	    }
+	}))
+});
+</script>
+
 	<!-- правая колоночка -->
 	<div class="rCol side_section"> 
 		<ul class="add_steps clear">
