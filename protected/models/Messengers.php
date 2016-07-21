@@ -9,6 +9,7 @@
  * @property integer $messenger
  * @property string $uin
  * @property integer $status
+ * @property string $chatneyID
  *
  * The followings are the available model relations:
  * @property MessengersItems $messenger0
@@ -37,6 +38,8 @@ class Messengers extends CActiveRecord
     
     public $_phone;
     
+    public $_fbbot;
+    
     
 	/**
 	 * @return string the associated database table name
@@ -56,10 +59,10 @@ class Messengers extends CActiveRecord
 		return array(
 			array('messenger, status', 'numerical', 'integerOnly'=>true),
 			array('user', 'length', 'max'=>20),
-			array('uin', 'length', 'max'=>50),
+			array('uin, chatneyID', 'length', 'max'=>96),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, user, messenger, uin, status', 'safe', 'on'=>'search'),
+			array('id, user, messenger, uin, status, chatneyID', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -87,6 +90,7 @@ class Messengers extends CActiveRecord
 			'messenger' => 'Messenger',
 			'uin' => 'Uin',
 			'status' => 'Status',
+			'chatneyID' => 'chatneyID',
 		);
 	}
 
@@ -123,13 +127,16 @@ class Messengers extends CActiveRecord
 		    case "sms":
 		        return 9;
 		        break;
+		    case "fbbot":
+		        return 10;
+		        break;
 		    default:throw new CHttpException(500, 'Messengers check error');
 		}
     }
 	protected function getUsersMessenger($userid)
 	{
 
-		$messsangers_id  = array(1,2,3,4,5,6,7,8,9);
+		$messsangers_id  = array(1,2,3,4,5,6,7,8,9,10);
 		foreach ($messengerids as $m) {
 			$ms = Messengers::model()->find("user = :user_id and messenger = :messengerID", array('user_id'=> $this->_userid, 'messengerID'=>$m));
 			if($ms) 
@@ -162,6 +169,9 @@ class Messengers extends CActiveRecord
 				    case 9:
 				        $this->_phone = $ms;
 				        break;
+				    case 9:
+				        $this->_fbbot = $ms;
+				        break;
 				    default:
 				        throw new CHttpException(500, 'Messengers check error');  
 				}
@@ -191,6 +201,7 @@ class Messengers extends CActiveRecord
 		$criteria->compare('user',$this->user,true);
 		$criteria->compare('messenger',$this->messenger);
 		$criteria->compare('uin',$this->uin,true);
+		$criteria->compare('chatneyID',$this->chatneyID,true);
 		$criteria->compare('status',$this->status);
 
 		return new CActiveDataProvider($this, array(

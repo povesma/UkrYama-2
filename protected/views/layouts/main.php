@@ -117,6 +117,7 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->clientScript->getCoreScrip
             if(!checking){
               checking=true;
               $.get("/userGroups/user/checkcode",function(data){
+		//console.log("checkcode: "+JSON.stringify(data));
                 if(data["status"]=="new"||data["status"]=="wait"){
                   loginCode.innerText=data["code"];
                 }else if(data["status"]=="ok"){
@@ -214,6 +215,16 @@ Yii::app()->clientScript->registerCssFile(Yii::app()->clientScript->getCoreScrip
    		})	
    	</script>
 	<?php endif; ?>
+				<div class="insape"><?php
+                        if (!defined('_SAPE_USER')){
+                            define('_SAPE_USER', 'f127747a52619313d55480e54fe0ca6a'); 
+			}
+			require_once($_SERVER['DOCUMENT_ROOT'].'/'._SAPE_USER.'/sape.php');
+			$o['charset'] = 'UTF-8';
+			$sape = new SAPE_client($o);
+			echo "<a href='http://ukryama.com/news/?ELEMENT_ID=431'>Реклама</a>: ";
+			echo $sape->return_links();
+		?></div>
    </div>
 </body>
 </html>

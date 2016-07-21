@@ -250,7 +250,7 @@ class Holes extends CActiveRecord
 	
 	public function savePictures(){				
 		foreach ($this->deletepict as $pictid) {
-			$pictmodel=HolePictures::model()->findByPk((int)$pictid);  
+			$pictmodel=HolePictures::model()->findByPk((int)$pictid);
 			if ($pictmodel)$pictmodel->delete();
 		}
 
