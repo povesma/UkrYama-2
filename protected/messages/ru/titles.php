@@ -7,7 +7,7 @@ return array(
    'UG_UPDATE' => Yii::app()->params['langtitle'].'Изменение',
    'UG_PASS' => Yii::app()->params['langtitle'].'Напоминание пароля',
    'UG_LOGIN' => Yii::app()->params['langtitle'].'Вход на портал',
-   'UG_RECOVERY' => Yii::app()->params['langtitle'].'Востановление пароля',     
+   'UG_RECOVERY' => Yii::app()->params['langtitle'].'Востановление пароля',
       // News
    'NEWS_GREATE' => Yii::app()->params['langtitle'].'Создать новость',
    'NEWS_UPDATE' => Yii::app()->params['langtitle'].'Редактирование новости',
@@ -23,7 +23,7 @@ return array(
    'HOLES_UPDATE' => Yii::app()->params['langtitle'].'Редактирование дефекта',
    'HOLES_COMMENT' => Yii::app()->params['langtitle'].'Комментирование дефекта',
    'HOLES_INDEX' => Yii::app()->params['langtitle'].'Список дефектов',
-   'HOLES_PERSONAL' => Yii::app()->params['langtitle'].'Добавленые мною дефекты',
+   'HOLES_PERSONAL' => Yii::app()->params['langtitle'].'Добавленные мною дефекты',
    'HOLES_AREA' => Yii::app()->params['langtitle'].'Мой участок',
    'HOLES_ADMIN' => Yii::app()->params['langtitle'].'Администрированние дефектов',
    );
