@@ -154,7 +154,7 @@ return array(
    'DEFECT_ADDEDBY'=>'Дефект додав:',
    'DELETE_DEFECT'=>'Видалити дефект',
    'PREMODERATE_DEFECT'=>'Показувати цей дефект всім',
-   'MAP_DEFECT'=>'Карта дефектiв',
+   'MAP_DEFECT'=>'Мапа дефектiв',
    'DELETE_FILE'=>'Видалити файл',
    'DELETE_IMAGE'=>'Видалити це зображення',
    'UPLOAD_AT_DATE'=>'Завантажено: {0}',
