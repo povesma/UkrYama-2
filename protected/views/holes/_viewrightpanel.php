@@ -72,7 +72,7 @@ $(window).keydown(function(e){
 			<a href="#" onclick="var c=document.getElementById('pdf_form');if(c){c.style.display=c.style.display=='block'?'none':'block';}return false;" class="close">&times;</a>
 			<div id="gibdd_form"></div>
         <?php
-		if($status==0){ // запрос не отправлялся
+		if(true || $status==0){ // запрос не отправлялся
 			$this->renderPartial('_form_request', array('hole'=>$hole, "first"=>1)); // 1 - первичный запрос
 		}elseif($status==2){ // получен ответ на запрос
 			$this->renderPartial('_form_request', array('hole'=>$hole, "first"=>31,'req'=>$req, 'answ'=>$answ)); // 31 - ответ с нарушением, жалоба в высший орган

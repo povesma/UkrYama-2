@@ -144,7 +144,7 @@ class UserController extends Controller
 				return;
 			}
 			$json = json_decode($a, true);
-			error_log ("checkCode: ".print_r($json, true)."\n", 3, "php-log.log");
+			//error_log ("checkCode: ".print_r($json, true)."\n", 3, "php-log.log");
 			try {
 			if($json["status"]=="login-ok"){
 				$imID=$json["socialID"];

@@ -537,6 +537,8 @@ class HolesController extends Controller
 
 		$model=$this->loadModel($id);
 		if(count($model->requests_user)>0){$first=1;}else{$first=0;}
+ 		// Оскільки ми не підтримуємо поки що подальших скарг (всі наші скарги - первісні!) - first = 0 завжди
+		$first = 0;
 		if($first!=0){
 			$pictures=$hole->pictures_fresh;
 		}else{
@@ -574,7 +576,7 @@ class HolesController extends Controller
 									$photos =$photos."<tr><td colspan=2>".Yii::t('holes_view', 'PICTURE').' '.$pnum.' '.Yii::t('holes_view', 'PICTURE_TO').' №'.$id.'<br><img height="500px" src="data:image/jpg;base64,'.base64_encode(file_get_contents(Yii::getPathOfAlias('webroot').$pfile)).'"></td></tr><tr><td colspan=2 class="smv-spacer"></td></tr>'."\n";
 								}
 							}else{
-								$pfile=$picPath.$picture->file_name;
+								$pfile=$picPath.$picture->filename;
 								if($request->html){
 									$photos =$photos."<tr><td colspan=2>".Yii::t('holes_view', 'PICTURE').' '.$pnum.' '.Yii::t('holes_view', 'PICTURE_TO').' №'.$id.'<br><img height="500px" src="'.$pfile.'"></td></tr><tr><td colspan=2 class="smv-spacer"></td></tr>'."\n";
 								}else{
@@ -781,7 +783,7 @@ class HolesController extends Controller
 		if(isset($_POST['when'])){
 			if(strlen($_POST['when'])>0){
 				$date= $_POST['when'];
-				if($_POST['mailtype']==1){
+				if($_POST['mailtype']==1 || $_POST['mailtype']==4){ // 1 - особисто, 4 - е-пошта
 					$hrs = new HoleRequestSent;
 					$hrs->hole_id=$id;
 					$hrs->user_id=Yii::app()->user->id;
