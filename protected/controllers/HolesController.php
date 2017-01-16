@@ -783,7 +783,8 @@ class HolesController extends Controller
 		if(isset($_POST['when'])){
 			if(strlen($_POST['when'])>0){
 				$date= $_POST['when'];
-				if($_POST['mailtype']==1 || $_POST['mailtype']==4){ // 1 - особисто, 4 - е-пошта
+				if($_POST['mailtype']==1 || $_POST['mailtype']==4 || $_POST['mailtype']==5){ // 1 - особисто, 4 - е-пошта, 5 - сайт ukc.gov.ua
+					// позначити доствленим негайно
 					$hrs = new HoleRequestSent;
 					$hrs->hole_id=$id;
 					$hrs->user_id=Yii::app()->user->id;

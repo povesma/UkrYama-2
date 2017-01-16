@@ -147,9 +147,11 @@ var defectMarker = new google.maps.Marker({
   var infowindow = new google.maps.InfoWindow();
 	function updateAddress(){
 //		geo.geocode({addr ess: "",location:marker.position, region: "uk"},function(callback){
-		$.post("/event/GetAddress",{"lat":defectMarker.position['lat'](),"lng":defectMarker.position['lng']()},function(data){
+		var lat = defectMarker.position['lat']();
+		var lng = defectMarker.position['lng']();
+		$.post("/event/GetAddress",{"lat":lat,"lng":lng},function(data){
 			var resp = JSON.parse(data);
-
+			console.log("Google map response: ", resp, 'for [',lat,'/',lng,']');
 			var cord = new google.maps.LatLng(defectMarker.position['lat']()+0.003/Math.pow(2,(map.zoom-12)), defectMarker.position['lng']());
 			var info = resp['results'][0].address_components;
 //			var address=info[3]['long_name']+", "+info[2]['long_name']+", "+info[1]['long_name']+", "+info[0]['long_name'];

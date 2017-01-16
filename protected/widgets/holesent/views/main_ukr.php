@@ -36,15 +36,16 @@
 	</td></tr>
 	<tr><td>Яким чином доставлена скарга?</td><td></tr>
 <tr><td>
-	<?= CHtml::link('Заніс особисто', "javascript:void(0)",array('class'=>"declarationBtn",'onClick'=>'btnz = $(".declarationBtn"); for(i=0;i<btnz.length;i++){ btnz[i].style["font-weight"]="";};this.style["font-weight"]="bold";mailtype.value="1";subwd.style["display"]="inline";wd.style["display"]="inline";rcptform.style["display"]="none"')) ?><br>
-	<?= CHtml::link('Простим листом', "javascript:void(0)",array('class'=>"declarationBtn",'onClick'=>'btnz = $(".declarationBtn"); for(i=0;i<btnz.length;i++){ btnz[i].style["font-weight"]="";};this.style["font-weight"]="bold";mailtype.value="2";subwd.style["display"]="inline";wd.style["display"]="inline";rcptform.style["display"]="none"')) ?><br>
-	<?= CHtml::link('Рекомендованим листом', "javascript:void(0)",array('class'=>"declarationBtn",'onClick'=>'btnz = $(".declarationBtn"); for(i=0;i<btnz.length;i++){ btnz[i].style["font-weight"]="";};this.style["font-weight"]="bold";subwd.style["display"]="none";wd.style["display"]="inline";rcptform.style["display"]="inline";')) ?>
-	<?= CHtml::link('Електронною поштою', "javascript:void(0)",array('class'=>"declarationBtn",'onClick'=>'btnz = $(".declarationBtn"); for(i=0;i<btnz.length;i++){ btnz[i].style["font-weight"]="";};this.style["font-weight"]="bold";mailtype.value="4";subwd.style["display"]="inline";wd.style["display"]="inline";rcptform.style["display"]="none"')) ?><br>
+	<?= CHtml::link('Заніс особисто',        "javascript:void(0)",array('class'=>"declarationBtn",'onClick'=>'btnz = $(".declarationBtn"); for(i=0;i<btnz.length;i++){ btnz[i].style["font-weight"]="";};this.style["font-weight"]="bold";mailtype.value="1";subwd.style["display"]="inline";wd.style["display"]="inline";rcptform.style["display"]="none"')) ?><br>
+	<?= CHtml::link('Простим листом',        "javascript:void(0)",array('class'=>"declarationBtn",'onClick'=>'btnz = $(".declarationBtn"); for(i=0;i<btnz.length;i++){ btnz[i].style["font-weight"]="";};this.style["font-weight"]="bold";mailtype.value="2";subwd.style["display"]="inline";wd.style["display"]="inline";rcptform.style["display"]="none"')) ?><br>
+	<?= CHtml::link('Рекомендованим листом', "javascript:void(0)",array('class'=>"declarationBtn",'onClick'=>'btnz = $(".declarationBtn"); for(i=0;i<btnz.length;i++){ btnz[i].style["font-weight"]="";};this.style["font-weight"]="bold";subwd.style["display"]="none";wd.style["display"]="inline";rcptform.style["display"]="inline";')) ?><br>
+	<?= CHtml::link('Електронною поштою',    "javascript:void(0)",array('class'=>"declarationBtn",'onClick'=>'btnz = $(".declarationBtn"); for(i=0;i<btnz.length;i++){ btnz[i].style["font-weight"]="";};this.style["font-weight"]="bold";mailtype.value="4";subwd.style["display"]="inline";wd.style["display"]="inline";rcptform.style["display"]="none"')) ?><br>
+	<?= CHtml::link('Через ukc.gov.ua',      "javascript:void(0)",array('class'=>"declarationBtn",'onClick'=>'btnz = $(".declarationBtn"); for(i=0;i<btnz.length;i++){ btnz[i].style["font-weight"]="";};this.style["font-weight"]="bold";mailtype.value="5";subwd.style["display"]="inline";wd.style["display"]="inline";rcptform.style["display"]="none"')) ?><br>
 </td>
 	<input type="hidden" name="mailtype" id="mailtype">
 	<input name="ref" type="hidden" value="<?= $ref ?>">
 	<tr><td><div style="display:none" id="wd" name="wd">Коли:<br>
-                    <input type="text"  placeholder="напр. 2015-11-25" onfocus="this.placeholder = ''" onblur="this.placeholder = 'напр. 2015-11-25' />
+                    <input type="text"  placeholder="напр. 2017-01-16" onfocus="this.placeholder = ''" onblur="this.placeholder = 'напр. 2015-11-25' />
                     <input type="date" max="<?= date('Y-m-d',time())?>"  name="when" id="when"><br><input id="subwd" name="subwd" type="submit" value="OК"></div></td></tr>
 	</form>
 </tr>
