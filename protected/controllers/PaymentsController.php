@@ -189,10 +189,14 @@ class PaymentsController extends Controller
         $model->amount = $_POST['amount'];
         $model->currency = $_POST['currency'];
         $model->hole_id =  filter_var($_POST['description'], FILTER_SANITIZE_NUMBER_INT);
+	$warning = "";
+	if ($model->status != "success") {
+	   $warning = "****** NOT SUCCESSFUL ******";
+	}
         // Імейл адміну та юристу якщо платіж прийшов і успішно збережений у БД
         if($model->save()) {
-        	mail(Yii::app()->params['paymentEmail'], Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TITLE'), Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TEXT',array('{0}'=>$model->hole_id,'{1}' => $model->amount,'{2}' => $model->currency)));
-            mail(Yii::app()->params['paymentEmailLawyer'], Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TITLE'), Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TEXT',array('{0}'=>$model->hole_id,'{1}' => $model->amount,'{2}' => $model->currency)));
+            mail(Yii::app()->params['paymentEmail'], Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TITLE'), Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TEXT',array('{0}'=>$model->hole_id,'{1}' => $model->amount,'{2}' => $model->currency,'{3}' => $model->status." ".$warning)));
+            mail(Yii::app()->params['paymentEmailLawyer'], Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TITLE'), Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TEXT',array('{0}'=>$model->hole_id,'{1}' => $model->amount,'{2}' => $model->currency,'{3}' => $model->status." ".$warning)));
         }
 }
 /*

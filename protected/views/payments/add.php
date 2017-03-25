@@ -28,8 +28,8 @@ if (Yii::app()->params['liqpay_sandbox'] == true) {
 <form method="POST" accept-charset="utf-8" action="https://www.liqpay.com/api/pay">
 <input type="hidden" name="public_key" value="<?php echo Yii::app()->params['public_key'] ?>" />
 
-<input id="amount" name="amount" type=range min=24 max=500 value=24 > 
-    <span class="sub">max</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b name=range id=range>24</b> грн. 
+<input id="amount" name="amount" type=range min=24 max=500 value=27> 
+    <span class="sub">max</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b name=range id=range>27</b> грн. 
         <script type="text/javascript">
     var p = document.getElementById("amount"),
         res = document.getElementById("range");
