@@ -20,6 +20,7 @@
         <li><a href="#tabs-2"><?php echo Yii::t('profile','PROFILE_CHANGE_PASS'); ?></a></li>
         <li><a href="#tabs-3"><?php echo Yii::t('profile','PROFILE_SECURE'); ?></a></li>
           <li><a href="#tabs-4"><?php echo Yii::t('profile','PROFILE_MESSAGERS'); ?></a></li>
+          <li><a href="#tabs-5"><?php echo Yii::t('profile','PROFILE_SIGNATURE'); ?></a></li>
     </ul>
     
     <div id="tabs-1">
@@ -129,12 +130,29 @@
         </div>  
 		<br /><br />	<br /><br />
         
+		Файл з рукописним підписом, який буде вставлятися в згенеровані документи:
+		<table>
+		  <tr>
+		    <td>
+		      <?php echo $form->labelEx($miscModel->relProfile,'signature_image'); ?>
+		      <?php echo $form->fileField($miscModel->relProfile,'signature_image',array('maxlength'=>50,'class'=>'typefile')); ?>
+		      <?php echo $form->error($miscModel->relProfile,'signature_image'); ?>		
+		    </td> 
+		
+		    <td rowspan=2>
+		      <?php if($miscModel->relProfile->signature_image) echo CHtml::image($miscModel->relProfile->signature_folder.'/'.$miscModel->relProfile->signature_image, 'signature_ALT text', array('width'=>'100px','height'=>'100px')); ?>
+		    </td>
+		  </tr>
+		</table>
+
         <div class="row buttons">
 			<?php echo CHtml::hiddenField('formID', $form->id) ?>
 			<?php echo CHtml::submitButton(Yii::t('profile', 'SUBMIT_BUTTON')); ?>
 			<?php //echo CHtml::ajaxSubmitButton(Yii::t('userGroupsModule.general','Update User Profile'), Yii::app()->baseUrl . '/profile/', array('update' => '#userGroups-container'), array('id' => 'submit-mail'.$passModel->id.rand()) ); ?>
 		</div>
+
 	<?php $this->endWidget(); ?>
+
 	</div><!-- form -->
 
 
@@ -235,18 +253,12 @@
 	</div><!-- form -->
         </div>
       <div id="tabs-4">
-          
-          
           <div class="form">
               
         <?php 
         
        echo $messagesModel->_facebook;
-    
-	
-        
-         
-        echo CHtml::beginForm(array('id'=>'user-groups-misc-form')); ?>
+       echo CHtml::beginForm(array('id'=>'user-groups-misc-form')); ?>
 
                                   <div class="row">
 <div id='socialCode' style="color:black;font-weigt:bold;"></div>
@@ -298,4 +310,5 @@
           
           </div>
      </div>
+
 <script>$("#tabs").tabs();</script>

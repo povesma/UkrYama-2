@@ -38,6 +38,7 @@ $MESS['HOLE_REQUEST_FORM_POSTADDRESS']         = 'Почтовый адрес з
 $MESS['HOLE_REQUEST_FORM_ADDRESS']             = 'Адрес дефекта';
 $MESS['HOLE_REQUEST_FORM_COMMENT']             = 'Если дефект дороги - работающий в плохом режиме или неработающий светофор,';
 $MESS['HOLE_REQUEST_FORM_SIGNATURE']           = 'Подпись';
+$MESS['HOLE_REQUEST_FORM_EMAIL']               = 'Email, если хотите получить ответ только на email';
 $MESS['HOLE_REQUEST_FORM_TO_NAME_COMMENT']     = 'Укажите фамилию начальника';
 $MESS['HOLE_REQUEST_FORM_TO_ADDRESS_COMMENT']  = 'Укажите наименование структурного подразделения полиции';
 $MESS['HOLE_REQUEST_FORM_FROM_COMMENT']        = 'Фамилия, имя и отчество заявителя в родительном падеже';

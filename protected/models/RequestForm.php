@@ -40,6 +40,7 @@ class RequestForm extends CFormModel
 			'address_from'=>Yii::t('holes_view', 'HOLE_REQUEST_FORM_ADDRESS'),
 			'address_index'=>Yii::t('holes_view', 'HOLE_REQUEST_FORM_INDEX'),
 			'signature'=>Yii::t('holes_view', 'HOLE_REQUEST_FORM_SIGNATURE'),
+			'email'=>Yii::t('holes_view', 'HOLE_REQUEST_FORM_EMAIL'),
 			'defect_type'=>Yii::t('holes_view', 'HOLE_REQUEST_FORM_DEFECT_TYPE'),
 			'authority'=>Yii::t('holes_view', 'HOLE_REQUEST_FORM_AUTHORITY'),
 		);

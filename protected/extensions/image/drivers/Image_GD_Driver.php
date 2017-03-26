@@ -378,7 +378,8 @@ class Image_GD_Driver extends Image_Driver {
 		// Prevent the alpha from being lost
 		imagealphablending($img, FALSE);
 		imagesavealpha($img, TRUE);
-
+		$transparent = imagecolorallocatealpha($img, 255, 255, 255, 127);
+		imagefilledrectangle($img, 0, 0, $width, $height, $transparent);
 		return $img;
 	}
 

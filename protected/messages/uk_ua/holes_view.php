@@ -39,6 +39,7 @@ $MESS['HOLE_REQUEST_FORM_POSTADDRESS']         = 'Поштова адреса з
 $MESS['HOLE_REQUEST_FORM_ADDRESS']             = 'Адреса дефекту';
 $MESS['HOLE_REQUEST_FORM_COMMENT']             = 'Якщо дефект дороги - це світлофор, який не працює або працює в поганому режимі,';
 $MESS['HOLE_REQUEST_FORM_SIGNATURE']           = 'Підпис';
+$MESS['HOLE_REQUEST_FORM_EMAIL']               = 'Email, якщо хочете отримати відповідь лише на email';
 $MESS['HOLE_REQUEST_FORM_TO_NAME_COMMENT']     = 'Вкажіть прізвище начальника';
 $MESS['HOLE_REQUEST_FORM_TO_ADDRESS_COMMENT']  = 'Вкажіть найменування структурного підрозділу ДАІ';
 $MESS['HOLE_REQUEST_FORM_FROM_COMMENT']        = 'Прізвище, ім\'я та по батькові заявника в родовому відмінку';

@@ -138,6 +138,9 @@ $usermodel=Yii::app()->user->userModel;
 </td>
 </tr>
 </table>
+
+<!-- RUSSIAN FORM -->
+
 <table id="ru_form" style="display:none">
 <tr><td>
 <label><?=Yii::t('holes_view', 'HOLE_REQUEST_FORM_DEFECT_TYPE',array(),null,'ru')?></label> 
