@@ -46,11 +46,13 @@
 
 <br><br></div>
 </td></tr>
-<!-- <tr><td colspan=2 class="smv-spacer"></td></tr> -->
+<tr><td colspan=2 class="smv-spacer"></td></tr>
 <tr><td colspan=2 >
   <table><tr valign=center>
 	<td valign=center class="date"><?= $date ?>&nbsp;р.</td>
+<?php if($signature): ?>
 	<td valign=center><img src="<?= $signature ?>"></td>
+<?php endif;?>
 	<td valign=center class="init"><?= $init ?></td>
   </tr></table>
 </td>

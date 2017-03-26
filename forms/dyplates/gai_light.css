@@ -28,11 +28,13 @@ table{
 .a-body{
 }
 .date{
-	margin-left:50px;
+	/* width:100px;
+	float:left; */
 	font-weight:bold;
-	width:500px;
-	float:left;
+	margin-left:50px;
 }
+
+
 .init{
 	font-weight:bold;
 	text-align:right;

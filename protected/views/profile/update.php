@@ -117,13 +117,14 @@
         </div>
 		
         <div class="finerow">
-		<?php echo $form->labelEx($miscModel->relProfile,'request_signature'); ?>
+		<?php echo Yii::t('profile','REQUEST_SIGNATURE'); ?>
 		<?php echo $form->textField($miscModel->relProfile,'request_signature',array('maxlength'=>100,'class'=>'textInput')); ?>
 		<?php echo $form->error($miscModel->relProfile,'request_signature'); ?>
         </div>
 		
         <div class="finerow">
-		<?php echo $form->labelEx($miscModel->relProfile,'request_address'); ?>
+<!-- 		<?php echo $form->labelEx($miscModel->relProfile,'request_address'); ?> -->
+		<?php echo Yii::t('profile','REQUEST_ADDRESS'); ?>
 		<?php echo $form->textField($miscModel->relProfile,'request_address',array('maxlength'=>255,'class'=>'textInput')); ?>
 		<?php echo $form->error($miscModel->relProfile,'request_address'); ?>
         </div>
