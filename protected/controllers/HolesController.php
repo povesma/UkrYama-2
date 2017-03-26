@@ -511,6 +511,8 @@ class HolesController extends Controller
 		$response_from=$_POST[$lang.'_response_from'];
 		$response_date=$_POST[$lang.'_response_date'];
 		$forward_to=$_POST[$lang.'_forward_to'];
+		$eo_tick=$_POST['reply_to_email_only'];
+		$eo_email=$_POST['email'];
 		$signature=$_POST[$lang.'_signature'];
 
 		$model=$this->loadModel($id);
@@ -618,6 +620,10 @@ class HolesController extends Controller
 		} else {
 			$signature_image = "";
 		}
+		$eo = "";
+		if($eo_tick && $eo_email) {
+			$eo = $eo_email;
+		}
 		$_data = array(
 			"ref" => "$id",
 			"to_name" =>$to_name,
@@ -634,7 +640,8 @@ class HolesController extends Controller
 			"c_photos"=>count($pics),
 			"files"=>$photos,
 			"map"=>1,
-			"signature"=>$signature_image
+			"signature"=>$signature_image,
+			"email_only"=>strtoupper($eo)
 		);
 //  			foreach ($_data as $dt) echo $dt."<br>";
 
@@ -664,7 +671,7 @@ class HolesController extends Controller
 					if(file_exists($tplname)){
 						$css = file_get_contents($cssfilename); 
 						$html = $this->renderFile($tplname,$_data,true);
-						$outname="ukryama-".date("Y-m-d_G-i-s");
+						$outname="$id"."-ukryama-".date("Y-m-d_G-i-s");
 						echo $printer->printH2P($html, $css, $outname);
 						return;
 					}

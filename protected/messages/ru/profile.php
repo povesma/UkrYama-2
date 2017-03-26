@@ -33,6 +33,7 @@ return array(
    'BIRTHDAY' => 'Дата рождения',
    'REQUEST_SIGNATURE' => 'Подпись (Фамилия и инициалы)',
    'REQUEST_ADDRESS' => 'Почтовый адрес для оправки заявления',
+   'REQUEST_REPLY_TO_EMAIL_ONLY' => 'Присылать ответ только на е-мейл',
    'PROFILE_MAIN' => 'Основное',
    'PROFILE_CHANGE_PASS' => 'Изменить пароль',
    'PROFILE_SECURE' => 'Настройка безопасности',

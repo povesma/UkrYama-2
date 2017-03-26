@@ -137,6 +137,16 @@ $usermodel=Yii::app()->user->userModel;
 <input name="ua_signature" value="<?= $usermodel->relProfile->request_signature ? $usermodel->relProfile->request_signature : $usermodel->last_name.' '.substr($usermodel->name, 0, 2).($usermodel->name ? '.' : '').' '.substr($usermodel->second_name, 0, 2).($usermodel->second_name ? '.' : '') ?>">
 </td>
 </tr>
+<tr><td>
+<label><?=Yii::t('profile', 'REQUEST_REPLY_TO_EMAIL_ONLY')?></label>
+</td>
+<td>
+<input name="reply_to_email_only" <?= $usermodel->relProfile->reply_to_email_only>=1?"checked":"NOT_CHECKED ".$usermodel->relProfile->reply_to_email_only ?> type="checkbox">
+<br>
+Email: 
+<input name="email" value="<?= $usermodel->email ?>">
+</td>
+</tr>
 </table>
 
 <!-- RUSSIAN FORM -->

@@ -1,22 +1,4 @@
-<html>
-<head>
-<title></title>
-</head>
-<body>
-<table>
-<tr>
-	<td></td>
-	<td class="head" colspan=2><p>Кому: <?= $to_name ?><br>Куди: <?= $to_address ?><br>Від: <?= $from_name ?><br>Адреса: <?= $from_address ?></p></td>
-</tr>
-<tr>
-<td class="ref"><div class="ref">Вих. №<?= $ref ?> від: <?= $date ?> р.</div></td><td>&nbsp;</td>
-</tr>
-<tr><td colspan=2 class="v-spacer"></td></tr>
-<tr><td colspan=2 class="title">
-<div>Заява</div>
-</td></tr>
-<tr><td colspan=2 class="smv-spacer"></td></tr>
-<tr><td colspan=2 class="a-body">
+<?php require_once(dirname(__FILE__).'/general_header.php'); ?>
 <div>
 <b><?= $when ?> р.</b>
 мною на території дороги за адресою: <b><?= $where ?></b>  були виявлені недоліки дороги,
@@ -41,6 +23,10 @@
 <li>Вжити заходів для забезпечення безпечного експлуатаційного стану вказаної ділянки дороги та продовжувати вживати їх аж до усунення правопорушення та забезпечення безпечних умов дорожнього руху.</li>
 <li>Про результати розгляду цієї заяви та про вжиті заходи прошу повідомити мене письмово.</li>
 </ol>
+<?php if($email_only): ?>
+	<br><?= Yii::t('holes_view', 'EMAIL_ONLY_TEXT') ?> <?= $email_only ?>
+<?php endif;?>
+
 </div>
 </td></tr>
 <tr><td colspan=2 class="smv-spacer"></td></tr>

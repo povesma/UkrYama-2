@@ -128,6 +128,12 @@
 		<?php echo $form->textField($miscModel->relProfile,'request_address',array('maxlength'=>255,'class'=>'textInput')); ?>
 		<?php echo $form->error($miscModel->relProfile,'request_address'); ?>
         </div>
+
+        <div class="finerow">
+		<?php echo Yii::t('profile','REQUEST_REPLY_TO_EMAIL_ONLY'); ?>
+		<?php echo $form->checkBox($miscModel->relProfile,'reply_to_email_only',array('value'=>1, 'uncheckValue'=>0)); ?>
+		<?php echo $form->error($miscModel->relProfile,'reply_to_email_only'); ?>
+        </div>
         </div>  
 		<br /><br />	<br /><br />
         

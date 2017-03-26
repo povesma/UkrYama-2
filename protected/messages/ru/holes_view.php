@@ -21,6 +21,9 @@ $MESS['HOLE_STATE_fixed']      = 'Исправлено';
 $MESS['HOLE_STATE_achtung']    = '';
 $MESS['HOLE_STATE_gibddre']    = 'Получен ответ';
 
+$MESS['EMAIL_ONLY_TEXT']  = 'Ответ и документы прошу отправить по адресу:';
+
+
 $MESS['WAIT']  = 'Ждать, когда отремонтируют';
 $MESS['PAST']  = 'Просрочено';
 $MESS['DAYS5'] = 'дней';

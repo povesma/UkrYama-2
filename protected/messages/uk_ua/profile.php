@@ -33,6 +33,7 @@ return array(
    'ABOUT' => 'Про мене',
    'REQUEST_SIGNATURE' => 'Підпис (Прізвище та ініціали)',
    'REQUEST_ADDRESS' => 'Поштова адреса для підстановки у заяву',
+   'REQUEST_REPLY_TO_EMAIL_ONLY' => 'Надсилати відповідь лише на емейл',
    'CH_PASS' => 'Змінити пароль',
    'CH_PASS_H1' => 'Змінa паролю',
    'PROFILE_MAIN' => 'Основне',

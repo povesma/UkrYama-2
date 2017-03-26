@@ -22,6 +22,8 @@ $MESS['HOLE_STATE_fixed']      = '';
 $MESS['HOLE_STATE_achtung']    = '';
 $MESS['HOLE_STATE_gibddre']    = 'Отримано відповідь з поліції';
 
+$MESS['EMAIL_ONLY_TEXT']  = 'Відповідь прошу надіслати на електронну адресу:';
+
 $MESS['WAIT']  = 'Чекати, коли відремонтують';
 $MESS['PAST']  = 'Прострочено';
 $MESS['DAYS5'] = 'днів';
@@ -41,7 +43,7 @@ $MESS['HOLE_REQUEST_FORM_COMMENT']             = 'Якщо дефект доро
 $MESS['HOLE_REQUEST_FORM_SIGNATURE']           = 'Підпис';
 $MESS['HOLE_REQUEST_FORM_EMAIL']               = 'Email, якщо хочете отримати відповідь лише на email';
 $MESS['HOLE_REQUEST_FORM_TO_NAME_COMMENT']     = 'Вкажіть прізвище начальника';
-$MESS['HOLE_REQUEST_FORM_TO_ADDRESS_COMMENT']  = 'Вкажіть найменування структурного підрозділу ДАІ';
+$MESS['HOLE_REQUEST_FORM_TO_ADDRESS_COMMENT']  = 'Вкажіть найменування структурного підрозділу поліції';
 $MESS['HOLE_REQUEST_FORM_FROM_COMMENT']        = 'Прізвище, ім\'я та по батькові заявника в родовому відмінку';
 $MESS['HOLE_REQUEST_FORM_POSTADDRESS_COMMENT'] = 'Для листування та отримання повідомлень. Ми не зберігаємо на сайті поштові адреси заявників';
 $MESS['HOLE_REQUEST_FORM_ADDRESS_COMMENT']     = 'бажано вказати адресу та місце розташування дефекту якомога точніше';

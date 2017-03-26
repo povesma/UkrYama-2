@@ -47,6 +47,7 @@ class Profile extends CActiveRecord
 			array('birthday, request_signature, signature_image', 'length', 'max'=>120),
 			array('site, avatar, request_from, request_address, ', 'length', 'max'=>255),
 			array('aboutme', 'length'),
+			array('reply_to_email_only', 'numerical', 'allowEmpty'=>true),
 			array('site', 'url','allowEmpty'=>true),
 			array('image', 'file', 'types'=>'jpeg, jpg, gif, png', 'allowEmpty' => true),
 			array('userpic', 'file', 'types'=>'jpeg, jpg, gif, png', 'allowEmpty' => true),
@@ -144,7 +145,8 @@ class Profile extends CActiveRecord
 			'request_from'=>Yii::t('profile', 'REQUEST_FROM'),
 			'request_signature'=>Yii::t('profile', 'SHOWFULLNAME'),
 			'request_address'=>Yii::t('profile', 'SHOWABOUTME'),
-			'signature_image'=>Yii::t('profile', 'UPLOAD_SIGNATURE_IMAGE')
+			'signature_image'=>Yii::t('profile', 'UPLOAD_SIGNATURE_IMAGE'),
+			'reply_to_email_only'=>Yii::t('profile', 'REQUEST_REPLY_TO_EMAIL_ONLY'),
 		);
 	}
 
@@ -172,6 +174,7 @@ class Profile extends CActiveRecord
 		return array(
 			'avatar',
 			'signature_image',
+			'reply_to_email_only',
 		);
 	}
 
