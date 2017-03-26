@@ -130,10 +130,10 @@
         </div>  
 		<br /><br />	<br /><br />
         
-		Файл з рукописним підписом, який буде вставлятися в згенеровані документи:
 		<table>
 		  <tr>
 		    <td>
+		Файл з рукописним підписом, який буде вставлятися в згенеровані документи:<br>
 		      <?php echo $form->labelEx($miscModel->relProfile,'signature_image'); ?>
 		      <?php echo $form->fileField($miscModel->relProfile,'signature_image',array('maxlength'=>50,'class'=>'typefile')); ?>
 		      <?php echo $form->error($miscModel->relProfile,'signature_image'); ?>		

@@ -116,12 +116,8 @@ class Profile extends CActiveRecord
 				unlink ($_SERVER['DOCUMENT_ROOT'].$this->signature_folder.'/'.$this->signature_image);
 			}
 
-			if ($image->width >= $image->height) {
-				$image->resize(20000,600)->rotate(0)->quality(90)->sharpen(20);
-			} else 	{
-				$image->resize(600, 20000)->rotate(0)->quality(90)->sharpen(20);
-			}
-			$image->crop(600, 600);
+			$image->resize(480, 140)->rotate(0)->quality(90)->sharpen(20);
+			//$image->crop(600, 600);
 			$file_name=rand().'.'.$picture->extensionName;
 			$savename=$_SERVER['DOCUMENT_ROOT'].$this->signature_folder.'/'.$file_name;
 			$image->save($savename);
@@ -175,7 +171,7 @@ class Profile extends CActiveRecord
 	{
 		return array(
 			'avatar',
-			'signature_file',
+			'signature_image',
 		);
 	}
 
@@ -192,7 +188,7 @@ class Profile extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('ug_id',$this->ug_id,true);
-		$criteria->compare('hobbies',$this->hobbies,true);
+//		$criteria->compare('hobbies',$this->hobbies,true);
 
 		return new CActiveDataProvider(get_class($this), array(
 			'criteria'=>$criteria,

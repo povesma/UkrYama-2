@@ -610,8 +610,14 @@ class HolesController extends Controller
 					$fType = $nauth->findByPk(array("id"=>$first_authid,"lang"=>$lang));
 					$first_auth = $fType->name;
 				}
-
-
+		$signature_image = "<".Yii::app()->user->id.">";
+		$u = new Profile;
+		$u=Profile::model()->findByAttributes(["ug_id" => Yii::app()->user->id]);
+		if($u->signature_image) {
+			$signature_image = $u->signature_folder.'/'.$u->signature_image; // CHtml::image($u->signature_folder.'/'.$u->signature_image, 'Handwritten signature',array('height'=>'150px'));
+		} else {
+			$signature_image = "";
+		}
 		$_data = array(
 			"ref" => "$id",
 			"to_name" =>$to_name,
@@ -627,7 +633,8 @@ class HolesController extends Controller
 			"init"=>$signature,
 			"c_photos"=>count($pics),
 			"files"=>$photos,
-			"map"=>1
+			"map"=>1,
+			"signature"=>$signature_image
 		);
 //  			foreach ($_data as $dt) echo $dt."<br>";
 
