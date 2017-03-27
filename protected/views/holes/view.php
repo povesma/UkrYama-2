@@ -80,7 +80,7 @@ function initialize() {
 						<span class="date"><?php echo CHtml::encode(Y::dateFromTime($hole->DATE_CREATED)); ?></span>
 						<?php
 						$userGroup = UserGroupsUser::model()->findByPk(Yii::app()->user->id);
-						if (isset($userGroup->level) && $userGroup->level > 1):?>
+						if ((isset($userGroup->level) && $userGroup->level > 1) || Yii::app()->user->id == $hole->USER_ID):?>
 						<div class="edit-container">
 						  <?php 
 							if(Yii::app()->user->isModer && !$hole->PREMODERATED){

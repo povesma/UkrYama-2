@@ -130,6 +130,9 @@ class Messengers extends CActiveRecord
 		    case "fbbot":
 		        return 10;
 		        break;
+		    case "tgbot":
+		        return 10;
+		        break;
 		    default:throw new CHttpException(500, 'Messengers check error');
 		}
     }
