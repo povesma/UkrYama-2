@@ -1,22 +1,4 @@
-<html>
-<head>
-<title></title>
-</head>
-<body>
-<table>
-<tr>
-	<td></td>
-	<td class="head" colspan=2><p>Кому: <?= $to_name ?><br>Куди: <?= $to_address ?><br>Від: <?= $from_name ?><br>Адреса: <?= $from_address ?></p></td>
-</tr>
-<tr>
-<td class="ref"><div class="ref">Вих. №<?= $ref ?> від: <?= $date ?> р.</div></td><td>&nbsp;</td>
-</tr>
-<tr><td colspan=2 class="v-spacer"></td></tr>
-<tr><td colspan=2 class="title">
-<div>Заява</div>
-</td></tr>
-<tr><td colspan=2 class="smv-spacer"></td></tr>
-<tr><td colspan=2 class="a-body">
+<?php require_once(dirname(__FILE__).'/_general_header.php'); ?>
 <div>
 <b><?= $when ?> р.</b>
 мною на території дороги за адресою: <b><?= $where ?></b> було виявлено факт ремонту дороги, яким дорожня організація
@@ -49,28 +31,5 @@
 </ol>
 
 </div>
-</td></tr>
-<tr><td colspan=2 class="smv-spacer"></td></tr>
-<tr><td colspan=2 >
-  <table><tr valign=center>
-	<td valign=center class="date"><?= $date ?>&nbsp;р.</td>
-<?php if($signature): ?>
-	<td valign=center><img src="<?= $signature ?>"></td>
-<?php endif;?>
-	<td valign=center class="init"><?= $init ?></td>
-  </tr></table>
-</td>
-</tr>
-<tr><td colspan=2 class="v-spacer"></td></tr>
-<?php if(count($files)): ?>
-<tr><td class="attach">Додаю: <?= $c_photos ?> фото.</td></tr>
-<?php endif;?>
-</table>
-<?php if(count($files)): ?>
-<pagebreak />
-<table>
-<?= $files ?>
-</table>
-<?php endif;?>
-</body>
-</html>
+
+<?php require_once(dirname(__FILE__).'/_general_footer.php'); ?>

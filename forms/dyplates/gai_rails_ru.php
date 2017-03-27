@@ -1,22 +1,4 @@
-<html>
-<head>
-<title></title>
-</head>
-<body>
-<table>
-<tr>
-	<td></td>
-	<td class="head" colspan=2><p>Кому: <?= $to_name ?><br>Куда: <?= $to_address ?><br>От: <?= $from_name ?><br>Адрес: <?= $from_address ?></p></td>
-</tr>
-<tr>
-<td class="ref"><div class="ref">Исх. №<?= $ref ?> от <?= $date ?> г.</div></td><td>&nbsp;</td>
-</tr>
-<tr><td colspan=2 class="v-spacer"></td></tr>
-<tr><td colspan=2 class="title">
-<div>Заявление</div>
-</td></tr>
-<tr><td colspan=2 class="smv-spacer"></td></tr>
-<tr><td colspan=2 class="a-body">
+<?php require_once(dirname(__FILE__).'/_general_header.php'); ?>
 <div>
 <b><?= $when ?> г.</b> мной на территории дороги по адресу: <b><?= $where ?></b> были обнаружены недостатки дороги, 
 размеры которых не соответствуют требованиям Государственного стандарта Украины ДСТУ 3587-97 — 
@@ -44,28 +26,5 @@
 <li>По существу моего заявления и о принятых мерах прошу сообщить мне письменно.</li>
 </ol>
 </div>
-</td></tr>
-<tr><td colspan=2 class="smv-spacer"></td></tr>
-<tr><td colspan=2 >
-  <table><tr valign=center>
-	<td valign=center class="date"><?= $date ?>&nbsp;г.</td>
-<?php if($signature): ?>
-	<td valign=center><img src="<?= $signature ?>"></td>
-<?php endif;?>
-	<td valign=center class="init"><?= $init ?></td>
-  </tr></table>
-</td>
-</tr>
-<tr><td colspan=2 class="v-spacer"></td></tr>
-<?php if($c_photos): ?>
-<tr><td class="attach">Приложение: <?= $c_photos ?> фото</td></tr>
-<?php endif;?>
-</table>
-<?php if($c_photos): ?>
-<pagebreak />
-<table>
-<?= $files ?>
-</table>
-<?php endif;?>
-</body>
-</html>
+
+<?php require_once(dirname(__FILE__).'/_general_footer.php'); ?>

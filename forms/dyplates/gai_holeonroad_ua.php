@@ -1,4 +1,4 @@
-<?php require_once(dirname(__FILE__).'/general_header.php'); ?>
+<?php require_once(dirname(__FILE__).'/_general_header.php'); ?>
 <div>
 <b><?= $when ?> р.</b>
 мною на території дороги за адресою: <b><?= $where ?></b>  були виявлені недоліки дороги,
@@ -23,33 +23,6 @@
 <li>Вжити заходів для забезпечення безпечного експлуатаційного стану вказаної ділянки дороги та продовжувати вживати їх аж до усунення правопорушення та забезпечення безпечних умов дорожнього руху.</li>
 <li>Про результати розгляду цієї заяви та про вжиті заходи прошу повідомити мене письмово.</li>
 </ol>
-<?php if($email_only): ?>
-	<br><?= Yii::t('holes_view', 'EMAIL_ONLY_TEXT') ?> <?= $email_only ?>
-<?php endif;?>
-
 </div>
-</td></tr>
-<tr><td colspan=2 class="smv-spacer"></td></tr>
-<tr><td colspan=2 >
-  <table><tr valign=center>
-	<td valign=center class="date"><?= $date ?>&nbsp;р.</td>
-<?php if($signature): ?>
-	<td valign=center><img src="<?= $signature ?>"></td>
-<?php endif;?>
-	<td valign=center class="init"><?= $init ?></td>
-  </tr></table>
-</td>
-</tr>
-<tr><td colspan=2 class="v-spacer"></td></tr>
-<?php if($c_photos): ?>
-<tr><td class="attach">Додаю: <?= $c_photos ?> фото.</td></tr>
-<?php endif;?>
-</table>
-<?php if($c_photos): ?>
-<pagebreak />
-<table>
-<?= $files ?>
-</table>
-<?php endif;?>
-</body>
-</html>
+
+<?php require_once(dirname(__FILE__).'/_general_footer.php'); ?>
