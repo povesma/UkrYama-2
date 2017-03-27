@@ -101,9 +101,24 @@ function initialize() {
 					<p class="status">
                                             
 	   					<span class="bull <?= $hole->STATE ?>">&bull;</span><b><?=CHtml::encode($hole->StateName)?></b><br />
-                                               <?php if($pays and $userGroup->level>50)
-                                                {?>
-                                                <span class="money"></span><b>Оплачено.</b> Сума: <?php echo $pays->amount; if($pays->currency == 'UAH') { echo 'грн.'; } else { echo '$'; }?> Дата: <?php echo $pays->date; } ?> 
+                                               <?php if($pays and $userGroup->level>50 and count($pays)>0)
+                                                {
+						foreach ($pays as $p1) {
+						$font_size = "100%";
+						$p_msg = "Оплачено.";
+						if ($p1->status != 'success') {
+							$font_size = "67%; font-color: grey";
+							$p_msg = "Спроба оплати: ".$p1->status;
+						}
+						?>
+                                                <div style="font-size:<?= $font_size ?>"><span class="money"></span><b> <?= $p_msg ?></b> 
+						Сума: <?php echo $p1->amount; if($p1->currency == 'UAH') { echo 'грн.'; } else { echo '$'; }?> 
+						Дата: <?php echo $p1->date;  ?> 
+						</div>
+						<?php 
+						
+						}
+						} ?> 
                                                 
 						<?php
 							$arr[] = array('name'=>CHtml::tag('b', array(), Yii::t('holes_view', 'HOLE_CREATED_INFO')));

@@ -168,7 +168,7 @@ class HolesController extends Controller
       $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/hole_view.css'); 
       $jsFile = CHtml::asset($this->viewPath.DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.'view_script.js');
       $cs->registerScriptFile($jsFile);
-      $pays = Payments::model()->find('hole_id=:hole_id', array(':hole_id'=>$id));
+      $pays = Payments::model()->findAll('hole_id=:hole_id', array(':hole_id'=>$id));
         
 		$this->render('view',array(
 			'hole'=>$this->loadModel($id),
@@ -1248,7 +1248,10 @@ class HolesController extends Controller
 			true
 		);
 
-		return mail(Yii::app()->params['ukrautodorEmail'], 'УкрЯма: добавлена яма', $mailbody, $headers);
+		if (Yii::app()->params['ukrautodorEmail']) {
+			return mail(Yii::app()->params['ukrautodorEmail'], 'УкрЯма: добавлена яма', $mailbody, $headers);
+		}
+		return true;
 	}
 
 	/**
@@ -1299,7 +1302,7 @@ class HolesController extends Controller
 				{
 				   $subj = 'УкрЯма: добавлена яма';
 				}
-			case "moderated": // ям отмодерирована. Нужно уведомить пользователя и предложить отправить по почте или заплатить
+			case "moderated": // яма отмодерирована. Нужно уведомить пользователя и предложить отправить по почте или заплатить
 				{
 				  $mailbody = $this->renderPartial(
 				   'application.views.ugmail.moderated',
