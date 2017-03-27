@@ -168,11 +168,12 @@ class HolesController extends Controller
       $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/hole_view.css'); 
       $jsFile = CHtml::asset($this->viewPath.DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.'view_script.js');
       $cs->registerScriptFile($jsFile);
-      $pays = Payments::model()->findAll('hole_id=:hole_id', array(':hole_id'=>$id));
+      //$pays = Payments::model()->findAll('hole_id=:hole_id', array(':hole_id'=>$id));
+      $thehole = $this->loadModel($id);
         
 		$this->render('view',array(
-			'hole'=>$this->loadModel($id),
-                        'pays'=>$pays,
+			'hole'=>$thehole,
+                        'pays'=>$thehole->payments, //$pays,
 		));
 	}
 	
@@ -1012,22 +1013,33 @@ class HolesController extends Controller
 	
 		$model=new Holes('search');
 		$model->unsetAttributes();  // clear any default values
+		$q = "";
 		if(isset($_POST['Holes']))
 			$model->attributes=$_POST['Holes'];
 			if ($model->ADR_CITY=="Город") $model->ADR_CITY='';
+		if(isset($_GET['q'])) {
+			$a = $_GET['q'];
+		}
 
 		$hole = new Holes;
 		//выставляем центр на карте по координатам IP юзера
+		// если он не в Украине, то выставлять на Киев (по умолчанию)
+		$hole->LATITUDE=30.4667;
+		$hole->LONGITUDE=50.423;
+
 		$request = new CHttpRequest;
 		$geoIp = new EGeoIP();
 		$geoIp->locate($request->userHostAddress); 	
-		//echo ($request->userHostAddress);
-		if ($geoIp->longitude) $hole->LATITUDE=$geoIp->longitude;
-		if ($geoIp->latitude) $hole->LONGITUDE=$geoIp->latitude;
+		if ($geoIp->countryCode == 'UA') {
+			//echo ($request->userHostAddress);
+			if ($geoIp->longitude) $hole->LATITUDE=$geoIp->longitude;
+			if ($geoIp->latitude) $hole->LONGITUDE=$geoIp->latitude;
+		}
 
 		$this->render('map',array(
 			'model'=>$model,
 			'hole'=>$hole,
+			'q'=>$q,
 			'types'=>HoleTypes::model()->findAll(Array('condition'=>'t.published=1 and t.lang="ua"')),
 		));
 	}
