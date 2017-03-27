@@ -131,6 +131,7 @@ class Holes extends CActiveRecord
 			'requests'=>array(self::HAS_MANY, 'HoleRequests', 'hole_id', 'order'=>'requests.id ASC'),
 			'request_last'=>array(self::HAS_ONE, 'HoleRequests', 'hole_id', 'order'=>'request_last.id DESC'),
 			'payments'=>array(self::HAS_MANY, 'Payments', 'hole_id', 'condition' => 'status = "success"', 'order'=>'payments.id ASC'),
+			'payments_all'=>array(self::HAS_MANY, 'Payments', 'hole_id', 'condition' => 'id >0','order'=>'id ASC'),
 
 			'fixeds'=>array(self::HAS_MANY, 'HoleFixeds', 'hole_id','order'=>'fixeds.date_fix DESC'),
 			'user_fix'=>array(self::HAS_ONE, 'HoleFixeds', 'hole_id', 'condition'=>'user_fix.user_id='.Yii::app()->user->id),

@@ -173,7 +173,7 @@ class HolesController extends Controller
         
 		$this->render('view',array(
 			'hole'=>$thehole,
-                        'pays'=>$thehole->payments, //$pays,
+                        'pays'=>$thehole->payments_all, //$pays,
 		));
 	}
 	

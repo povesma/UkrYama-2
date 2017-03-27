@@ -114,6 +114,7 @@ function initialize() {
                                                 <div style="font-size:<?= $font_size ?>"><span class="money"></span><b> <?= $p_msg ?></b> 
 						Сума: <?php echo $p1->amount; if($p1->currency == 'UAH') { echo 'грн.'; } else { echo '$'; }?> 
 						Дата: <?php echo $p1->date;  ?> 
+						UserID: <?php echo $hole->USER_ID;  ?> 
 						</div>
 						<?php 
 						

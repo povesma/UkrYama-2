@@ -34,13 +34,13 @@ class Payments extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('hole_id', 'numerical', 'integerOnly'=>true),
+			array('hole_id, user_id', 'numerical', 'integerOnly'=>true),
 			array('amount', 'numerical'),
             array('description', 'length', 'max'=>500),
             array('transaction_id', 'length', 'max'=>30),
 			array('status, type, currency', 'length', 'max'=>15),
 			array('date', 'safe'),
-			array('id, hole_id, amount, date, status, type, transaction_id, description, currency', 'safe', 'on'=>'search'),
+			array('id, user_id, hole_id, amount, date, status, type, transaction_id, description, currency', 'safe', 'on'=>'search'),
 		);
 	}
 
