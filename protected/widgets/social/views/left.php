@@ -4,9 +4,9 @@
 </div><br /> -->
 
 
-
+<!--
 <div id="from_blog">
-	<script src="http://www.google.com/jsapi?key=internal-sample" type="text/javascript"></script>
+	<script src="http://www.google.com/jsapi?key=<?php echo Yii::app()->params['google_maps_api'] ?>" type="text/javascript"></script>
 	<script language="Javascript" type="text/javascript">//<![CDATA[
 		google.load("feeds", "1");
 		function OnLoad() {
@@ -21,7 +21,7 @@
 	</script> 
 	<div id="feedControl">Загрузка постов…</div>
 </div>
-
+-->
 <?php
     // last comments
     $this->widget("comments.widgets.ECommentsLastListWidget", array(

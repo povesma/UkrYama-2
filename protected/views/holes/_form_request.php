@@ -9,28 +9,41 @@ $usermodel=Yii::app()->user->userModel;
 $model=new RequestForm;
 //			$mytype=$hole->type->findAll("id=:id",array(':id'=>$hole->TYPE_ID));
 $mytype=array();
-if($first==1){
+$authority=array();
+
 	$mytype['ru']=$hole->type->findByPk(array("id"=>$hole->TYPE_ID,"lang"=>"ru"));
 	$mytype['ua']=$hole->type->findByPk(array("id"=>$hole->TYPE_ID,"lang"=>"ua"));
-}else{
-	$mytype['ru']=$hole->type->findByPk(array("id"=>13,"lang"=>"ru"));
-	$mytype['ua']=$hole->type->findByPk(array("id"=>13,"lang"=>"ua"));
-	
-	$auth['ru']=$req->auth_ru;
-	$auth['ua']=$req->auth_ua;
-	$mytype['ru']->name=$auth['ru']->name;
-	$mytype['ua']->name=$auth['ua']->name;
+
+$authid="";
+$d1 = date('Y-m-d H:i:s');
+
+if($first!=1){ // повторная жалоба, уже есть запрос
+	$mytype['ru']=$hole->type->findByPk(array("id"=>$first,"lang"=>"ru"));
+	$mytype['ua']=$hole->type->findByPk(array("id"=>$first,"lang"=>"ua"));
+	if ($authority['ru']->gibdd != 0) {
+		$authority['ru']=$req->auth_ru;
+		$authority['ua']=$req->auth_ua;
+	} else {
+		error_log ($d1.": _form_request: GIBDD_ID is 0! req.id: " . $req->id.", holeid: ".$req->hole_id."\n", 3, "php-log.log");
+	}
+	$authid=$authority['ua']->id;
+	$mytype['ru']->name = $authority['ru']->name . ", ".$mytype['ru']->name;
+	$mytype['ua']->name = $authority['ua']->name . ", ".$mytype['ua']->name;
 }
 
 $region=$hole->region();
 $choices=array();
-if($first==1){
+if($first==1 ){ // если первичная жалоба, то выбираем список органов, которые ответствены за этот тип ямы (связана таблица yii_authority_relation)
 	$choices['ua']=$hole->getAllAuth($region,$mytype['ua'],"ua");
 	$choices['ru']=$hole->getAllAuth($region,$mytype['ru'],"ru");
-}else{
-
-	$choices['ua']=$auth['ua']->parents("ua");
-	$choices['ru']=$auth['ru']->parents("ru");
+}else{ // повторная жалоба - выбираем вышестоящие органы
+	//error_log ("AUTH_UA: " . print_r($authority,true), 3, "php-log.log");
+	if ($authority['ua']) {
+		$choices['ua']=$authority['ua']->parents("ua");
+	}
+	if ($authority['ru']) {
+		$choices['ru']=$authority['ru']->parents("ru");
+	}
 }
 $usermodel=Yii::app()->user->userModel;
 ?>
@@ -67,6 +80,8 @@ $usermodel=Yii::app()->user->userModel;
 <tr><td>
 <input type="hidden" name="lang" id="lang" value="ua">
 <input type="hidden" name="hole_type" value="<?= $hole->TYPE_ID?>">
+<input type="hidden" name="defect_type" value="<?= $first?>">
+<input type="hidden" name="first_authid" id="first_authid" value="<?= $authid?>">
 
 <label><?=Yii::t('holes_view', 'HOLE_REQUEST_FORM_LANG',array(),null,'uk_ua')?></label>/<label><?=Yii::t('holes_view', 'HOLE_REQUEST_FORM_LANG',array(),null,'ru')?></label>
 </td>
@@ -82,7 +97,7 @@ $usermodel=Yii::app()->user->userModel;
 <label><?=Yii::t('holes_view', 'HOLE_REQUEST_FORM_AUTHORITY',array(),null,'uk_ua')?></label>
 </td>
 <td>
-<select onClick="authChange(this,'ua')" name="ua_auth">
+	<select onClick="authChange(this,'ua')" name="ua_auth">
 	<option value="0">. . .
 <?php foreach($choices['ua'] as $choice) {?>
 	<option value="<?= $choice->id?>"><?=$choice->name?>
@@ -122,7 +137,20 @@ $usermodel=Yii::app()->user->userModel;
 <input name="ua_signature" value="<?= $usermodel->relProfile->request_signature ? $usermodel->relProfile->request_signature : $usermodel->last_name.' '.substr($usermodel->name, 0, 2).($usermodel->name ? '.' : '').' '.substr($usermodel->second_name, 0, 2).($usermodel->second_name ? '.' : '') ?>">
 </td>
 </tr>
+<tr><td>
+<label><?=Yii::t('profile', 'REQUEST_REPLY_TO_EMAIL_ONLY')?></label>
+</td>
+<td>
+<input name="reply_to_email_only" <?= $usermodel->relProfile->reply_to_email_only>=1?"checked":"NOT_CHECKED ".$usermodel->relProfile->reply_to_email_only ?> type="checkbox">
+<br>
+Email: 
+<input name="email" value="<?= $usermodel->email ?>">
+</td>
+</tr>
 </table>
+
+<!-- RUSSIAN FORM -->
+
 <table id="ru_form" style="display:none">
 <tr><td>
 <label><?=Yii::t('holes_view', 'HOLE_REQUEST_FORM_DEFECT_TYPE',array(),null,'ru')?></label> 
@@ -225,7 +253,7 @@ function picSelect(){
 		if($first==1){
 			echo "<li><input name='chpk[".$picture->id."]' id='chpk_".$picture->id."' type=checkbox checked><a href='#' onClick=setPic(".$picture->id.")><img class='t_pic' width=100px src='".$picture->small."' id='".$picture->id."'><img class='tic' src='/images/tic.png' id='tic_".$picture->id."'></a></li>\n";
 		}else{
-			echo "<li><input name='chpk[".$picture->id."]' id='chpk_".$picture->id."' type=checkbox checked><a href='#' onClick=setPic(".$picture->id.")><img class='t_pic' width=100px src='".$hole->requests[0]->answer->filesFolder.'/'.$picture->file_name."' id='".$picture->id."'><img class='tic' src='/images/tic.png' id='tic_".$picture->id."'></a></li>\n";
+			echo "<li><input name='chpk[".$picture->id."]' id='chpk_".$picture->id."' type=checkbox checked><a href='#' onClick=setPic(".$picture->id.")><img class='t_pic' width=100px src='".$hole->requests[0]->answer->filesFolder.'/'.$picture->filename."' id='".$picture->id."'><img class='tic' src='/images/tic.png' id='tic_".$picture->id."'></a></li>\n";
 		}
 	}
 ?>

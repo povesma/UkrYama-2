@@ -204,10 +204,14 @@ class UGCron {
 			if ($cItem) {
 				// execute the cronjob if enough time has passed by
 				if ($cItem->last_occurrence <= date('Y-m-d', time() - (3600 * 24 * $cItem->lapse)).' 00:00:00') {
-					if ($cron->action === UGCronJob::DELETE)
+					if ($cron->action === UGCronJob::DELETE) {
+//						Need to check if these users have holes added (checked in set criteria)
+//						this situation happens when hole is added with autoregistration funtion
 						$cron->_model->deleteAll($cron->criteria);
-					elseif ($cron->action === UGCronJob::UPDATE)
+					}
+					elseif ($cron->action === UGCronJob::UPDATE) {
 						$cron->_model->updateAll($cron->columns, $cron->criteria);
+					}
 					// update the cronTable
 					$cItem->last_occurrence = date('Y-m-d').' 00:00:00';
 					$cItem->save();
@@ -413,12 +417,16 @@ class UGCJGarbageCollection extends UGCronJob {
 	
 	/**
 	 * return the action criteria
+	 * do not delete those who have holes!
 	 */
 	protected function getCriteria()
 	{
 		$criteria = new CDbCriteria;
 		$criteria->compare('status',UserGroupsUser::WAITING_ACTIVATION);
 		$criteria->compare('activation_time <', date('Y-m-d', time() - (3600 * 24 * 7)).' 00:00:00');
+		// do not delete those who have holes!
+		$criteria->compare('id not in (select distinct user_id from yii_holes) and 1', 1);
+		$criteria->compare('id not in (select distinct user from yii_messengers) and 1', 1);
 		return $criteria;
 	}
 	

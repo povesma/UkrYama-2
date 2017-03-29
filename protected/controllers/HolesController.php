@@ -27,15 +27,15 @@ class HolesController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('add','smallhole','index','view', 'findRegion', 'findCity', 'map','map2', 'ajaxMap'),
+				'actions'=>array('add','smallhole','index','view', 'findRegion', 'findCity', 'map','map2', 'ajaxMap','sai','test2'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('getauth','TrackMail','update', 'personal','personalDelete','requestForm','sent','notsent','reply','fix', 'defix', 'delanswerfile','myarea', 'delpicture','selectHoles','review'),
+				'actions'=>array('getauth',/*'TrackMail',*/'update', 'personal','personalDelete','requestForm','sent','notsent','reply','fix', 'defix', 'delanswerfile','myarea', 'delpicture','selectHoles','review','test2'),
 				'users'=>array('@'),
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('delete', 'moderate', 'test','test2'),
+				'actions'=>array('delete', 'moderate', 'test','test2','rotate'),
 				'groups'=>array('root', 'admin', 'moder'), 
 			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
@@ -125,19 +125,7 @@ class HolesController extends Controller
 		return;
 	}
 	public function actionTest2(){
-	echo "<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js'></script><style>span{cursor:pointer;}</style>";
-	$holes = Holes::model()->findAll(array('order'=>'ADDRESS'));
-	foreach($holes as $hole){
-		$region=$hole->region();
-		if(!count($region)){
-			$holetype=$hole->type->findByPk(array("id"=>$hole->TYPE_ID,"lang"=>"ru"));
-			echo "<div id='hid_".$hole->ID."'><hr>Hole ID:".$hole->ID."<br>\nAddress: ".$hole->ADDRESS."<br>\nType: ".$holetype->alias."<br>\n Best guess for Region is: ".$region->name.$top."<br>\nAuthority suggested: ".$auth[0]->name."<br>\n";
-			echo CHtml::link(Yii::t('holes_view', 'EDIT'), array('update', 'id'=>$hole->ID), array('target'=>'_blank'));
-			echo "<div><span onClick='$(\"#hid_".$hole->ID."\").remove();' style='background-color:green'>FIXED</span></div>";
-			echo "</div>";
-		}
-	}
-		return;
+       echo Yii::app()->user->id;
 	}
 
 	public function actionFindCity()
@@ -180,9 +168,12 @@ class HolesController extends Controller
       $cs->registerCssFile(Yii::app()->request->baseUrl.'/css/hole_view.css'); 
       $jsFile = CHtml::asset($this->viewPath.DIRECTORY_SEPARATOR.'js'.DIRECTORY_SEPARATOR.'view_script.js');
       $cs->registerScriptFile($jsFile);
+      //$pays = Payments::model()->findAll('hole_id=:hole_id', array(':hole_id'=>$id));
+      $thehole = $this->loadModel($id);
         
 		$this->render('view',array(
-			'hole'=>$this->loadModel($id),
+			'hole'=>$thehole,
+                        'pays'=>$thehole->payments_all, //$pays,
 		));
 	}
 	
@@ -285,6 +276,9 @@ class HolesController extends Controller
 					if ($model->PREMODERATED && $model->ROAD_TYPE == 'highway') {
 						$this->sendMailToUkrautodor($model);
 					}
+					if ($model->PREMODERATED) {
+						$this->sendMailToSai($model);
+					}
 					$this->redirect(array('view','id'=>$model->ID));
 				}
 			}
@@ -357,7 +351,15 @@ class HolesController extends Controller
 //				$answer->request_id=$req->id;
 				$answer->request_id=$_POST['req_id'];
 //			}else{return false;}
-			if($answer->save()){
+			if($answer->save()){ // Успішно зберегли відповідь
+				// повідомляемо зацікавленним, що завантажена відповідь:
+				$admin_id = 228;	
+				$owner_id = $hole->user->id; // власник ями. Тут би ще з'ясувати відправника, бо лише відправник може завантажувати, аби йому не відправляти
+			       $mesg1 = $this->renderPartial('application.views.ugmail.answer',
+   	  		      Array( 'model' => $hole,), true);
+                               Messenger::send($admin_id, "УкрЯма: завантажена відповідь", $mesg1);
+                               Messenger::send($owner_id, "УкрЯма: завантажена відповідь", $mesg1);
+				// переадресовуємо на сторінку
 				$this->redirect(array('view','id'=>$hole->ID));
 			}
 		}
@@ -376,11 +378,14 @@ class HolesController extends Controller
   
 
 		if (!$model->isUserHole && Yii::app()->user->level < 50){
-			if ($model->STATE==Holes::STATE_FIXED || !$model->requests || !$model->requests_user[0]->answers || $model->user_fix)
-				throw new CHttpException(403,'Доступ запрещен.');
+			if ($model->STATE==Holes::STATE_FIXED || !$model->requests ||  $model->user_fix) { // !$model->requests_user[0]->answers || - требование ответов на запросы - лишнее
+				$all_conds= '$model.STATE: '.$model->STATE.', $model->requests: '.$model->requests.',  $model->requests_user[0]->answers: '.$model->requests_user[0]->answers.', $model->user_fix: '.$model->user_fix;
+				throw new CHttpException(403,'Доступ запрещен ибо не админ и не владелец ямы, или яма уже исправлена или запросы не отправлены, или ответы не получены. '.$all_conds);
+			}
 		}		
-		elseif ($model->STATE==Holes::STATE_FIXED && $model->user_fix)
-				throw new CHttpException(403,'Доступ запрещен.');		
+		elseif ($model->STATE==Holes::STATE_FIXED && $model->user_fix) {
+				throw new CHttpException(403,'Доступ запрещен, т.к. уже отмечена исправленной.');		
+		}
 			
 		$model->scenario='fix';
 		
@@ -490,20 +495,27 @@ class HolesController extends Controller
 	   $this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('personal'));
 	}	
 	
-	//форма ГИБДД
+	//форма печати заявления
 	public function actionRequestForm($id)
 	{
 		$lang=$_POST['lang'];
+
 		$holetype=$_POST['hole_type'];
+		$defect_type=$_POST['defect_type'];
 		$auth=$_POST[$lang.'_auth'];
+		$first_authid=$_POST['first_authid'];	
 		$to_name=$_POST[$lang.'_to_name'];
 		$to_address=$_POST[$lang.'_to_address'];
 		$to_index=$_POST[$lang.'_to_index'];
 		$from=$_POST[$lang.'_from'];
 		$postaddress=$_POST[$lang.'_postaddress'];
+		$response_from=$_POST[$lang.'_response_from'];
+		$response_date=$_POST[$lang.'_response_date'];
+		$forward_to=$_POST[$lang.'_forward_to'];
+		$eo_tick=$_POST['reply_to_email_only'];
+		$eo_email=$_POST['email'];
 		$signature=$_POST[$lang.'_signature'];
 
-		$auth=Authority::model()->findByPk(array('id'=>$auth,'lang'=>$lang));
 		$model=$this->loadModel($id);
 
 		$pics=array();
@@ -517,6 +529,8 @@ class HolesController extends Controller
 			$lang="ua";
 		}
 
+		$auth=Authority::model()->findByPk(array('id'=>$auth,'lang'=>$lang));
+
 		$pics=array_keys($_POST['chpk']);
 		setlocale(LC_ALL, 'ru_RU.UTF-8');
 
@@ -526,6 +540,8 @@ class HolesController extends Controller
 
 		$model=$this->loadModel($id);
 		if(count($model->requests_user)>0){$first=1;}else{$first=0;}
+ 		// Оскільки ми не підтримуємо поки що подальших скарг (всі наші скарги - первісні!) - first = 0 завжди
+		$first = 0;
 		if($first!=0){
 			$pictures=$hole->pictures_fresh;
 		}else{
@@ -563,7 +579,7 @@ class HolesController extends Controller
 									$photos =$photos."<tr><td colspan=2>".Yii::t('holes_view', 'PICTURE').' '.$pnum.' '.Yii::t('holes_view', 'PICTURE_TO').' №'.$id.'<br><img height="500px" src="data:image/jpg;base64,'.base64_encode(file_get_contents(Yii::getPathOfAlias('webroot').$pfile)).'"></td></tr><tr><td colspan=2 class="smv-spacer"></td></tr>'."\n";
 								}
 							}else{
-								$pfile=$picPath.$picture->file_name;
+								$pfile=$picPath.$picture->filename;
 								if($request->html){
 									$photos =$photos."<tr><td colspan=2>".Yii::t('holes_view', 'PICTURE').' '.$pnum.' '.Yii::t('holes_view', 'PICTURE_TO').' №'.$id.'<br><img height="500px" src="'.$pfile.'"></td></tr><tr><td colspan=2 class="smv-spacer"></td></tr>'."\n";
 								}else{
@@ -576,34 +592,76 @@ class HolesController extends Controller
 					}
 				}
 
+ 				$formType = "";
+				$first_auth = "";
+				$sent_date = "";
+				$delivery_date = "";
+				if($defect_type < 30 ){ // обычный дефект
+	                                $formType=$model->type['alias'];
+				}else{ // повторное обжалование - дефект типа незаконного ответа, неответа
+					$fType=$model->type->findByPk(array("id"=>$defect_type,"lang"=>$lang));
+					$formType = $fType->alias;
+
+					$requests=$model->requests;
+					$req=false;
+					if(count($requests)>0){
+						$req=$requests[0];
+						$sent_date = $req->date_sent;
+					}
+					$delivery_date = $model->request_sent[0]->ddate;
+					$nauth= new Authority;
+					$fType = $nauth->findByPk(array("id"=>$first_authid,"lang"=>$lang));
+					$first_auth = $fType->name;
+				}
+		$signature_image = "<".Yii::app()->user->id.">";
+		$u = new Profile;
+		$u=Profile::model()->findByAttributes(["ug_id" => Yii::app()->user->id]);
+		if($u->signature_image) {
+			$signature_image = $u->signature_folder.'/'.$u->signature_image; // CHtml::image($u->signature_folder.'/'.$u->signature_image, 'Handwritten signature',array('height'=>'150px'));
+		} else {
+			$signature_image = "";
+		}
+		$eo = "";
+		if($eo_tick && $eo_email) {
+			$eo = $eo_email;
+		}
 		$_data = array(
 			"ref" => "$id",
 			"to_name" =>$to_name,
 			"to_address"=>$to_address,
 			"from_name"=>$from,
+			"first_auth"=>$first_auth,
+			//"sent_date"=>date("Y-m-d", $sent_date),
+			"delivery_date"=>$delivery_date,
 			"from_address"=>$postaddress,
-			"when"=>strftime("%e ".Yii::t('month', date("n"))." %Y", $model->DATE_CREATED ? $model->DATE_CREATED : time()),
+            "when"=>date("d ".Yii::t('month',date("n",$model->DATE_CREATED) )." Y", $model->DATE_CREATED),
 			"where"=>$model->ADDRESS,
-			"date"=>strftime("%e ".Yii::t('month', date("n"))." %Y", time()),
+            "date"=>date("d ".Yii::t('month',date("n",time()) )." Y", time()),
 			"init"=>$signature,
 			"c_photos"=>count($pics),
 			"files"=>$photos,
-			"map"=>1
+			"map"=>1,
+			"signature"=>$signature_image,
+			"email_only"=>strtoupper($eo)
 		);
-				if(!$first){
-					$formType=$model->type['alias'];
-				}else{
-					$formType="prosecutor2";
-				}
+//  			foreach ($_data as $dt) echo $dt."<br>";
+
+
+//				$formType=$model->type['alias'];
+
+				$name="$formType"."_$lang";
+
+				$printer = Yii::app()->Printer;
+
+				$tpl_base_name = YiiBase::getPathOfAlias($printer->params['templates'])."/dyplates/".$auth->atype->alias."_";
+				$tplname = $tpl_base_name.$name.".php";
+				$cssfilename = $tpl_base_name.$formType.".css";
+
 
 				if($_POST['print']=="HTML")
 				{
 					header('Content-Type: text/html; charset=utf8', true);
-					$printer = Yii::app()->Printer;
-//					echo $printer->printHTML($_data, $formType, $lang);
-					$name="$formType"."_$lang";
-					$tplname = YiiBase::getPathOfAlias($printer->params['templates'])."/dyplates/".$auth->atype->alias."_".$name.".php";
-					$css = file_get_contents(YiiBase::getPathOfAlias($printer->params['templates'])."/dyplates/".$auth->atype->alias."_".$formType.".css"); 
+					$css = file_get_contents($cssfilename); 
 					$html = $this->renderFile($tplname,$_data,true);
 					$html = "<style>$css</style>\n$html";
 					echo $html;
@@ -611,14 +669,10 @@ class HolesController extends Controller
 				}//end print html
 				else
 				{//print pdf
-					$printer = Yii::app()->Printer;
-					$name="$formType"."_$lang";
-					$tplname = YiiBase::getPathOfAlias($printer->params['templates'])."/dyplates/".$auth->atype->alias."_".$name.".php";
 					if(file_exists($tplname)){
-						$css = file_get_contents(YiiBase::getPathOfAlias($printer->params['templates'])."/dyplates/".$auth->atype->alias."_".$formType.".css"); 
+						$css = file_get_contents($cssfilename); 
 						$html = $this->renderFile($tplname,$_data,true);
-
-						$outname="ukryama-".date("Y-m-d_G-i-s");
+						$outname="$id"."-ukryama-".date("Y-m-d_G-i-s");
 						echo $printer->printH2P($html, $css, $outname);
 						return;
 					}
@@ -647,7 +701,7 @@ class HolesController extends Controller
 		));
 	}
 	
-	public function actionModerate($id)
+	public function actionModerate($id) // на первый взгляд оооочень корявая и неоптимальная функция
 	{
 		if (!isset($_GET['PREMODERATE_ALL'])){
 			$model=$this->loadModel($id);
@@ -658,13 +712,17 @@ class HolesController extends Controller
 						echo "ok";
 						if ($model->ROAD_TYPE == 'highway') {
 							$this->sendMailToUkrautodor($model);
-						}
+						} 
+						$this->sendMailToSai($model);
+						$this->sendMessage($model, "moderated", $this->user);
 					}
 				}else{
 					if ($model->update()) {
 						if ($model->ROAD_TYPE == 'highway') {
 							$this->sendMailToUkrautodor($model);
 						}
+						$this->sendMailToSai($model);
+						$this->sendMessage($model, "moderated", $this->user);
 						$this->redirect($_SERVER['HTTP_REFERER']);
 					}
 				}
@@ -682,20 +740,22 @@ class HolesController extends Controller
 				if ($model->update()) {
 					if ($model->ROAD_TYPE == 'highway') {
 						$this->sendMailToUkrautodor($model);
+						$this->sendMailToSai($model);
 					}
+					$this->sendMessage($model, "moderated", $this->user);
 					$ok++;
 				}
 			}
 			if ($ok==count($holes))  echo 'ok';
 		}
 	}
-
+/*
 	public function trackMail($id){
 		$http=new Http;
-		$url="http://services.ukrposhta.com/barcodesingle/default.aspx?ctl00%24centerContent%24scriptManager=ctl00%24centerContent%24scriptManager%7Cctl00%24centerContent%24btnFindBarcodeInfo&__EVENTTARGET=&__EVENTARGUMENT=&ctl00%24centerContent%24txtBarcode=$id&__ASYNCPOST=true&ctl00%24centerContent%24btnFindBarcodeInfo=%D0%9F%D0%BE%D1%88%D1%83%D0%BA";
+		$url="http://services.ukrposhta.ua/barcodesingle/default.aspx?ctl00%24centerContent%24scriptManager=ctl00%24centerContent%24scriptManager%7Cctl00%24centerContent%24btnFindBarcodeInfo&__EVENTTARGET=&__EVENTARGUMENT=&ctl00%24centerContent%24txtBarcode=$id&__ASYNCPOST=true&ctl00%24centerContent%24btnFindBarcodeInfo=%D0%9F%D0%BE%D1%88%D1%83%D0%BA";
 		$a= $http->http_request(array('url'=>$url,'return'=>'array', 'cookie'=>true));
 		$cookie = $a['headers']['SET-COOKIE'];
-		$url="http://services.ukrposhta.com/barcodesingle/DownloadInfo.aspx";
+		$url="http://services.ukrposhta.ua/barcodesingle/DownloadInfo.aspx";
 		$data= $http->http_request(array('url'=>$url, 'cookie'=>$cookie));
 		
 		$page=preg_split("\n",$data);
@@ -713,6 +773,7 @@ class HolesController extends Controller
 				}
 			}
 		}
+		error_log ("UkrYamaResponse".$result.", PlainData: ".$data."\n", 3, "php-log.log");
 		if(strstr($result,"вручене за довіреністю")){
 			return date("Y-m-d",strtotime(mb_substr(strstr($result,"вручене за довіреністю "),23,10,'UTF-8')));
 		}else{
@@ -723,7 +784,7 @@ class HolesController extends Controller
 		$date=$this->trackMail($id);
 		echo $date;
 	}	
-
+*/
 	public function actionSent($id)
 	{
 		$model=$this->loadModel($id);
@@ -737,7 +798,8 @@ class HolesController extends Controller
 		if(isset($_POST['when'])){
 			if(strlen($_POST['when'])>0){
 				$date= $_POST['when'];
-				if($_POST['mailtype']==1){
+				if($_POST['mailtype']==1 || $_POST['mailtype']==4 || $_POST['mailtype']==5){ // 1 - особисто, 4 - е-пошта, 5 - сайт ukc.gov.ua
+					// позначити доствленим негайно
 					$hrs = new HoleRequestSent;
 					$hrs->hole_id=$id;
 					$hrs->user_id=Yii::app()->user->id;
@@ -778,14 +840,15 @@ class HolesController extends Controller
 			$hrs->rcpt=$data['rcpt'];
 			$hrs->mailme=$data['mailme'];
 			$hrs->hole_id=$data['hole'];
-			$date=$this->trackMail($data['rcpt']);
-			if($date){
-				$hrs->status=1;
-				$hrs->ddate=$date;
-			}else{
-				$hrs->status=0;
-			}
 			$hrs->save();
+			$hrs->updateMail();
+			$admin_id = 228;
+			$owner_id = $model->user->id; // власник ями. Тут би ще з'ясувати відправника, бо лише відправник може завантажувати, аби йому не відправляти
+			$mesg1 = $this->renderPartial('application.views.ugmail.sent-request',
+   	  		      Array( 'model' => $model, 'request' => $model->request_last), true);
+                               Messenger::send($admin_id, "УкрЯма: скарга відправлена", $mesg1);
+                               Messenger::send($owner_id, "УкрЯма: скарга відправлена", $mesg1);
+
 		}
 			if(!isset($_GET['ajax']))
 				$this->redirect(array('view','id'=>$model->ID));
@@ -950,22 +1013,33 @@ class HolesController extends Controller
 	
 		$model=new Holes('search');
 		$model->unsetAttributes();  // clear any default values
+		$q = "";
 		if(isset($_POST['Holes']))
 			$model->attributes=$_POST['Holes'];
 			if ($model->ADR_CITY=="Город") $model->ADR_CITY='';
+		if(isset($_GET['q'])) {
+			$a = $_GET['q'];
+		}
 
 		$hole = new Holes;
 		//выставляем центр на карте по координатам IP юзера
+		// если он не в Украине, то выставлять на Киев (по умолчанию)
+		$hole->LATITUDE=30.4667;
+		$hole->LONGITUDE=50.423;
+
 		$request = new CHttpRequest;
 		$geoIp = new EGeoIP();
 		$geoIp->locate($request->userHostAddress); 	
-		//echo ($request->userHostAddress);
-		if ($geoIp->longitude) $hole->LATITUDE=$geoIp->longitude;
-		if ($geoIp->latitude) $hole->LONGITUDE=$geoIp->latitude;
+		if ($geoIp->countryCode == 'UA') {
+			//echo ($request->userHostAddress);
+			if ($geoIp->longitude) $hole->LATITUDE=$geoIp->longitude;
+			if ($geoIp->latitude) $hole->LONGITUDE=$geoIp->latitude;
+		}
 
 		$this->render('map',array(
 			'model'=>$model,
 			'hole'=>$hole,
+			'q'=>$q,
 			'types'=>HoleTypes::model()->findAll(Array('condition'=>'t.published=1 and t.lang="ua"')),
 		));
 	}
@@ -1100,7 +1174,7 @@ class HolesController extends Controller
 			'model'=>$model,
 		));
 	}
-	
+
 	public function actionItemsSelected()
 	{
 	if (isset ($_POST['submit_mult']) && isset($_POST['itemsSelected'])) {
@@ -1186,6 +1260,144 @@ class HolesController extends Controller
 			true
 		);
 
-		return mail(Yii::app()->params['ukrautodorEmail'], 'УкрЯма: добавлена яма', $mailbody, $headers);
+		if (Yii::app()->params['ukrautodorEmail']) {
+			return mail(Yii::app()->params['ukrautodorEmail'], 'УкрЯма: добавлена яма', $mailbody, $headers);
+		}
+		return true;
 	}
+
+	/**
+	 * Sends hole notification email to State Automodule Inspection.
+	 */
+	protected function sendMailToSai($hole)
+	{
+        $dep = Authority::model()->find(array(
+            'select'=>'o_email',
+            'condition'=>'region_id=:region_id and lang=:lang',
+            'params' => array(':region_id' => $hole->region_id, ':lang'=>'ua')
+        ));
+
+        if($dep->o_email){
+            $email = $dep->o_email;
+        }else{
+            $email = Yii::app()->params['saiEmail'];
+        }
+
+
+		$headers = "MIME-Version: 1.0\r\nFrom: " . Yii::app()->params['adminEmail'] . "\r\nReply-To: " . Yii::app()->params['adminEmail'] . "\r\nContent-Type: text/html; charset=utf-8";
+		Yii::app()->request->baseUrl = Yii::app()->request->hostInfo;
+
+		$mailbody = $this->renderPartial(
+			'application.views.ugmail.sai',
+			Array(
+				'model' => $hole,
+			),
+			true
+		);
+
+		return mail($email, $hole->ID.' - ч. 1 ст. 140 КУпАП: Повідомлення по порушення законодавства', 
+				$mailbody, $headers);
+	}
+
+	/**
+	 * Sends event notification to the User
+	 */
+	public function sendMessage($hole, $event, $user)
+	{
+		$headers = "MIME-Version: 1.0\r\nFrom: " . Yii::app()->params['adminEmail'] . 
+			"\r\nReply-To: " . Yii::app()->params['adminEmail'] . 
+			"\r\nContent-Type: text/html; charset=utf-8";
+		Yii::app()->request->baseUrl = Yii::app()->request->hostInfo;
+
+		$mail = new YiiMailer();
+
+		$mailbody = "";
+		$subj = "Empty - Unknown";
+		$email = ''; // Yii::app()->params['moderatorEmail'];
+		$att = '';
+		$fn = 'file.pdf';
+		switch(strtolower($event)){
+			case "add": // добавлена яма. Нужно уведомить модератора
+				{
+				   $subj = 'УкрЯма: добавлена яма';
+				}
+			case "moderated": // яма отмодерирована. Нужно уведомить пользователя и предложить отправить по почте или заплатить
+				{
+				  $mailbody = $this->renderPartial(
+				   'application.views.ugmail.moderated',
+	   	  		   Array( 'model' => $hole, ), true);
+				   $email = $hole->user->email;
+				   $subj = 'УкрЯма: яма опублікована';
+
+				}
+		}
+
+		if ($email != '') {
+			//return mail($email, $subj, $mailbody, $headers);
+			$mail->setFrom(Yii::app()->params['adminEmail']);
+			$mail->setTo($email);
+			$mail->setSubject($subj);
+			$mail->setBody($mailbody);
+			if ($att) {
+				$mail->AddStringAttachment($att, $fn);
+			}
+			return $mail->send();
+		}
+	}
+
+    /*
+     * Функція для перевертання зображення
+     * Використовується в \protected\views\holes\view.php
+     * Return: bool
+     * Poremhuck Evgeniy 2015
+     */
+    public function actionRotate($image,$holeid){
+        
+        $degrees = 180;
+
+        $patches = array(
+            YiiBase::getPathOfAlias("webroot")."\\upload\\st1234\\medium\\".$holeid."\\".$image, // Шлях до оригінального зображення
+            YiiBase::getPathOfAlias("webroot")."\\upload\\st1234\\small\\".$holeid."\\".$image, //  Шлях до мініатюри
+                    );
+
+        foreach($patches as $patch) {
+
+            $src = $patch;
+
+            $extension = explode(".", $src);
+
+            if (preg_match("/jpg|jpeg/", $extension[2])) {
+
+                $src_img = imagecreatefromjpeg($src);
+            }
+
+            if (preg_match("/png/", $extension[2])) {
+
+                $src_img = imagecreatefrompng($src);
+            }
+
+            if (preg_match("/gif/", $extension[2])) {
+
+                $src_img = imagecreatefromgif($src);
+            }
+
+            $rotate = imagerotate($src_img, $degrees, 0);
+
+            if (preg_match("/png/", $extension[2])) {
+                imagepng($rotate, $patch);
+            } else if (preg_match("/gif/", $extension[2])) {
+                imagegif($rotate, $patch);
+            } else {
+                imagejpeg($rotate, $patch);
+            }
+
+            imagedestroy($rotate);
+            imagedestroy($src_img);
+
+            return true;
+        }
+
+    }
+
+
 }

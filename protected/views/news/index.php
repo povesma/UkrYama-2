@@ -1,6 +1,10 @@
 <?
+$this->title = Yii::t("template", "MENU_TOP_ABOUT");
 $this->pageTitle=Yii::app()->name . ' :: Новости';
+$this->layout='//layouts/header_blank';
 ?>
+
+
 <?php
 $this->breadcrumbs=array(
 	'News',

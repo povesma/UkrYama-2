@@ -49,5 +49,6 @@ $('.search-form form').submit(function(){
             'amount',
             'status',
             'type',
+            'currency',
     ),
 )); ?>

@@ -1,5 +1,7 @@
 <?
 $this->pageTitle=Yii::app()->name . ' :: Новости :: '.$model->title;
+$this->title = Yii::t("template", "MENU_TOP_ABOUT");
+$this->layout='//layouts/header_blank';
 ?>
 <?php
 $this->breadcrumbs=array(

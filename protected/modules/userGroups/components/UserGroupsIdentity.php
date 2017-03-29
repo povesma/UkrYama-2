@@ -48,6 +48,8 @@ class UserGroupsIdentity extends CUserIdentity
 	private $profile;
 	
 	private $hash;
+
+	private $_nopassword;
 	
 	/**
 	 * these constants rappresent new possible errors
@@ -63,11 +65,13 @@ class UserGroupsIdentity extends CUserIdentity
 	const ERROR_ACTIVATION_CODE = 8;
 	const ERROR_NOT_AUTHENTICATED = 3;
 
-	public function __construct($username,$password,$hash=null)
+	public function __construct($username,$password,$hash=null,$user_id = null, $nopassword=false)
 	{
 		$this->username=$username;
+		$this->_nopassword=$nopassword;
 		$this->password=$password;
 		if ($hash) $this->hash=$hash;
+		if ($user_id) $this->id=$user_id;
 	}
 
 	/**
@@ -76,34 +80,42 @@ class UserGroupsIdentity extends CUserIdentity
 	 */
 	public function authenticate()
 	{
-		$model=UserGroupsUser::model()->findByAttributes(array('username' => $this->username));
-		
-		//Тупая битриксовская проверка пароля.
-		if ($model && $model->is_bitrix_pass){
-			if(strlen($model->password) > 32)
-					{
-						$salt = substr($model->password, 0, strlen($model->password) - 32);
-						$db_password = substr($model->password, -32);
-					}
-					else
-					{
-						$salt = "";
-						$db_password = $model->password;
-					}
-			$user_password =  md5($salt.$this->password);
-			//echo $salt.'<br/>'.$user_password.'<br/>'.$db_password;
-			//die();
+		if ($this->username) {
+			//print_r ("Finding by username: " . $this->username . "\n");
+			$model=UserGroupsUser::model()->findByAttributes(array('username' => $this->username));
+		} else {
+			//print_r ("Finding by id: " . $this->id . "\n");
+			$model=UserGroupsUser::model()->findByAttributes(array('id' => $this->id));
 		}
-		elseif ($model && !$model->is_bitrix_pass){
-			$user_password=md5($this->password . $model->getSalt());
-			$db_password = $model->password;
+		if(!$this->_nopassword){ // не проверям пароль, если не хотим
+			//Тупая битриксовская проверка пароля.
+			if ($model && $model->is_bitrix_pass){
+				if(strlen($model->password) > 32)
+						{
+							$salt = substr($model->password, 0, strlen($model->password) - 32);
+							$db_password = substr($model->password, -32);
+						}
+						else
+						{
+							$salt = "";
+							$db_password = $model->password;
+						}
+				$user_password =  md5($salt.$this->password);
+				//echo $salt.'<br/>'.$user_password.'<br/>'.$db_password;
+				//die();
+			}
+			elseif ($model && !$model->is_bitrix_pass){
+				$user_password=md5($this->password . $model->getSalt());
+				$db_password = $model->password;
+			}
 		}
 		
-		if(!count($model))
+		if(!count($model)) {
 			$this->errorCode=self::ERROR_USERNAME_INVALID;
-		else if((int)$model->status === UserGroupsUser::WAITING_ACTIVATION)
+			//print_r ("User not found: " . $this->username . "\n");	
+		} else if((int)$model->status === UserGroupsUser::WAITING_ACTIVATION)
 			$this->errorCode=self::ERROR_USER_INACTIVE;
-		else if(!$this->hash && ($user_password!==$db_password) || $this->hash && ($model->password!=$this->hash))
+		else if(!$this->_nopassword && (!$this->hash && ($user_password!==$db_password) || $this->hash && ($model->password!=$this->hash)))
 			$this->errorCode=self::ERROR_PASSWORD_INVALID;
 		else if((int)$model->status === UserGroupsUser::WAITING_APPROVAL)
 			$this->errorCode=self::ERROR_USER_APPROVAL;

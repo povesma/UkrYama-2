@@ -37,6 +37,11 @@ class UserController extends Controller
 				'ajax'=>false,
 				'users'=>array('?'),
 			),
+			array('allow',
+				'actions'=>array('checkcode'),
+				'ajax'=>true,
+				'users'=>array('?'),
+			),
 			array('allow',  // captchas can be loaded just by guests
 				'actions'=>array('captcha'),
 				'expression'=>'UserGroupsConfiguration::findRule("registration")',
@@ -126,9 +131,100 @@ class UserController extends Controller
 		if (Yii::app()->request->isAjaxRequest)
 			$this->renderPartial('index',array('model'=>$model,), false, true);
 		else
-			$this->render('index',array('model'=>$model,), false, true);
+			$this->render('index',array('model'=>$model), false, true);
 	}
-	
+	public function actionCheckcode(){
+		header("Content-Type: application/json");
+		if (Yii::app()->user->isGuest){
+			$http=new Http;
+			$url=Yii::App()->params['social_auth_url'];
+			$a = $http->http_request(array('url'=>$url,'return'=>'content', 'data'=>array('session'=>Yii::app()->request->cookies['PHPSESSID'])));
+			if($a===FALSE) {
+				echo '{"status":"500"}';
+				return;
+			}
+			$json = json_decode($a, true);
+			//error_log ("checkCode: ".print_r($json, true)."\n", 3, "php-log.log");
+			try {
+			if($json["status"]=="login-ok"){
+				$imID=$json["socialID"];
+				error_log ("socialID: ".print_r($imID, true)."\n", 3, "php-log.log");
+				$messenger=Messengers::model()->getMessangerID($json["social"]);
+				error_log ("messenger: ".print_r($messenger, true)."\n", 3, "php-log.log");
+				$model = Messengers::model()->find("uin=:uin and messenger=:messenger",array(":uin"=>$imID,":messenger"=>$messenger));
+				if($model==NULL){
+					$model = Messengers::model()->find("chatneyID=:chatneyID",array(":chatneyID"=>$json["chatneyID"]));
+				}
+				$newUser=false;
+				$asID=0;
+				if($model==NULL){
+					$newUser=true;
+					$targetUser=new UserGroupsUser();
+					$targetUser->username="Користувач ".$json["social"];
+					$targetUser->group_id=2;
+					$targetUser->save();
+					error_log ("target user saved: ".print_r($targetUser, true)."\n", 3, "php-log.log");
+					$model=new Messengers();
+					$model->messenger=$messenger;
+					$model->user=$targetUser->primaryKey;
+					// $model->uin=$json["socialID"]; // цього насправді не треба. Достатньо chatneyID для індентифікації
+					$model->chatneyID=$json["chatneyID"];
+					$model->status=1;
+					$model->save();
+					$asID=(int)$targetUser->primaryKey;
+				}else{
+					$targetUser=$model->user0;
+					$asID=$targetUser->id;
+					// перевірити, чи є chatneyID в таблиці messengers, а якщо ні - то записати
+					$model = Messengers::model()->find("user=:user and messenger=:messenger",array(":user"=>$asID,":messenger"=>$messenger));
+					if($model!=NULL){
+						if ($model->chatneyID!=$json["chatneyID"]) {
+							$model->chatneyID=$json["chatneyID"];
+							$model->save();
+						}
+					} else {
+						$model=new Messengers();
+						$model->messenger=$messenger;
+						$model->user=$asID;
+						// $model->uin=$json["socialID"]; // цього насправді не треба. Достатньо chatneyID для індентифікації
+						$model->chatneyID=$json["chatneyID"];
+						$model->status=1;
+						$model->save();
+					}
+				}
+		    		$identity=new UserGroupsIdentity(null,'','',$asID,true);
+				$identity->authenticate();
+				if(!Yii::app()->user->login($identity,0)) {
+					// perhaps, here's some error
+					// return $this->error('NO_SUCH_USER');
+				}
+				if($newUser){
+					echo '{"status":"new-ok"}';
+				}else{
+					echo '{"status":"ok"}';
+				}
+	        	//return Yii::app()->user;
+		        	return Yii::app()->user;
+			}
+			if($json["status"]=="awaiting"){
+				echo '{"status":"wait","code":"'.$json["code"].'"}';
+				return;
+			}
+			if($json["status"]=="new"){
+				echo '{"status":"new","code":"'.$json["code"].'"}';
+				return;
+			}
+			echo '{"status":"501"}';
+			return;
+			} catch(Exception $e){
+				echo print_r($e,true);
+			}
+		}else{
+			echo '{"status":"ok"}';
+			return Yii::app()->user; 
+		}
+	}
+
 	public function actionDelete($id)
 	{
 		if(Yii::app()->request->isPostRequest)
@@ -263,6 +359,7 @@ class UserController extends Controller
 
 	public function actionAutoRegister(){
 		$newUser = $_POST['CommunityForm'];
+		error_log ("actionAutoRegister: ".strstr($newUser)."\n", 3, "php-log.log");
 		$umod = new UserGroupsUser;
 		$users = $umod->findAllByAttributes(array(),"email=:email",array(":email"=>$newUser['email']));
 		if(count($users)==0){
@@ -317,6 +414,9 @@ class UserController extends Controller
 	    $this->pageTitle = Yii::t('titles','UG_YPDATE');
 		$miscModel=$this->loadModel($id, 'changeMisc');
 		$passModel= clone $miscModel;
+                 $messagesModel = Messengers::model()->findAll("user = :user_id", array('user_id'=>Yii::app()->user->id));
+                var_dump($messagesModel);
+                
 		$passModel->setScenario('changePassword');
 		$passModel->password = NULL;
 
@@ -380,8 +480,9 @@ class UserController extends Controller
 					Yii::app()->user->setFlash('user', Yii::t('userGroupsModule.general','An Error Occurred. Please try later.'));
 			}
 		}
-
-		$this->renderPartial('application.views.profile.update',array('miscModel'=>$miscModel,'passModel'=>$passModel, 'profiles' => $profile_models), false, true);
+ //$messagesModel = Messengers::model()->findAll("user = :user_id", array('user_id'=>Yii::app()->user->id));
+   //             var_dump($messagesModel);
+		//$this->renderPartial('application.views.profile.update',array('miscModel'=>$miscModel,'passModel'=>$passModel, 'profiles' => $profile_models,'messagesModel'=>$messagesModel), false, true);
 	}
 	
 	

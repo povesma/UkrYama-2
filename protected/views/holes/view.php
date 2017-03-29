@@ -27,7 +27,13 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			<div class="r">
 				<div class="add-by-user">
 					<span><?php echo Yii::t('template', 'DEFECT_ADDEDBY')?></span>
-					<?php echo CHtml::link(CHtml::encode($hole->user->getParam('showFullname') ? $hole->user->Fullname : $hole->user->username), array('/profile/view', 'id'=>$hole->user->id),array('class'=>""));?>
+					<?php $fullName = null; 
+                                         if ($hole->user != null ) { // иногда бывает так, что пользователя у ямы нет почему-то: пользователь удалился, а его ямы остались.
+						$fullName = $hole->user->getParam('showFullname') ? $hole->user->Fullname : $hole->user->username;
+					 } else {
+ 						$fullName = "The hole has no owner ...";
+					 }
+                                         echo CHtml::link(CHtml::encode($fullName), array('/profile/view', 'id'=>$hole->user->id),array('class'=>""));?>
 				</div>
 				<div class="control">
 					<!-- RIGHT PANEL -->
@@ -74,7 +80,7 @@ function initialize() {
 						<span class="date"><?php echo CHtml::encode(Y::dateFromTime($hole->DATE_CREATED)); ?></span>
 						<?php
 						$userGroup = UserGroupsUser::model()->findByPk(Yii::app()->user->id);
-						if (isset($userGroup->level) && $userGroup->level > 1):?>
+						if ((isset($userGroup->level) && $userGroup->level > 1) || Yii::app()->user->id == $hole->USER_ID):?>
 						<div class="edit-container">
 						  <?php 
 							if(Yii::app()->user->isModer && !$hole->PREMODERATED){
@@ -93,7 +99,28 @@ function initialize() {
 					<p class="type type_<?= $hole->type->alias ?>"><?php echo $hole->type->getName(); ?></p>
 					<p class="address"><?= CHtml::encode($hole->ADDRESS) ?></p>
 					<p class="status">
-	   					<span class="bull <?= $hole->STATE ?>">&bull;</span><b><?=CHtml::encode($hole->StateName)?></b>
+                                            
+	   					<span class="bull <?= $hole->STATE ?>">&bull;</span><b><?=CHtml::encode($hole->StateName)?></b><br />
+                                               <?php if($pays and $userGroup->level>50 and count($pays)>0)
+                                                {
+						foreach ($pays as $p1) {
+						$font_size = "100%";
+						$p_msg = "Оплачено.";
+						if ($p1->status != 'success') {
+							$font_size = "67%; font-color: grey";
+							$p_msg = "Спроба оплати: ".$p1->status;
+						}
+						?>
+                                                <div style="font-size:<?= $font_size ?>"><span class="money"></span><b> <?= $p_msg ?></b> 
+						Сума: <?php echo $p1->amount; if($p1->currency == 'UAH') { echo 'грн.'; } else { echo '$'; }?> 
+						Дата: <?php echo $p1->date;  ?> 
+						UserID: <?php echo $hole->USER_ID;  ?> 
+						</div>
+						<?php 
+						
+						}
+						} ?> 
+                                                
 						<?php
 							$arr[] = array('name'=>CHtml::tag('b', array(), Yii::t('holes_view', 'HOLE_CREATED_INFO')));
 							$arr[] = array('date'=>Y::dateTimeFromTime($hole->createdate), 'name'=>Yii::t('holes_view', 'HOLE_CREATED'));
@@ -106,11 +133,38 @@ function initialize() {
 								$arr[] = array('name'=>CHtml::tag('b', array(), Yii::t('holes_view', 'HOLE_REQUEST_USER_TO', array('{0}'=>$request->user->getFullname(),'{1}'=>$request->$param->name))), 'date'=>Y::dateFromTime($request->date_sent));
 								$deliv=$request->req_sent;
 								if(count($deliv)){
-									if(!$deliv->status){$deliv->updateMail();}
+									if(!$deliv->status) { // якщо статус був "не доставлено", перевіряємо, як воно зараз
+									  $deliv->updateMail();
+									  if ($deliv->status == 1) { // якщо нарешті доставлено - інформуємо користувача.  Цей цикл треба в крон поставити 4 рази на добу, наприклад
+                                                                               // власнику ями і адміну. У адміна окремого аккаунта немає, тому тут хардкод на користувача №228
+                                                                               // ще треба тому, хто заплатив за яму і тому, что реально відправив
+                                                                               $owner_id = $hole->user->id;
+                                                                               $sender_id = $request->user->id;
+                                                                               $payer_id = $hole->payments->user_id;
+                                                                               $admin_id = 228;
+                                                                               error_log("IDs: Owner: ".$owner_id.", sender: ".$sender_id.", payer: ".$payer_id, 3, "php-log.log");
+                                                                               // оставляем только уникальных (тут все неправильно, нужно сделать метод getHoleRelatedUsers (hole_id) [], которая будет отдавать массив всех связанных
+                                                                               if ($owner_id == $sender_id) $sender_id =0;
+									       if ($owner_id == $payer_id) $payer_id =0;
+									       if ($owner_id == $admin_id) $admin_id =0;
+									       if ($sender_id == $admin_id) $admin_id =0;
+									       if ($sender_id == $payer_id) $payer_id =0;
+									       if ($admin_id == $payer_id) $payer_id =0;
+									       $mesg1 = $this->renderPartial('application.views.ugmail.delivered',
+						   	  		      Array( 'model' => $hole, 'deliv' => $deliv, 'request' => $request), true);
 
-									if($deliv->status){
-										if($deliv->status!=2){$arr[] = array('name'=>Yii::t('holes_view', 'HOLE_REQUEST_DELIVERED',array('{0}'=>$request->$param->name)), 'date'=>Y::dateFromTime($deliv->ddate));}
-									}else{
+                                                                               Messenger::send($admin_id, "УкрЯма: заява доставлена", $mesg1);
+                                                                               Messenger::send($sender_id, "УкрЯма: заява доставлена", $mesg1);
+                                                                               Messenger::send($payer_id, "УкрЯма: заява доставлена", $mesg1);
+                                                                               Messenger::send($owner_id, "УкрЯма: заява доставлена", $mesg1);
+									  }
+									} 
+
+									if($deliv->status){ // якщо доставлено
+										if($deliv->status!=2) { // і статус не 2 (тобто відправлено, і відповідь отримана)
+										  $arr[] = array('name'=>Yii::t('holes_view', 'HOLE_REQUEST_DELIVERED',array('{0}'=>$request->$param->name)), 'date'=>Y::dateFromTime($deliv->ddate));
+										}
+									}else{ // пишемо, що недоставлено
 										if(strlen($deliv->status)){$arr[] = array('name'=>Yii::t('holes_view', 'HOLE_REQUEST_DELIVERDATE',array('{0}'=>$request->$param->name)), 'date'=>Yii::t('holes_view', 'HOLE_REQUEST_NOTDELIVERED'));}
 									}
 								}
@@ -182,6 +236,7 @@ function initialize() {
             if($hole->pictures_fresh){  // было
                echo CHtml::tag('h2', array(), Yii::t('holes_view', 'HOLE_ITWAS'));
    			   foreach($hole->pictures_fresh as $i=>$picture){
+
 				echo "<p class='holes_pict_p'>";
 				echo CHtml::link(CHtml::image($picture->small), 
 					$picture->medium, 
@@ -189,6 +244,7 @@ function initialize() {
 						'rel'=>'hole',
 						'title'=>CHtml::encode($hole->ADDRESS))
 					);
+                   echo CHtml::image('/images/rotate.png', 'Rotate', array('class'=>'rotate'));
 				echo "</p>";
                } 
             }
@@ -204,9 +260,12 @@ function initialize() {
 			echo CHtml::tag('h2', array(), Yii::t('holes_view', 'HOLE_ITBECAME'));
 			foreach($hole->pictures_fixed as $i=>$picture){
 				echo "<p class='holes_pict_p'>";
+
 				if ($picture->user_id==Yii::app()->user->id || Yii::app()->user->level > 80 || $hole->IsUserHole)
 					echo CHtml::link(Yii::t('template', 'DELETE_IMAGE'), Array('delpicture','id'=>$picture->id), Array('class'=>'declarationBtn')).'<br />';
-				echo CHtml::link(CHtml::image($picture->medium), 
+
+				echo CHtml::link(CHtml::image($picture->medium),
+
 					$picture->original, 
 					array('class'=>'holes_pict',
 						'rel'=>'hole_fixed',

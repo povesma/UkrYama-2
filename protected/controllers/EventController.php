@@ -56,7 +56,8 @@ class EventController extends Controller
 		header('Access-Control-Allow-Origin: *');
 		$lat = $_POST['lat'];
 		$lng = $_POST['lng'];
-		$uri = "http://maps.googleapis.com/maps/api/geocode/json?latlng=$lat,$lng&language=uk&sensor=false";
+		$uri = "https://maps.googleapis.com/maps/api/geocode/json?&key=".Yii::app()->params['google_maps_api_server']."&latlng=$lat,$lng&language=uk&sensor=false";
+//		echo $uri;
 		$r = new Http;
 		echo $r->http_request($uri);
 	}

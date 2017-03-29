@@ -33,6 +33,7 @@ class Holes extends CActiveRecord
 		return parent::model($className);
 	}
 	
+	public $DATE_FIRST_SENT; 	
 	public $WAIT_DAYS; 	
 	public $PAST_DAYS;	
 	public $NOT_PREMODERATED;	
@@ -85,7 +86,7 @@ class Holes extends CActiveRecord
 			array('PREMODERATED, TYPE_ID, NOT_PREMODERATED, createdate, updatedate', 'numerical', 'integerOnly'=>true),
 			array('LATITUDE, LONGITUDE', 'numerical'),
 			array('USER_ID, STATE, DATE_CREATED, DATE_STATUS', 'length', 'max'=>10),
-			array('ADR_CITY', 'length', 'max'=>50),
+			array('ADR_CITY', 'length', 'max'=>70),
 //			array('STR_SUBJECTRF, username', 'length'),
 			array('COMMENT1, COMMENT2, deletepict, upploadedPictures, showUserHoles', 'safe'),	
 			array('upploadedPictures', 'file', 'types'=>'jpg, jpeg, png, gif','maxFiles'=>10, 'allowEmpty'=>true, 'on' => 'update, import, fix'),
@@ -125,8 +126,12 @@ class Holes extends CActiveRecord
 			'not_sent'=>array(self::HAS_MANY, 'HoleRequests', 'hole_id','condition'=>'not_sent.id is null and DATE(FROM_UNIXTIME(`date_created`)) < (curdate() - interval 3 day)'),
 
 			'request_sent'=>array(self::HAS_MANY, 'HoleRequestSent', 'hole_id','order'=>'request_sent.ddate ASC'),
+			'last_request_sent'=>array(self::HAS_ONE, 'HoleRequestSent', 'hole_id','order'=>'request_sent.ddate DESC'),
 			'requests_user'=>array(self::HAS_MANY, 'HoleRequests', 'hole_id', 'condition'=>'requests_user.user_id='.Yii::app()->user->id,'order'=>'requests_user.id ASC'),
 			'requests'=>array(self::HAS_MANY, 'HoleRequests', 'hole_id', 'order'=>'requests.id ASC'),
+			'request_last'=>array(self::HAS_ONE, 'HoleRequests', 'hole_id', 'order'=>'request_last.id DESC'),
+			'payments'=>array(self::HAS_MANY, 'Payments', 'hole_id', 'condition' => 'status = "success"', 'order'=>'payments.id ASC'),
+			'payments_all'=>array(self::HAS_MANY, 'Payments', 'hole_id', 'condition' => 'id >0','order'=>'id ASC'),
 
 			'fixeds'=>array(self::HAS_MANY, 'HoleFixeds', 'hole_id','order'=>'fixeds.date_fix DESC'),
 			'user_fix'=>array(self::HAS_ONE, 'HoleFixeds', 'hole_id', 'condition'=>'user_fix.user_id='.Yii::app()->user->id),
@@ -196,29 +201,34 @@ class Holes extends CActiveRecord
 		return false;	
 	}	
 	
-	public function getFixByUser($id)	
-	{	
+	public function getFixByUser($id)
+	{
 		foreach ($this->fixeds as $fix){
 			if ($fix->user_id==$id) return $fix;
 		}
 		return null;
-	}		
-	
-	private $_files = [];
-	
+	}
+
+	private $_files = array();
+
 	public function getUpploadedPictures(){
 	    if(empty($this->_files)){
 		if(!empty($_FILES)){
 		    foreach ($_FILES as $file){
 			if(is_array($file['name'])){
-			    for($i=0; $i < count($file['name']); $i++)
+			    error_log ("Count of files: ".count($file['name'])."\n", 3, "php-log.log");
+			    error_log ("Contents: ".print_r($file,true)."\n", 3, "php-log.log");
+			    for($i=0; $i < count($file['name']['upploadedPictures']); $i++){
+				$f_name = $file['name']['upploadedPictures'][$i];
+			  	error_log ("Filename: ".$f_name."\n", 3, "php-log.log");
 				$this->_files []= $this->_getInstanseFromFile ([
-				    'name' => $file['name'][$i], 
-				    'tmp_name' => $file['tmp_name'][$i], 
-				    'type' => $file['type'][$i], 
-				    'size' => $file['size'][$i], 
-				    'error' => $file['error'][$i]
+				    'name' => $f_name, 
+				    'tmp_name' => $file['tmp_name']['upploadedPictures'][$i], 
+				    'type' => $file['type']['upploadedPictures'][$i], 
+				    'size' => $file['size']['upploadedPictures'][$i], 
+				    'error' => $file['error']['upploadedPictures'][$i]
 				]);
+			    }
 			}else
 			    $this->_files []= $this->_getInstanseFromFile($file);
 		    }
@@ -241,7 +251,7 @@ class Holes extends CActiveRecord
 	
 	public function savePictures(){				
 		foreach ($this->deletepict as $pictid) {
-			$pictmodel=HolePictures::model()->findByPk((int)$pictid);  
+			$pictmodel=HolePictures::model()->findByPk((int)$pictid);
 			if ($pictmodel)$pictmodel->delete();
 		}
 
@@ -370,7 +380,7 @@ class Holes extends CActiveRecord
 	}	
 
 	public function sendRequest($date,$auth,$ref){
-			echo "here";
+			//echo "here";
 			$request=new HoleRequests;
 			$request->attributes=Array(
 					'hole_id'=>$this->ID,
@@ -422,6 +432,40 @@ class Holes extends CActiveRecord
 
 	}		
 
+	public function getFirstSentDate()
+	{
+		$requests=$this->requests; // это неправильно. Выбирается дата отправки, а не доставки!
+		$req=false;
+		if(count($requests)>0){
+			$req=$requests[0];
+			$this->DATE_FIRST_SENT = $req->date_sent;
+			return $this->DATE_FIRST_SENT;
+			
+		}else{
+			return false;
+		}
+
+	}
+
+    /**
+     * Функція повертає реальну кількість днів відведених законом "Про звернення громадян"
+     * Якщо дефект не відправлено - поверає false
+     * Використовується в \protected\views\holes\_viewrightpanel.php
+     * @return bool|int
+     *
+     */
+	public function daysWaitPast(){
+
+           if($this->STATE != Holes::STATE_INPROGRESS || !$this->getFirstSentDate() || !$this->DATE_FIRST_SENT ) {
+
+              return false;
+
+           }else{
+
+               return 31 - ceil((time() - $this->DATE_FIRST_SENT) / 86400);
+           }
+        }
+	
 /*	
 	public function afterFind(){
 		//вычисляем количество дней с момента отправки
@@ -658,8 +702,8 @@ class Holes extends CActiveRecord
 	    $dataProvider->pagination = false;	    
 	    $dataProvider->criteria->with = [];
 	    
-	    $dataProvider->criteria->offset = (int) $this->offset;//$billpage == null ? 0 : ($billpage - 1) * setting('defaultPageSize') - 2;
-	    $dataProvider->criteria->limit = (int) $this->limit;//setting('defaultPageSize') + 4;
+	    $dataProvider->criteria->offset = (int) $this->offset;
+	    $dataProvider->criteria->limit = (int) $this->limit;
 
 	    return $dataProvider;
 	}
@@ -667,9 +711,13 @@ class Holes extends CActiveRecord
 	public function region(){
 		$address=preg_split("/,/",$this->ADDRESS);
 			$sub=$address[0];
-			if(strpos($sub,"місто")!==false){
-				$sub=mb_substr($sub,6,20,'UTF-8');
+			foreach ($address as $addrpart) {
+				if(strpos($addrpart,"місто ")){ // якщо десь між комами написано "місто"
+					$sub=trim(mb_substr($addrpart,6,20,'UTF-8'));
+					error_log ($addrpart." contains Місто. Sub now: <" . $sub.">\n", 3, "php-log.log");
+					break;
 				}
+			}
 			$name=mb_strtolower($sub,'UTF-8');
 			$region=Region::model()->find('LOWER(name) like :name',array(':name'=>$name));
 			if(strlen($region->id)>0) 

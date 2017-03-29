@@ -66,18 +66,19 @@ class XmlController extends Controller
 		if (Yii::app()->request->getParam('filter_rf_subject_id')) $model->region_id=(int)Yii::app()->request->getParam('filter_rf_subject_id');
 		if (Yii::app()->request->getParam('filter_city')) $model->ADR_CITY=Yii::app()->request->getParam('filter_city');
 		if (Yii::app()->request->getParam('filter_status')) $model->STATE=Yii::app()->request->getParam('filter_status');
-		if (Yii::app()->request->getParam('filter_type')) $model->type_alias=Yii::app()->request->getParam('filter_type');
+		if (Yii::app()->request->getParam('filter_type')) $model->TYPE_ID = Yii::app()->db->createCommand()->select('id')->from(HoleTypes::model()->tableName())->where('alias =:alias',[ ':alias' => Yii::app()->request->getParam('filter_type')])->queryScalar();
+		//if (Yii::app()->request->getParam('filter_type')) $model->type_alias=Yii::app()->request->getParam('filter_type');
 //		$page=Yii::app()->request->getParam('page');
 		if (!$model->limit) $model->limit=30;
+//		$offset=Yii::app()->request->getParam('offset');
+//		if (!$offset) $offset=0;
+//		$data=$model->search();
 		$model->offset = (int) (Yii::app()->request->getParam('offset') ? : 0);
-		
-		$data=$model->xmlSearch();
 		
 //		if (!$page)
 //			$data->pagination->currentPage=(int)($offset/$model->limit);
-//		else $data->pagination->setCurrentPage ($page);
-		//else $data->pagination->currentPage=$page;
-
+//		else $data->pagination->currentPage=$page;
+		$data=$model->xmlSearch();
 		$tags=Array();
 		if (!$model->ID){
 		$tags[]=CHtml::tag('sort', array (), false, false);
@@ -88,7 +89,7 @@ class XmlController extends Controller
 			$tags[]=CHtml::tag('item', array ('code'=>'filter_rf_subject_id'), CHtml::encode($model->region_id), true);
 			$tags[]=CHtml::tag('item', array ('code'=>'filter_city'), CHtml::encode($model->ADR_CITY), true);
 			$tags[]=CHtml::tag('item', array ('code'=>'filter_status'), CHtml::encode($model->STATE), true);
-			$tags[]=CHtml::tag('item', array ('code'=>'filter_type'), CHtml::encode($model->type_alias), true);			
+			$tags[]=CHtml::tag('item', array ('code'=>'filter_type'), CHtml::encode(Yii::app()->request->getParam('filter_type')), true);			
 		$tags[]=CHtml::closeTag('filter');
 		$tags[]=CHtml::tag('navigation', array (), false, false);
 			$tags[]=CHtml::tag('item', array ('code'=>'limit'), CHtml::encode($model->limit), true);
@@ -299,8 +300,8 @@ class XmlController extends Controller
 		
 	//	$addressArr    = RfSubjects::model()->Address($address);
 	//	$subject_rf = $addressArr['subject_rf'];
-//		$city       = $addressArr['city'];
-//		$address    = $addressArr['address'];
+	//	$city       = $addressArr['city'];
+	//	$address    = $addressArr['address'];
 		
 /**
  * 		if((!$subject_rf || !$city || !$address) && ($latitude && $longitude)){
@@ -713,8 +714,22 @@ class XmlController extends Controller
 				}
 			}
 	}
-	
-	
+	public function actionGetuserbyim(){
+		$user=$this->auth();
+		if(!$user->getIsAdmin()) $this->error("PERMISSION_DENIED");
+		if(Yii::app()->request->getParam('im')){
+			$imID=Yii::app()->request->getParam('im');
+			$model = Messengers::model()->find("uin=:uin",array(":uin"=>$imID));
+			$targetUser=$model->user0;
+			$tags[]=CHtml::tag('user', array ('id'=>$targetUser->id), false, false);
+			$tags[]=CHtml::tag('username', array ('username'=>$targetUser->username), false, false);
+				$tags[]=CHtml::tag('name', array (), CHtml::encode($targetUser->name), true);
+				$tags[]=CHtml::tag('fullname', array (), CHtml::encode($targetUser->fullname), true);
+			$tags[]=CHtml::closeTag('username');
+			$tags[]=CHtml::closeTag('user');
+			$this->renderXml($tags);
+		}
+	}
 	public function auth()
 	{
 		if (Yii::app()->user->isGuest){
@@ -723,36 +738,30 @@ class XmlController extends Controller
 			$model->username=Yii::app()->request->getParam('login');
 			$model->password=Yii::app()->request->getParam('password');
             $model->rememberMe=0;
-
 			if (Yii::app()->request->getParam('passwordhash'))
 			{
 				$model->password=Yii::app()->request->getParam('passwordhash');
 				$loginmode='fromHash';
 			}
 
-
-            
 			if ($model->validate() && $model->login($loginmode))
             {
-                
+            	if(Yii::app()->request->getParam("as")&&Yii::app()->user->getIsAdmin()){
+            		$asID=Yii::app()->request->getParam("as");
+            		$identity=new UserGroupsIdentity(null,'','',$asID,true);
+					$identity->authenticate();
+					if(!Yii::app()->user->login($identity,0)) {
+						// perhaps, here's some error
+						// return $this->error('NO_SUCH_USER');
+					}
+            	}
             	return Yii::app()->user;
-                 
-            } elseif($model->username && $model->password) {
-                
+            } elseif($model->username && $model->password){
                 $this->error('WRONG_CREDENTIALS'); // Логін та пароль передані, але вони не вірні
-                
-            }else {
-               
-            
-           
+            }else{
                 $this->error('AUTHORIZATION_REQUIRED');
-                
             }
-				
-	}
-	
-		else return Yii::app()->user; 
-        
+		}else return Yii::app()->user;        
 	}
 	
 	public function actionError()

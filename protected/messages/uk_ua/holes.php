@@ -8,15 +8,15 @@ $MESS['WIDGET_SUBMIT_DEFECT']          = 'Показати';
 $MESS['WIDGET_CLEAR_DEFECT']           = 'Очистити';
 
 $MESS['HOLES_STATE_FRESH_FULL']="Доданий на сайт";
-$MESS['HOLES_STATE_INPROGRESS_FULL']="Розглядаеться";
+$MESS['HOLES_STATE_INPROGRESS_FULL']="Розглядається";
 $MESS['HOLES_STATE_FIXED_FULL']="Виправлений";
 
 $MESS['HOLES_STATE_FRESH_SHORT']="Додано на сайт";
-$MESS['HOLES_STATE_INPROGRESS_SHORT']="Розглядаеться";
+$MESS['HOLES_STATE_INPROGRESS_SHORT']="Розглядається";
 $MESS['HOLES_STATE_FIXED_SHORT']="Відремонтовано";
 
 $MESS['HOLES_STATE_FRESH_MANY']="Нові";
-$MESS['HOLES_STATE_INPROGRESS_MANY']="Розглядаеться";
+$MESS['HOLES_STATE_INPROGRESS_MANY']="Розглядається";
 $MESS['HOLES_STATE_FIXED_MANY']="Зроблені";
 
 $MESS['HOLES_TYPE_BADROAD']="Розбита дорога";
@@ -26,7 +26,7 @@ $MESS['HOLES_TYPE_RAILS']="Рейки";
 $MESS['HOLES_TYPE_HOLEINYARD']="Яма у дворі";
 $MESS['HOLES_TYPE_SNOW']="Сніг";
 $MESS['HOLES_TYPE_CROSSING']="Переїзд";
-$MESS['HOLES_TYPE_POLICEMAN']="Лежачий поліцейський";
+$MESS['HOLES_TYPE_POLICEMAN']="Гасій швидкості";
 $MESS['HOLES_TYPE_NOMARKING']="Відсутність розмітки";
 $MESS['HOLES_TYPE_FENCE']="Огорожа";
 $MESS['HOLES_TYPE_LIGHT']="Світлофор";
@@ -35,7 +35,7 @@ $MESS['HOLES_TYPE_UNFINISHED-REPAIR']      = "Незавершений ремо�
 $MESS['HOLES_TYPE_SIDEWALK']      = "Тротуар";
 
 $MESS['HOLES_ROAD_TYPE_CITY']="Місто";
-$MESS['HOLES_ROAD_TYPE_HIGHWAY']="Шоссе";
+$MESS['HOLES_ROAD_TYPE_HIGHWAY']="Шосе";
 
 $MESS['all_news']="Всі новини";
 

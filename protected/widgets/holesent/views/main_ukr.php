@@ -1,13 +1,27 @@
 <div id="holesent" name="holesent" style="display:none">
 <?php
-	if($req){
-		$choices=$req->auth_ua->parents("ua");
+	error_log("Auth selection Logging here\n", 3, "php-log.log");
+
+	$mytype=$hole->type->findByPk(array("id"=>$hole->TYPE_ID,"lang"=>"ua"));
+	try {
+		error_log("Auth selection for the primary claim: RegionID: ".strval($hole->region()->name).", mytype: ".strval($mytype->name)."\n", 3, "php-log.log");
+	} catch (Exception $e) {
+		$e = "some error ".$e->getMessage();
+		error_log("Auth selection err: ".$err."\n", 3, "php-log.log");
+	} 
+
+	$choices=$hole->getAllAuth($hole->region(),$mytype,"ua");
+	$ref=0;
+
+ 	$superiors = array();
+
+	if($req){ // first request (claim) has already been sent. Look for parents
+		error_log("Auth selection req exists ".strval($req->auth_ua->id)."\n", 3, "php-log.log");
+		$superiors=$req->auth_ua->parents("ua");
 		$ref=$req->id;
-	}else{
-		$mytype=$hole->type->findByPk(array("id"=>$hole->TYPE_ID,"lang"=>"ua"));
-		$choices=$hole->getAllAuth($hole->region(),$mytype,"ua");
-		$ref=0;
 	}
+	
+	$choices = array_merge($choices, $superiors);
 ?>
 <table>
 	<form name="simple" action="/holes/sent/<?=$hole->ID?>/" method="POST" onSubmit="if(when.value.length<8){ $('#when').effect('highlight', {}, 3000); when.focus(); return false;}">
@@ -22,13 +36,17 @@
 	</td></tr>
 	<tr><td>Яким чином доставлена скарга?</td><td></tr>
 <tr><td>
-	<?= CHtml::link('Заніс особисто', "javascript:void(0)",array('class'=>"declarationBtn",'onClick'=>'btnz = $(".declarationBtn"); for(i=0;i<btnz.length;i++){ btnz[i].style["font-weight"]="";};this.style["font-weight"]="bold";mailtype.value="1";subwd.style["display"]="inline";wd.style["display"]="inline";rcptform.style["display"]="none"')) ?><br>
-	<?= CHtml::link('Простим листом', "javascript:void(0)",array('class'=>"declarationBtn",'onClick'=>'btnz = $(".declarationBtn"); for(i=0;i<btnz.length;i++){ btnz[i].style["font-weight"]="";};this.style["font-weight"]="bold";mailtype.value="2";subwd.style["display"]="inline";wd.style["display"]="inline";rcptform.style["display"]="none"')) ?><br>
-	<?= CHtml::link('Рекомендованим листом', "javascript:void(0)",array('class'=>"declarationBtn",'onClick'=>'btnz = $(".declarationBtn"); for(i=0;i<btnz.length;i++){ btnz[i].style["font-weight"]="";};this.style["font-weight"]="bold";subwd.style["display"]="none";wd.style["display"]="inline";rcptform.style["display"]="inline";')) ?>
+	<?= CHtml::link('Заніс особисто',        "javascript:void(0)",array('class'=>"declarationBtn",'onClick'=>'btnz = $(".declarationBtn"); for(i=0;i<btnz.length;i++){ btnz[i].style["font-weight"]="";};this.style["font-weight"]="bold";mailtype.value="1";subwd.style["display"]="inline";wd.style["display"]="inline";rcptform.style["display"]="none"')) ?><br>
+	<?= CHtml::link('Простим листом',        "javascript:void(0)",array('class'=>"declarationBtn",'onClick'=>'btnz = $(".declarationBtn"); for(i=0;i<btnz.length;i++){ btnz[i].style["font-weight"]="";};this.style["font-weight"]="bold";mailtype.value="2";subwd.style["display"]="inline";wd.style["display"]="inline";rcptform.style["display"]="none"')) ?><br>
+	<?= CHtml::link('Рекомендованим листом', "javascript:void(0)",array('class'=>"declarationBtn",'onClick'=>'btnz = $(".declarationBtn"); for(i=0;i<btnz.length;i++){ btnz[i].style["font-weight"]="";};this.style["font-weight"]="bold";subwd.style["display"]="none";wd.style["display"]="inline";rcptform.style["display"]="inline";')) ?><br>
+	<?= CHtml::link('Електронною поштою',    "javascript:void(0)",array('class'=>"declarationBtn",'onClick'=>'btnz = $(".declarationBtn"); for(i=0;i<btnz.length;i++){ btnz[i].style["font-weight"]="";};this.style["font-weight"]="bold";mailtype.value="4";subwd.style["display"]="inline";wd.style["display"]="inline";rcptform.style["display"]="none"')) ?><br>
+	<?= CHtml::link('Через ukc.gov.ua',      "javascript:void(0)",array('class'=>"declarationBtn",'onClick'=>'btnz = $(".declarationBtn"); for(i=0;i<btnz.length;i++){ btnz[i].style["font-weight"]="";};this.style["font-weight"]="bold";mailtype.value="5";subwd.style["display"]="inline";wd.style["display"]="inline";rcptform.style["display"]="none"')) ?><br>
 </td>
 	<input type="hidden" name="mailtype" id="mailtype">
 	<input name="ref" type="hidden" value="<?= $ref ?>">
-	<tr><td><div style="display:none" id="wd" name="wd">Коли:<br><input type="date" max="<?= date('Y-m-d',time()) ?>" name="when" id="when"><br><input id="subwd" name="subwd" type="submit" value="OК"></div></td></tr>
+	<tr><td><div style="display:none" id="wd" name="wd">Коли:<br>
+                    <input type="text"  placeholder="напр. 2017-01-16" onfocus="this.placeholder = ''" onblur="this.placeholder = 'напр. 2015-11-25' />
+                    <input type="date" max="<?= date('Y-m-d',time())?>"  name="when" id="when"><br><input id="subwd" name="subwd" type="submit" value="OК"></div></td></tr>
 	</form>
 </tr>
 	<tr>

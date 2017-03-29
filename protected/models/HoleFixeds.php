@@ -43,7 +43,10 @@ class HoleFixeds extends CActiveRecord
          array('date_fix', 'compare', 'compareValue'=>time(), 'operator'=>'<', 'allowEmpty'=>false , 
             'message'=>Yii::t('template', 'DATE_CANT_BE_FUTURE'),
          ),
-         array('date_fix', 'compare', 'compareValue'=>time() - (7 * 86400), 'operator'=>'>', 'allowEmpty'=>false , 
+//         array('date_fix', 'compare', 'compareValue'=>time() - (7 * 86400), 'operator'=>'>', 'allowEmpty'=>false , 
+//            'message'=>Yii::t('template', 'DATE_CANT_BE_PAST'),
+//         ),           
+         array('date_fix', 'compare', 'compareAttribute'=>'createdate', 'operator'=>'>', 'allowEmpty'=>false , 
             'message'=>Yii::t('template', 'DATE_CANT_BE_PAST'),
          ),           
 			// The following rule is used by search().

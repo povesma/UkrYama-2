@@ -14,13 +14,13 @@ $this->breadcrumbs=array(
 			'id'=>'user-groups-passrequest-form',
 			'enableAjaxValidation'=>true,
 		)); ?>
-		<strong>Укажите</strong>
+		<strong><?php echo Yii::t('UserGroupsModule.general', 'TYPE_USERNAME') ?></strong>
 		<div class="row">
 			<?php echo $form->label($model,'username'); ?>
 			<?php echo $form->textField($model,'username'); ?>
 			<?php echo $form->error($model,'username'); ?>
 		</div>
-		<strong>ИЛИ</strong>
+		<strong><?php echo Yii::t('UserGroupsModule.general', 'OR_EMAIL') ?></strong>
 		<div class="row">
 			<?php echo $form->label($model,'email'); ?>
 			<?php echo $form->textField($model,'email'); ?>

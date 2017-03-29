@@ -5,6 +5,7 @@ include ('appConfig.php');
 // Any writable CConsoleApplication properties can be configured here.
 return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
+    'assetManager'=>'assets', // потрібно запустити консоль.
 	'name'=>'My Console Application',
         'preload'=>array('log'),
 	// autoloading model and component classes

@@ -4,13 +4,14 @@
 	width: 700px;
 }
 </style>
-<div class="form">
+<div class="form" id="addForm">
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'holes-form',
 	'enableAjaxValidation'=>false,
 	'htmlOptions'=>array('enctype'=>'multipart/form-data'),
 )); 
 echo $form->errorSummary($model); ?>
+
 	<!-- правая колоночка -->
 	<div class="rCol side_section"> 
 		<ul class="add_steps clear">
@@ -47,7 +48,7 @@ echo $form->errorSummary($model); ?>
 	</script>
 
 	<!-- левая колоночка -->
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?php echo Yii::app()->params['google_maps_api'] ?>&sensor=false&libraries=places"></script>
 <?php if($model->isNewRecord): ?>
 <script src="/js/markers.js"></script>
 <?php endif; ?>
@@ -146,9 +147,11 @@ var defectMarker = new google.maps.Marker({
   var infowindow = new google.maps.InfoWindow();
 	function updateAddress(){
 //		geo.geocode({addr ess: "",location:marker.position, region: "uk"},function(callback){
-		$.post("/event/GetAddress",{"lat":defectMarker.position['lat'](),"lng":defectMarker.position['lng']()},function(data){
+		var lat = defectMarker.position['lat']();
+		var lng = defectMarker.position['lng']();
+		$.post("/event/GetAddress",{"lat":lat,"lng":lng},function(data){
 			var resp = JSON.parse(data);
-
+			console.log("Google map response: ", resp, 'for [',lat,'/',lng,']');
 			var cord = new google.maps.LatLng(defectMarker.position['lat']()+0.003/Math.pow(2,(map.zoom-12)), defectMarker.position['lng']());
 			var info = resp['results'][0].address_components;
 //			var address=info[3]['long_name']+", "+info[2]['long_name']+", "+info[1]['long_name']+", "+info[0]['long_name'];
@@ -215,6 +218,29 @@ google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 	<div class="lCol main_section">
 <?php if(!(Yii::app()->user->getId())){ ?>
+<script>
+$(document).ready(function(){
+	$('#holes-form').on('submit', (function () {
+
+	    // Get the Login Name value and trim it
+	    var name = $.trim($('#Holes_FIRST_NAME').val());
+	    var email = $.trim($('#Holes_EMAIL').val());
+
+	    // Check if empty of not
+	    if (name  === '') {
+	        alert("Вкажіть своє ім'я, будь ласка.");
+	        return false;
+	    }
+	    var re = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+	    var is_email=re.test(email);
+	    if (!is_email) {
+	        alert('Вкажіть правильний EMAIL');
+	        return false;
+	    }
+	}))
+});
+</script>
+
 <table>
 <tr>
     <td><?= $form->labelEx($model,'EMAIL') ?></td><td><?= $form->textField($model,'EMAIL', array( "style"=>"width:250px")) ?></td>
@@ -313,8 +339,8 @@ $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 		</div>
 
 
-         	
-		<!-- фотки -->
+
+		<!-- фотки-------------------------------------------------------------------------- -->
 		<div class="f clearfix">
 			<?php echo $form->labelEx($model,'upploadedPictures'); ?>
 			<?php $this->widget('CMultiFileUpload', array('accept'=>'gif|jpg|png|jpeg', 'model'=>$model, 'attribute'=>'upploadedPictures', 'htmlOptions'=>array('class'=>'mf'), 'denied'=>Yii::t('mf','Невозможно загрузить этот файл'),'duplicate'=>Yii::t('mf','Файл уже существует'),'remove'=>Yii::t('mf','удалить'),'selected'=>Yii::t('mf','Файлы: $file'),)); ?>			
@@ -328,14 +354,35 @@ $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 					?>
 					<div id="overshadow"><span class="command" onclick="document.getElementById('picts').style.display=document.getElementById('picts').style.display=='block'?'none':'block';"><?php echo Yii::t('template', 'INFO_CANDELETEPHOTO')?></span><div class="picts" id="picts">
 					<?php
-					foreach($model->pictures_fresh as $i=>$picture){				
+					foreach($model->pictures_fresh as $i=>$picture){
 						echo '<br>'.$form->checkBox($model,"deletepict[$i]", array('class'=>'filter_checkbox','value'=>$picture->id)).' ';
-						echo $form->labelEx($model,"deletepict[$i]", array('label'=>Yii::t('template', 'DELETEPICT'))).'<br><img src="'.$picture->medium.'"><br><br>';
+						echo $form->labelEx($model,"deletepict[$i]", array('label'=>Yii::t('template', 'DELETEPICT'))).'<br><a href="#" data-imagename="'.$picture->filename.'" data-holeid="'.$model->ID.'" class ="hole_update"><img src="'.$picture->medium.'" /></a>';
+                        echo CHtml::image('/images/rotate.png', 'Rotate', array('class'=>'rotate'));
+                        echo "<br><br>";
 					}
 					echo '</div></div>';
 				} ?>
+                            <!--функція-міст для перевертання фотографії-->
+                            <script type="application/javascript">
 
-		<!-- камент -->
+                                $("hole_update").click(function(){
+                                    console.log("Клік по фото")
+                                    var imagename = $(this).attr("data-imagename");
+                                    var holeid = $(this).attr("data-holeid");
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/holes/rotate',
+                                        data: 'image='+imagename+'&holeid='+holeid,
+                                        success: function(data){
+
+                                            $("#hole_update").load(location.href + " #hole_update");
+
+                                        }
+
+                                    });
+                                });
+                            </script>
+		<!-- камент ---------------------------------------------------------------------------->
 		<div class="f">
 			<?php echo $form->labelEx($model,'COMMENT1'); ?>
 			<?php echo $form->textArea($model,'COMMENT1',array('height'=>"150px")); ?>
@@ -354,3 +401,4 @@ $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 	</div>
 	<!-- /левая колоночка -->
 <?php $this->endWidget(); ?>
+

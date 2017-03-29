@@ -47,6 +47,7 @@ class HoleRequestForm extends CFormModel
 			'address'=>Yii::t('holes_view', 'HOLE_REQUEST_FORM_ADDRESS'),
 			'comment'=>Yii::t('holes_view', 'HOLE_REQUEST_FORM_COMMENT'),
 			'signature'=>Yii::t('holes_view', 'HOLE_REQUEST_FORM_SIGNATURE'),
+			'email'=>Yii::t('holes_view', 'HOLE_REQUEST_FORM_EMAIL'),
 			'printAllPictures'=>Yii::t('holes_view', 'HOLE_REQUEST_FORM_PRINT_PICTURES'),
 		);
 	}

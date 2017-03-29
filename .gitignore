@@ -18,3 +18,7 @@ protected/runtime/
 themes/classic/views/
 .htaccess
 upload/
+/nbproject/private/
+.idea
+.st1234
+protected/config/appConfig.php

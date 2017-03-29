@@ -5,7 +5,11 @@
 
  <h2>Наши партнеры:</h2>
  		
-  <ul class="default"> 		<a href="https://www.facebook.com/lesyaorobets" target="_blank" >Леся Оробец</a> &mdash; пишет депутатские обращения в ГПУ, когда службы не реагируют на жалобы пользователей &laquo;УкрЯмы&raquo;;
+  <ul class="default"> 		
+   		«<a href="http://www.rozumnemisto.org/" alt="Розумне місто. Електронне врядування для громад">Розумне місто. </a>» — Електронне врядування для громад
+    <br />
+
+<a href="https://www.facebook.com/lesyaorobets" target="_blank" >Леся Оробец</a> &mdash; пишет депутатские обращения в ГПУ, когда службы не реагируют на жалобы пользователей &laquo;УкрЯмы&raquo;;
     <br />
    		«<a href="http://pravoved.in.ua/" target="_blank" >Правовед</a>» — правовая литература Украины. Знай свои права и обязанности;
     <br />
