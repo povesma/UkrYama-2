@@ -39,6 +39,8 @@ class Messengers extends CActiveRecord
     public $_phone;
     
     public $_fbbot;
+
+    public $_tgbot;
     
     
 	/**

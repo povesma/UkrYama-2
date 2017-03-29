@@ -37,6 +37,12 @@ class Messenger extends CComponent {
     public $_instagram; // 8
     public $_instagram_status;
     
+    public $_tgbot; // 9
+    public $_tgbot_status;
+    
+    public $_fbbot; // 10
+    public $_fbbot_status;
+    
     // Єдина строчка відсилання нотифікації для усього сайту (Messenger::send($userid, $subject, $message)) 
     public function condence($userid, $subject = NULL, $message)
     {

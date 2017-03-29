@@ -20,7 +20,6 @@
         <li><a href="#tabs-2"><?php echo Yii::t('profile','PROFILE_CHANGE_PASS'); ?></a></li>
         <li><a href="#tabs-3"><?php echo Yii::t('profile','PROFILE_SECURE'); ?></a></li>
           <li><a href="#tabs-4"><?php echo Yii::t('profile','PROFILE_MESSAGERS'); ?></a></li>
-          <li><a href="#tabs-5"><?php echo Yii::t('profile','PROFILE_SIGNATURE'); ?></a></li>
     </ul>
     
     <div id="tabs-1">
@@ -261,35 +260,63 @@
         </div>
       <div id="tabs-4">
           <div class="form">
+<div>
+<div class="row">
+<div>Для того, щоб підключити мессенджер до вашого акаунту УкрЯми, надішліть код</div>
+<div id='socialCode' style="color:black;font-weight:bold;"></div>
+<div> на акаунт відповідного месенджера.
+Після підключення ви зможете заходити в УкрЯму без паролю: просто надішліть код на першій сторінці на підключений месенджер.
+</div>
+</div>
+
+</div>
               
         <?php 
         
-       echo $messagesModel->_facebook;
        echo CHtml::beginForm(array('id'=>'user-groups-misc-form')); ?>
 
-                                  <div class="row">
-<div id='socialCode' style="color:black;font-weigt:bold;"></div>
-                        <label>Telegram</label>                        <input type="text" value="<?php echo $messagesModel->_telegram;?>" name="Telegram" id="telegram" />                        <input checked="checked" type="checkbox" value="0" name="status_FaceBook" id="status_FaceBook" />Надсилати повідомлення на цей мессенджер                             
-                            </div>
-                            <div class="row">
-                    
-                        <label>FaceBook</label>                        <input type="text" value="<?php echo $messagesModel->_facebook;?>" name="FaceBook" id="facebook" />                        <input checked="checked" type="checkbox" value="0" name="status_FaceBook" id="status_FaceBook" />Надсилати повідомлення на цей мессенджер                             
-                            </div>
+	<div class="row">
+		<label for="telegram">Telegram [hidden]</label>
+		<input type="text" value="<?php echo $messagesModel->_telegram;?>" name="Telegram" id="telegram" />
+		<input checked="checked" type="checkbox" value="0" name="status_Telegram" id="status_telegram" />
+		<span>Надсилати повідомлення на цей мессенджер</span>
+	</div>
 
+	<div class="row">
+		<label for="tgbot">Telegram Bot [<a href=https://t.me/ukryamabot>@ukryamabot</a>]</label>
+		<input type="text" value="<?php echo $messagesModel->_tgbot;?>" name="TelegramBot" id="tgbot" />
+		<input checked="checked" type="checkbox" value="0" name="status_tgbot" id="status_tgbot" />
+		<span>Надсилати повідомлення на цей мессенджер</span>
+	</div>
+
+	<div class="row">
+		<label for="fbbot">FaceBook Bot [n/a]</label>
+		<input type="text" value="<?php echo $messagesModel->_fbbot;?>" name="FaceBook" id="fbbot" />
+		<input checked="checked" type="checkbox" value="0" name="status_FaceBookBot" id="status_fbbot" />
+		<span>Надсилати повідомлення на цей мессенджер</span>
+	</div>
                                                        
-                            <div class="row">
-                    
-                        <label>Viber</label>                        <input type="text" value="<?php echo $messagesModel->_viber;?>" name="Viber" id="viber" />                        <input type="checkbox" value="1" name="status_Viber" id="status_Viber" />Надсилати повідомлення на цей мессенджер                             
-                            </div>
-                                 <div class="row">
-                    
-                        <label>WhatsApp</label>                        <input type="text" value="<?php echo $messagesModel->_whatsapp;?>" name="whatsapp" id="viber" />                        <input type="checkbox" value="1" name="status_Viber" id="status_Viber" />Надсилати повідомлення на цей мессенджер                             
-                            </div>
+	<div class="row">
+		<label for="viber">Viber [n/a]</label>
+		<input type="text" value="<?php echo $messagesModel->_viber;?>" name="Viber" id="viber" />
+		<input type="checkbox" value="1" name="status_Viber" id="status_viber" />
+		<span>Надсилати повідомлення на цей мессенджер</span>
+        </div>
+
+        <div class="row">
+        	<label for="whatsapp">WhatsApp [n/a]</label>
+		<input type="text" value="<?php echo $messagesModel->_whatsapp;?>" name="whatsapp" id="whatsapp" /> 
+		<input type="checkbox" value="1" name="status_WhatsApp" id="status_whatsapp" />
+		<span>Надсилати повідомлення на цей мессенджер</span>
+	</div>
                       
-                           <div class="row">
-                    
-                        <label>Twitter</label>                        <input type="text" value="<?php echo $messagesModel->_twitter;?>" name="twitter" id="twitter" />                        <input type="checkbox" value="1" name="status_Viber" id="status_Viber" />Надсилати повідомлення на цей мессенджер                             
-                            </div>
+	<div class="row">
+		<label for="twitter">Twitter [n/a]</label>
+		<input type="text" value="<?php echo $messagesModel->_twitter;?>" name="twitter" id="twitter" />
+		<input type="checkbox" value="1" name="status_Viber" id="status_twitter" />
+		<span>Надсилати повідомлення на цей мессенджер</span>
+	</div>
+
          <script type="text/javascript">
           var checking = false;
           function checkCode(){
@@ -313,9 +340,7 @@
                           
                     echo CHtml::endForm(); 
              ?>
-              </div>
           
-          </div>
      </div>
-
+</div>
 <script>$("#tabs").tabs();</script>
