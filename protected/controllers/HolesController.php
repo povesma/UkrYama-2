@@ -740,8 +740,8 @@ class HolesController extends Controller
 				if ($model->update()) {
 					if ($model->ROAD_TYPE == 'highway') {
 						$this->sendMailToUkrautodor($model);
+						$this->sendMailToSai($model);
 					}
-					$this->sendMailToSai($model);
 					$this->sendMessage($model, "moderated", $this->user);
 					$ok++;
 				}
@@ -1295,7 +1295,8 @@ class HolesController extends Controller
 			true
 		);
 
-		return mail($email, 'ч. 1 ст. 140 КУпАП: Повідомлення по порушення законодавства', $mailbody, $headers);
+		return mail($email, $hole->ID.' - ч. 1 ст. 140 КУпАП: Повідомлення по порушення законодавства', 
+				$mailbody, $headers);
 	}
 
 	/**
@@ -1303,12 +1304,18 @@ class HolesController extends Controller
 	 */
 	public function sendMessage($hole, $event, $user)
 	{
-		$headers = "MIME-Version: 1.0\r\nFrom: " . Yii::app()->params['adminEmail'] . "\r\nReply-To: " . Yii::app()->params['adminEmail'] . "\r\nContent-Type: text/html; charset=utf-8";
+		$headers = "MIME-Version: 1.0\r\nFrom: " . Yii::app()->params['adminEmail'] . 
+			"\r\nReply-To: " . Yii::app()->params['adminEmail'] . 
+			"\r\nContent-Type: text/html; charset=utf-8";
 		Yii::app()->request->baseUrl = Yii::app()->request->hostInfo;
+
+		$mail = new YiiMailer();
 
 		$mailbody = "";
 		$subj = "Empty - Unknown";
 		$email = ''; // Yii::app()->params['moderatorEmail'];
+		$att = '';
+		$fn = 'file.pdf';
 		switch(strtolower($event)){
 			case "add": // добавлена яма. Нужно уведомить модератора
 				{
@@ -1326,7 +1333,15 @@ class HolesController extends Controller
 		}
 
 		if ($email != '') {
-			return mail($email, $subj, $mailbody, $headers);
+			//return mail($email, $subj, $mailbody, $headers);
+			$mail->setFrom(Yii::app()->params['adminEmail']);
+			$mail->setTo($email);
+			$mail->setSubject($subj);
+			$mail->setBody($mailbody);
+			if ($att) {
+				$mail->AddStringAttachment($att, $fn);
+			}
+			return $mail->send();
 		}
 	}
 
