@@ -10,7 +10,7 @@
    		</p>
 
   <ul class="default"> 			
-    <li><a href="http://navalny.ru/" alt="Финальная битва между добром и нейтралитетом" target="_blank" >Алексей Навальный</a> &mdash; идея, создание <a href="http://rosyama.ru/" alt="Яму мне запили!" target="_blank" >РосЯмы</a>;</li>
+    <li><a href="http://navalny.com" alt="Финальная битва между добром и нейтралитетом" target="_blank" >Алексей Навальный</a> &mdash; идея, создание <a href="http://rosyama.ru/" alt="Яму мне запили!" target="_blank" >РосЯмы</a>;</li>
    			
     <li>Команда веб-студии &laquo;<a href="http://greensight.ru/" alt="Главная страница сайта студии «Гринсайт&raquo;" target="_blank" >Greensight</a>» <i>(отдельное спасибо Дмитрию Никифорову)</i>;</li>
    			
@@ -22,8 +22,6 @@
    			
     <li>Спасибо <a href="http://habrahabr.ru/users/vessi/" alt="Системный администратор" target="_blank" >Михаилу Бортнику</a> за приложение «УкрЯма» для ОС Android;</li>
    			
-    <li>Некто Александр помогает в <a href="http://www.our-dns.info/" title="Удаленное администрирование серверов" alt="Удаленное администрирование серверов" target="_blank" >администрировании серверов</a>;</li>
-    
     <li>Веб-студия <a href="http://force-it.org/" alt="Разработка проектов на yii framework" target="_blank" >force-it.org</a> — лучшая команда в своем деле.</li>
    		</ul>
  	

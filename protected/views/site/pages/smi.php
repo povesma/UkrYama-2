@@ -16,7 +16,7 @@
   <ul class="default"> 			
     <li>Леся Оробец &mdash; «<a href="http://lesyaorobets.livejournal.com/108199.html" title="УкрЯма — гениально" target="_blank" >УкрЯма — гениально!</a>»</li>
    			
-    <li>Алексей Навальный — «<a href="http://navalny.livejournal.com/635894.html" title="Яма интернешнл" target="_blank" >Яма интернешнл</a>»</li>
+    <li>Алексей Навальный — «<a href="http://navalny.com/" title="Яма интернешнл" target="_blank" >Росяма / ФБК</a>»</li>
    		</ul>
  		
   <br />
