@@ -135,7 +135,7 @@ class Holes extends CActiveRecord
 
 			'fixeds'=>array(self::HAS_MANY, 'HoleFixeds', 'hole_id','order'=>'fixeds.date_fix DESC'),
 			'user_fix'=>array(self::HAS_ONE, 'HoleFixeds', 'hole_id', 'condition'=>'user_fix.user_id='.Yii::app()->user->id),
-			'type'=>array(self::BELONGS_TO, 'HoleTypes', 'TYPE_ID','order'=>'hole_types.ordering ASC'),
+			'type'=>array(self::BELONGS_TO, 'HoleTypes', 'TYPE_ID','order'=>'type.ordering ASC'),
 			'user'=>array(self::BELONGS_TO, 'UserGroupsUser', 'USER_ID'),
 			'selected_lists'=>array(self::MANY_MANY, 'UserSelectedLists',
                '{{user_selected_lists_holes_xref}}(hole_id,list_id)'),
