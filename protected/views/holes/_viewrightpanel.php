@@ -62,6 +62,9 @@ $(window).keydown(function(e){
 			$status=1;
 		}
 	}
+	if ($hole->STATE == 'fixed') {
+		$status = 3;
+	}
 
 	if($status!=1){ // или не отправлено, или отправлено и получен ответ
 	?>
@@ -101,6 +104,12 @@ $(window).keydown(function(e){
 		</div>
 
 	<?php endif;
+		if($status==3): ?>
+					<div class="cc">
+						<p><?php echo Yii::t('holes_view', 'INFO_IF_DEFECT_FIXED') ?></p>
+						<p><?php echo CHtml::link(Yii::t('holes_view', 'SETNULL_FIX_REQUEST'), array('defix', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
+					</div>
+	<?php endif;
 
 	}else{ // отправлено, ответа не получено
 	         ?>
@@ -132,5 +141,8 @@ $(window).keydown(function(e){
 			<p><?php echo CHtml::link(Yii::t('holes_view', 'HOLE_REPLY_RECEIVED'), array('reply', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
 		</div>
 	<?php endif; ?>
+<!--		<div class="rc">
+			<p><?php echo CHtml::link(Yii::t('holes_view', 'ADD_MORE_PICS'), array('addpics', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
+		</div> -->
 <?php } ?>
 </div>
