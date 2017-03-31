@@ -85,6 +85,7 @@ class HoleTypes extends CActiveRecord
 		$criteria->compare('lang',$this->lang,true);
 		$criteria->compare('alias',$this->alias,true);
 		$criteria->compare('name',$this->name,true);
+		$criteria->order='ordering ASC';
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -115,7 +116,7 @@ class HoleTypes extends CActiveRecord
    }
 
    public static function getTypes(){
-      return self::model()->findAll(array('condition'=>'published = 1'));
+      return self::model()->findAll(array('condition'=>'published = 1','order'=>'ordering ASC'));
    }
 
 }
