@@ -73,6 +73,7 @@ $MESS['ILLEGAL_FORWARD_CLAIM']  = 'Жалоба на пересылку';
 $MESS['CLAIM_TO_GAI_WAS_SEND']  = 'Заявление в полицию отправлено';
 $MESS['CLAIM_WAS_SEND']  = 'Заявление отправлено';
 $MESS['HOLE_REPLY_RECEIVED']  = 'Ответ получен';
+$MESS['ADD_MORE_PICS']  = 'Добавить еще фото';
 $MESS['INFO_IF_DEFECT_FIXED']  = 'Если дефект устранён';
 $MESS['SET_AS_FIXED']  = 'Отметить как устранённый';
 $MESS['SET_DEFECT_AS_FIXED'] = 'Отметить дефект как устранённый';

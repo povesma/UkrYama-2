@@ -2308,6 +2308,14 @@ div.form #user-groups-passrequest-form label{
    background: url(../images/st1234/sidewalk-active.png) no-repeat;
 }
 
+/* Зруйнована дорога*/
+.defect_type label[for="type_destroyed"]:before{
+   background: url(../images/st1234/destroyed.png) no-repeat;
+}
+.defect_type input[type="radio"]:checked + label[for="type_destroyed"]:before{
+   background: url(../images/st1234/destroyed-active.png) no-repeat;
+}
+
 /*
 
 

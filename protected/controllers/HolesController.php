@@ -357,6 +357,44 @@ class HolesController extends Controller
 				$owner_id = $hole->user->id; // власник ями. Тут би ще з'ясувати відправника, бо лише відправник може завантажувати, аби йому не відправляти
 			       $mesg1 = $this->renderPartial('application.views.ugmail.answer',
    	  		      Array( 'model' => $hole,), true);
+				$this->sendMessage($model, "reply", $this->user);
+				try {
+					$admin_user = UserGroupsUser::model()->findByPk(["id"=>$admin_id]);
+					$this->sendMessage($model, "reply", $admin_user);
+				} catch (Exception $e) {
+				  // TODO: report error?
+				}
+
+                               Messenger::send($admin_id, "УкрЯма: завантажена відповідь", $mesg1);
+                               Messenger::send($owner_id, "УкрЯма: завантажена відповідь", $mesg1);
+				// переадресовуємо на сторінку
+				$this->redirect(array('view','id'=>$hole->ID));
+			}
+		}
+		$this->render('reply',array('hole'=>$hole));
+	}
+
+	public function actionAddpics($id=null){
+	    $this->pageTitle = Yii::t('titles', 'HOLES_COMMENT');
+		$this->layout='//layouts/header_user';
+		$hole=$this->loadModel($id);
+		if(isset($_POST['answerdate'])){
+			$answer = new HoleAnswers;
+			$answer->date=strtotime($_POST['answerdate']);
+			$answer->comment=$_POST['comment'];
+
+			$requests=$hole->requests_user;
+//			if(count($requests)>0){
+//				$req=$requests[count($requests)-1];
+//				$answer->request_id=$req->id;
+				$answer->request_id=$_POST['req_id'];
+//			}else{return false;}
+			if($answer->save()){ // Успішно зберегли відповідь
+				// повідомляемо зацікавленним, що завантажена відповідь:
+				$admin_id = 228;	
+				$owner_id = $hole->user->id; // власник ями. Тут би ще з'ясувати відправника, бо лише відправник може завантажувати, аби йому не відправляти
+			       $mesg1 = $this->renderPartial('application.views.ugmail.answer',
+   	  		      Array( 'model' => $hole,), true);
                                Messenger::send($admin_id, "УкрЯма: завантажена відповідь", $mesg1);
                                Messenger::send($owner_id, "УкрЯма: завантажена відповідь", $mesg1);
 				// переадресовуємо на сторінку
@@ -1328,6 +1366,15 @@ class HolesController extends Controller
 	   	  		   Array( 'model' => $hole, ), true);
 				   $email = $hole->user->email;
 				   $subj = 'УкрЯма: яма опублікована';
+
+				}
+			case "reply": // получен и загружен ответ
+				{
+				  $mailbody = $this->renderPartial(
+				   'application.views.ugmail.answer',
+	   	  		   Array( 'model' => $hole, ), true);
+				   $email = $hole->user->email;
+				   $subj = 'УкрЯма: отримана відповідь';
 
 				}
 		}

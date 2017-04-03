@@ -74,6 +74,7 @@ $MESS['PRINT_CLAIM']  = 'Надрукувати заяву';
 $MESS['CLAIM_TO_GAI_WAS_SEND']  = 'Заяву в поліцію надіслано';
 $MESS['CLAIM_WAS_SEND']  = 'Заяву надіслано';
 $MESS['HOLE_REPLY_RECEIVED']  = 'Відповідь отримано';
+$MESS['ADD_MORE_PICS']  = 'Додати ще фото';
 $MESS['INFO_IF_DEFECT_FIXED']  = 'Якщо дефект усунуто';
 $MESS['SET_AS_FIXED']  = 'Відзначити як усунений';
 $MESS['SET_DEFECT_AS_FIXED'] = 'Відзначити дефект як усунений';

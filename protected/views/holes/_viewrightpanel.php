@@ -104,7 +104,7 @@ $(window).keydown(function(e){
 		</div>
 
 	<?php endif;
-		if($status==3): ?>
+		if($status==3 && ($hole->user_fix || Yii::app()->user->level > 80)): ?>
 					<div class="cc">
 						<p><?php echo Yii::t('holes_view', 'INFO_IF_DEFECT_FIXED') ?></p>
 						<p><?php echo CHtml::link(Yii::t('holes_view', 'SETNULL_FIX_REQUEST'), array('defix', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
