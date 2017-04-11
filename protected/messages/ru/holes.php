@@ -36,6 +36,7 @@ $MESS['HOLES_TYPE_BADREPAIR']="Некачественный ремонт дор�
 $MESS['HOLES_TYPE_UNFINISHED-REPAIR']="Незаконченый ремонт дороги";
 $MESS['HOLES_TYPE_SIDEWALK']      = "Тротуар";
 $MESS['HOLES_TYPE_DESTROYED']      = "Искусственно разрушенная дорога";
+$MESS['HOLES_TYPE_ITEMS']      = "Посторонние предметы на дороге";
 
 $MESS['HOLES_ROAD_TYPE_CITY']="Город";
 $MESS['HOLES_ROAD_TYPE_HIGHWAY']="Трасса";

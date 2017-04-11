@@ -750,6 +750,7 @@ ul.operations li {
 .fence {background: url(../images/st1234/fence.png) no-repeat 0 -3px;}
 .snow {background: url(../images/st1234/snow.png) no-repeat 0 0;}
 .badrepair {background: url(../images/st1234/badrepair.png) no-repeat 0 0;}
+.items {background: url(../images/st1234/items.png) no-repeat 0 0;}
 .unfinished-repair {background: url(../images/st1234/unfinished-repair.png) no-repeat 0 0;}
 
 
@@ -766,6 +767,7 @@ ul.operations li {
 .filterType input[type="checkbox"]:checked + ins.snow {background: url(../images/st1234/snow-active.png) no-repeat 0 0;}
 .filterType input[type="checkbox"]:checked + ins.badrepair {background: url(../images/st1234/badrepair-active.png) no-repeat 0 0;}
 .filterType input[type="checkbox"]:checked + ins.unfinished-repair {background: url(../images/st1234/unfinished-repair-active.png) no-repeat 0 0;}
+.filterType input[type="checkbox"]:checked + ins.items {background: url(../images/st1234/items-active.png) no-repeat 0 0;}
 
 .filterCol {
 	font-size: 0.92em;
@@ -2285,14 +2287,14 @@ div.form #user-groups-passrequest-form label{
 .defect_type input[type="radio"]:checked + label[for="type_snow"]:before{
    background: url(../images/st1234/snow-active.png) no-repeat;
 }
-/* Разбитая дорога */
+/* Некачественный ремонт */
 .defect_type label[for="type_badrepair"]:before{
    background: url(../images/st1234/badrepair.png) no-repeat;
 }
 .defect_type input[type="radio"]:checked + label[for="type_badrepair"]:before{
    background: url(../images/st1234/badrepair-active.png) no-repeat;
 }
-/* Разбитая дорога */
+/* Незавершенный ремонт */
 .defect_type label[for="type_unfinished-repair"]:before{
    background: url(../images/st1234/unfinished-repair.png) no-repeat;
 }
@@ -2314,6 +2316,14 @@ div.form #user-groups-passrequest-form label{
 }
 .defect_type input[type="radio"]:checked + label[for="type_destroyed"]:before{
    background: url(../images/st1234/destroyed-active.png) no-repeat;
+}
+
+/* Сторонні предмети на дорозі */
+.defect_type label[for="type_items"]:before{
+   background: url(../images/st1234/items.png) no-repeat;
+}
+.defect_type input[type="radio"]:checked + label[for="type_items"]:before{
+   background: url(../images/st1234/items-active.png) no-repeat;
 }
 
 /*

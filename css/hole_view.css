@@ -38,6 +38,10 @@ div.rCol .h .type_rails { background-image: url("../images/st1234/rails.png"); }
 div.rCol .h .type_light { background-image: url("../images/st1234/light.png"); padding-left: 23px; }
 div.rCol .h .type_fence { background-image: url("../images/st1234/fence.png"); }
 div.rCol .h .type_hatch { background-image: url("../images/st1234/hatch.png"); }
+div.rCol .h .type_destroyed { background-image: url("../images/st1234/destroyed.png"); }
+div.rCol .h .type_unfinished_repair { background-image: url("../images/st1234/unfinished_repair.png"); }
+div.rCol .h .type_badrepair{ background-image: url("../images/st1234/badrepair.png"); }
+div.rCol .h .type_items{ background-image: url("../images/st1234/items.png"); }
 div.rCol .h .type_nomarking { background-image: url("../images/st1234/nomarking.png"); }
 div.rCol .h .type_policeman { background-image: url("../images/st1234/policeman.png"); }
 div.rCol .h .status {position: relative; }
