@@ -160,7 +160,7 @@ class UserController extends Controller
 				if($model==NULL){
 					$newUser=true;
 					$targetUser=new UserGroupsUser();
-					$targetUser->username="Користувач ".$json["social"];
+					$targetUser->username="Користувач ".$json["social"]." ".$json["chatneyID"]; // имя пользователя по умолчанию
 					$targetUser->group_id=2;
 					$targetUser->save();
 					error_log ("target user saved: ".print_r($targetUser, true)."\n", 3, "php-log.log");
