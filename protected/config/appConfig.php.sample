@@ -12,12 +12,6 @@ $bd=array(
 	               'enableParamLogging' => true,
 		);
 $socials=array( // You can change the providers and their classes.
-				/*'google' => array(
-					'class' => 'GoogleOpenIDService',
-				),*/
-				'yandex' => array(
-					'class' => 'YandexOpenIDService',
-				),
 				'twitter' => array(
 					// регистрация приложения: https://dev.twitter.com/apps/new
 					'class' => 'TwitterOAuthService',
@@ -43,18 +37,6 @@ $socials=array( // You can change the providers and their classes.
 					'client_id' => '',
 					'client_secret' => '',
 				),
-				'mailru' => array(
-					'class' => 'MailruOpenIDService',
-				),
-				'livejournal' => array(
-					'class' => 'LJOpenIDService',
-				),
-				/*'mailru' => array(
-					// регистрация приложения: http://api.mail.ru/sites/my/add
-					'class' => 'MailruOAuthService',
-					'client_id' => '',
-					'client_secret' => '',
-				),*/
 				'moikrug' => array(
 					// регистрация приложения: https://oauth.yandex.ru/client/my
 					'class' => 'MoikrugOAuthService',
