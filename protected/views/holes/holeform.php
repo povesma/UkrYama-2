@@ -393,7 +393,20 @@ $this->widget('zii.widgets.jui.CJuiDatePicker', array(
 		<?php echo $form->hiddenField($model,'ADR_CITY'); ?>
 
 		<div class="addSubmit">
-			<div onclick="$(this).parents('form').submit();">
+                    <script type="application/javascript">
+                      function validateFormSubmit (frm) { // validates a form and submits if valid
+                         var address = $.trim($('#Holes_ADDRESS').val());
+	                 //alert ("Submitting! " + address);
+	                 re = /unnamed road/gi;
+	                 var poor_address=re.test(address);
+	                 if (poor_address) {
+	                     alert('За такою адресою - '+address + "- поліція не знайде цей дефект. Напишіть, будь ласка, повну адресу.");
+	                     return false;
+	                 }
+                          frm.submit();
+                      }
+                    </script>
+			<div onclick="validateFormSubmit($(this).parents('form'));">
 				<a class="addFact"><i class="text"><?php echo Yii::t('template', 'SEND')?></i><i class="arrow"></i></a>
 			</div>
 			<p><?php echo Yii::t('template', 'INFO_AFTERSEND')?></p>

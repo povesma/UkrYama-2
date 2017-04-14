@@ -1,7 +1,6 @@
 <?php if($email_only): ?>
 	<br><?= Yii::t('holes_view', 'EMAIL_ONLY_TEXT') ?> <?= $email_only ?>
 <?php endif;?>
-
 </td></tr>
 <tr><td colspan=2 class="smv-spacer"></td></tr>
 <tr><td colspan=2 >

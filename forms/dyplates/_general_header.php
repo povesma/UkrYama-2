@@ -1,5 +1,6 @@
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 <title></title>
 </head>
 <body>
@@ -16,9 +17,9 @@
 <tr>
 <td class="ref"><div class="ref">Вих. №<?= $ref ?> від: <?= $date ?> р.</div></td><td>&nbsp;</td>
 </tr>
-<tr><td colspan=2 class="v-spacer"></td></tr>
+<!-- <tr><td colspan=2 class="v-spacer"></td></tr> -->
 <tr><td colspan=2 class="title">
 <div>Заява</div>
 </td></tr>
-<tr><td colspan=2 class="smv-spacer"></td></tr>
+<!-- <tr><td colspan=2 class="smv-spacer"></td></tr> -->
 <tr><td colspan=2 class="a-body">

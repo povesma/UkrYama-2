@@ -1359,6 +1359,7 @@ class HolesController extends Controller
 				{
 				   $subj = 'УкрЯма: добавлена яма';
 				}
+				break;
 			case "moderated": // яма отмодерирована. Нужно уведомить пользователя и предложить отправить по почте или заплатить
 				{
 				  $mailbody = $this->renderPartial(
@@ -1368,6 +1369,7 @@ class HolesController extends Controller
 				   $subj = 'УкрЯма: яма опублікована';
 
 				}
+				break;
 			case "reply": // получен и загружен ответ
 				{
 				  $mailbody = $this->renderPartial(
@@ -1377,6 +1379,7 @@ class HolesController extends Controller
 				   $subj = 'УкрЯма: отримана відповідь';
 
 				}
+				break;
 		}
 
 		if ($email != '') {

@@ -203,11 +203,11 @@ function initialize() {
 								<noindex><iframe src="http://www.facebook.com/plugins/like.php?href=<?=Yii::app()->request->hostInfo?>/<?=Yii::app()->request->pathInfo?>&amp;layout=button_count&amp;show_faces=false&amp;width=180&amp;action=recommend&amp;font&amp;colorscheme=light&amp;height=21" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:180px; height:21px;" allowTransparency="true"></iframe></noindex>
 							</div>
 
-							<!-- Vkontakte like -->
+							<!-- Vkontakte like  -->
 							<noindex>
 								<div id="vk_like"></div>
 								<script type="text/javascript">VK.Widgets.Like("vk_like", {type: "button", verb: 1});</script>
-							</noindex>
+							</noindex>          
 					</div>
 					<div class="share">
 						<span><?php echo Yii::t('template', 'SHARE')?></span>
