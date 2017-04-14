@@ -1,6 +1,6 @@
 <?php
 /**
- * MoikrugOAuthService class file.
+ * YandexOAuthService class file.
  *
  * Register application: https://oauth.yandex.ru/client/my
  *
@@ -12,14 +12,14 @@
 require_once dirname(dirname(__FILE__)) . '/EOAuth2Service.php';
 
 /**
- * Moikrug provider class.
+ * Yandex OAuth provider class.
  *
  * @package application.extensions.eauth.services
  */
-class MoikrugOAuthService extends EOAuth2Service {
+class YandexOAuthService extends EOAuth2Service {
 
-	protected $name = 'moikrug';
-	protected $title = 'Moikrug.ru';
+	protected $name = 'yandex_oauth';
+	protected $title = 'Yandex';
 	protected $type = 'OAuth';
 	protected $jsArguments = array('popup' => array('width' => 500, 'height' => 450));
 
@@ -33,13 +33,14 @@ class MoikrugOAuthService extends EOAuth2Service {
 	protected $fields = '';
 
 	protected function fetchAttributes() {
-		$info = (array)$this->makeSignedRequest('https://api.moikrug.ru/v1/my/');
-		$info = (array)$info[0];
+		$info = (array)$this->makeSignedRequest('https://login.yandex.ru/info');
+
 		$this->attributes['id'] = $info['id'];
-		$this->attributes['name'] = $info['name'];
-		$this->attributes['url'] = $info['link'];
-		//$this->attributes['photo'] = $info['avatar']['SnippetSquare'];
-		$this->attributes['gender'] = ($info['gender'] == 'male') ? 'M' : 'F';
+		$this->attributes['name'] = $info['real_name'];
+		//$this->attributes['login'] = $info['display_name'];
+		//$this->attributes['email'] = $info['emails'][0];
+		//$this->attributes['email'] = $info['default_email'];
+		$this->attributes['gender'] = ($info['sex'] == 'male') ? 'M' : 'F';
 	}
 
 	protected function getCodeUrl($redirect_uri) {
@@ -86,7 +87,7 @@ class MoikrugOAuthService extends EOAuth2Service {
 	 */
 	public function makeSignedRequest($url, $options = array(), $parseJson = true) {
 		if (!$this->getIsAuthenticated()) {
-			throw new CHttpException(401, Yii::t('eauth', 'Unable to complete the authentication because the required data was not received.', array('{provider}' => $this->getServiceTitle())));
+			throw new CHttpException(401, 'Unable to complete the authentication because the required data was not received.');
 		}
 
 		$options['query']['oauth_token'] = $this->access_token;

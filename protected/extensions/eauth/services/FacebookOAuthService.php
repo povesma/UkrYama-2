@@ -9,10 +9,11 @@
  * @license http://www.opensource.org/licenses/bsd-license.php
  */
 
-require_once dirname(dirname(__FILE__)).'/EOAuth2Service.php';
+require_once dirname(dirname(__FILE__)) . '/EOAuth2Service.php';
 
 /**
  * Facebook provider class.
+ *
  * @package application.extensions.eauth.services
  */
 class FacebookOAuthService extends EOAuth2Service {
@@ -31,7 +32,15 @@ class FacebookOAuthService extends EOAuth2Service {
 	);
 
 	protected function fetchAttributes() {
-		$info = (object) $this->makeSignedRequest('https://graph.facebook.com/me');
+		$info = (object)$this->makeSignedRequest('https://graph.facebook.com/v2.8/me', array(
+			'query' => array(
+				'fields' => join(',', array(
+					'id',
+					'name',
+					'link',
+				))
+			)
+		));
 
 		$this->attributes['id'] = $info->id;
 		$this->attributes['name'] = $info->name;
@@ -48,34 +57,36 @@ class FacebookOAuthService extends EOAuth2Service {
 		$this->setState('redirect_uri', $redirect_uri);
 
 		$url = parent::getCodeUrl($redirect_uri);
-		if (isset($_GET['js']))
+		if (isset($_GET['js'])) {
 			$url .= '&display=popup';
+		}
 
 		return $url;
 	}
 
 	protected function getTokenUrl($code) {
-		return parent::getTokenUrl($code).'&redirect_uri='.urlencode($this->getState('redirect_uri'));
+		return parent::getTokenUrl($code) . '&redirect_uri=' . urlencode($this->getState('redirect_uri'));
 	}
 
 	protected function getAccessToken($code) {
 		$response = $this->makeRequest($this->getTokenUrl($code), array(), false);
-		parse_str($response, $result);
-		return $result;
+		return json_decode($response, true);
 	}
 
 	/**
 	 * Save access token to the session.
+	 *
 	 * @param array $token access token array.
 	 */
 	protected function saveAccessToken($token) {
 		$this->setState('auth_token', $token['access_token']);
-		$this->setState('expires', isset($token['expires']) ? time() + (int)$token['expires'] - 60 : 0);
+		$this->setState('expires', isset($token['expires_in']) ? time() + (int)$token['expires_in'] - 60 : 0);
 		$this->access_token = $token['access_token'];
 	}
 
 	/**
 	 * Returns the error info from json.
+	 *
 	 * @param stdClass $json the json response.
 	 * @return array the error array with 2 keys: code and message. Should be null if no errors.
 	 */
@@ -86,7 +97,8 @@ class FacebookOAuthService extends EOAuth2Service {
 				'message' => $json->error->message,
 			);
 		}
-		else
+		else {
 			return null;
+		}
 	}
 }
