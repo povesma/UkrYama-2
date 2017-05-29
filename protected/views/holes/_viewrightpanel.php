@@ -86,7 +86,7 @@ $(window).keydown(function(e){
 	<?php
 		$this->widget('application.widgets.holesent.HoleSent', array('hole'=>$hole,'req'=>$req));
 		echo CHtml::tag('p', array(), CHtml::link(Yii::t('holes_view', 'CLAIM_WAS_SEND'), "javascript:void(0)", array('class'=>"declarationBtn",'onClick'=>"holesent.style['display']='inline';this.style['display']='none';")));
-		if($status==2): ?>
+		if($status==2 || Yii::app()->user->level>50 || Yii::app()->user->id == $hole->user_id): ?>
 					<div class="cc">
 						<p><?php echo Yii::t('holes_view', 'INFO_IF_DEFECT_FIXED') ?></p>
 						<p><?php echo CHtml::link(Yii::t('holes_view', 'SET_AS_FIXED'), array('fix', 'id'=>$hole->ID),array('class'=>"declarationBtn")); ?></p>
