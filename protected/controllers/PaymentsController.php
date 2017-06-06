@@ -191,7 +191,7 @@ class PaymentsController extends Controller
         $model->hole_id =  filter_var($_POST['description'], FILTER_SANITIZE_NUMBER_INT);
 	$warning = "";
 	if ($model->status != "success") {
-	   $warning = "****** NOT SUCCESSFUL ******";
+	   $warning = "****** NOT SUCCESSFUL ****** ".$model->status;
 	}
         // Імейл адміну та юристу якщо платіж прийшов і успішно збережений у БД
         if($model->save()) {

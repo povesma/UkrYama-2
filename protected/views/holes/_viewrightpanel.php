@@ -50,10 +50,13 @@ $(window).keydown(function(e){
 <?php if(!Yii::app()->user->isGuest){ ?>
 
 <?php
+	$d1 = date('Y-m-d H:i:s');
 	$requests=$hole->requests_user;
 	$status=0;
 	$req=false;
+	$answ=false;
 	if(count($requests)>0){ // по крайней мере один запрос был
+		error_log ($d1.": _view_rightpanel: request: " . print_r(count($requests), true)." Current user: ".Yii::app()->user->id. ", hole user: ".$hole->user->id."\n", 3, "php-log.log");
 		$req=$requests[count($requests)-1];
 		if($req->answer){ // получен ответ на запрос
 			$answ=$req->answer;
@@ -78,7 +81,7 @@ $(window).keydown(function(e){
 		if(true || $status==0){ // запрос не отправлялся
 			$this->renderPartial('_form_request', array('hole'=>$hole, "first"=>1)); // 1 - первичный запрос
 		}elseif($status==2){ // получен ответ на запрос
-			$this->renderPartial('_form_request', array('hole'=>$hole, "first"=>31,'req'=>$req, 'answ'=>$answ)); // 31 - ответ с нарушением, жалоба в высший орган
+			$this->renderPartial('_form_request', array('hole'=>$hole, "first"=>31,'req'=>$req->getAttributes(), 'answ'=>$answ)); // 31 - ответ с нарушением, жалоба в высший орган
 		}
 	?>
 		</div>
