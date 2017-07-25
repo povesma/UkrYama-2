@@ -30,7 +30,7 @@ if (Yii::app()->params['liqpay_sandbox'] == true) {
 }
 ?>
 
-<form method="POST" accept-charset="utf-8" action="https://www.liqpay.com/api/pay">
+<form method="POST" accept-charset="utf-8" action="https://www.liqpay.ua/api/pay">
 <input type="hidden" name="public_key" value="<?php echo Yii::app()->params['public_key'] ?>" />
 
 <input type="hidden" id="amount" name="amount" value="27" />
@@ -66,7 +66,7 @@ if (Yii::app()->params['liqpay_sandbox'] == true) {
 <input type="hidden" name="sandbox" value="<?php echo Yii::app()->params['liqpay_sandbox']?>" />
 
 <input type="hidden" name="server_url" value="<?php echo Yii::app()->params['liqpay_server_url']?>" />
-<input type="image" src="//static.liqpay.com/buttons/p1ru.radius.png" name="btn_text" />
+<input type="image" src="//static.liqpay.ua/buttons/p1ru.radius.png" name="btn_text" />
 </form>
 
 <?php } ?>
