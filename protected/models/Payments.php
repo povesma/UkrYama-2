@@ -11,7 +11,8 @@
  * @property string $date
  * @property string $status
  * @property string $type
- * @property iineger $transaction_id
+ * @property string $inner_id
+ * @property integer $transaction_id
  * @property varchar $currency
  * The followings are the available model relations:
  * @property UsergroupsUser $user
@@ -37,10 +38,10 @@ class Payments extends CActiveRecord
 			array('hole_id, user_id', 'numerical', 'integerOnly'=>true),
 			array('amount', 'numerical'),
             array('description', 'length', 'max'=>500),
-            array('transaction_id', 'length', 'max'=>30),
+            array('transaction_id', 'length', 'max'=>255),
 			array('status, type, currency', 'length', 'max'=>15),
 			array('date', 'safe'),
-			array('id, user_id, hole_id, amount, date, status, type, transaction_id, description, currency', 'safe', 'on'=>'search'),
+			array('id, user_id, hole_id, amount, date, status, type, transaction_id, inner_id, description, currency', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -67,6 +68,7 @@ class Payments extends CActiveRecord
 			'status' => Yii::t('template','status'),
 			'type' => Yii::t('template','type'),
             'transaction_id' => Yii::t('template','transaction_id'),
+            'inner_id' => Yii::t('template','inner_id'),
             'description' => Yii::t('template','description'),
             'currency' => Yii::t('template','CURRENCY'),
                     
@@ -86,6 +88,7 @@ class Payments extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('hole_id',$this->hole_id);
+		$criteria->compare('inner_id',$this->inner_id);
 		$criteria->compare('amount',$this->amount);
 		$criteria->compare('date',$this->date,true);
 		$criteria->compare('status',$this->status,true);

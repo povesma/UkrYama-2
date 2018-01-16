@@ -27,7 +27,7 @@ class PaymentsController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('view','add','done','callback','test'),
+				'actions'=>array('view','add','done','callback','test', 'coinypay','coinypaystatus'),
 				'users'=>array('*'),
 			),
 			array('allow', // allow authenticated user to perform 'create' and 'update' actions
@@ -84,6 +84,7 @@ class PaymentsController extends Controller
 		));
 	}
 
+
 	/**
 	 * Updates a particular model.
 	 * If update is successful, the browser will be redirected to the 'view' page.
@@ -109,9 +110,10 @@ class PaymentsController extends Controller
 	}
 
     public function actionTest(){
-        $str = 'In My Cart : 11 items';
+        $str = 'In My Cart : 15 items';
         $int = filter_var($str, FILTER_SANITIZE_NUMBER_INT);
         echo $int;
+        return;
     }
 	/**
 	 * Deletes a particular model.
@@ -176,9 +178,70 @@ class PaymentsController extends Controller
                          'holes'=>$holes,
 		));
     }
+
+   public function actionCoinypaystatus() {
+        // decode JSON
+        //echo file_get_contents('php://input');
+        //return;
+         $res = ["status"=>"not_found"];
+        //$_POST = json_decode(file_get_contents('php://input'), true);
+        // Продакшен заповнення моделі
+        if (isset($_POST['innerid'])) {
+           $inner_id = $_POST['innerid'];
+           $ps = Payments::model()->findByAttributes(["inner_id"=>$inner_id]);
+           if ($ps) {
+             if ($ps->status == "success") {
+                 $res = ["status"=>"paid"];
+             } else {
+                 $res = ["status"=>"problem: "+$ps->status];
+             }
+           } else {
+              echo "Nothing found!";
+           }
+
+          
+        } else {
+           echo "No post!";
+        }
+        echo json_encode($res);
+        
+   }
+
+   public function actionCoinypay() {
+        $model=new Payments;
+        // decode JSON
+        //echo file_get_contents('php://input');
+        //return;
+        $_POST = json_decode(file_get_contents('php://input'), true);
+	echo json_encode($_POST);
+        // Продакшен заповнення моделі
+        if (isset($_POST)) {
+        $model->type = $_POST['ps'];
+        $model->description = $_POST['description'];
+        $model->transaction_id = $_POST['transaction_id'];
+        $model->status = $_POST['status'];
+        $model->amount = $_POST['amount'];
+        $model->inner_id= $_POST['innerid'];
+        $model->currency = $_POST['currency'];
+        $model->hole_id =  filter_var($_POST['description'], FILTER_SANITIZE_NUMBER_INT);
+	$warning = "";
+	if ($model->status != "success") {
+	   $warning = "****** NOT SUCCESSFUL ****** ".$model->status;
+	}
+        // Імейл адміну та юристу якщо платіж прийшов і успішно збережений у БД
+        $r = ["status"=>"fail"];
+        if($model->save()) {
+            mail(Yii::app()->params['paymentEmail'], Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TITLE'), Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TEXT',array('{0}'=>$model->hole_id,'{1}' => $model->amount,'{2}' => $model->currency,'{3}' => $model->status." ".$warning)));
+            mail(Yii::app()->params['paymentEmailLawyer'], Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TITLE'), Yii::t('template', 'EMAIL_ADMIN_PAYMENT_ADD_TEXT',array('{0}'=>$model->hole_id,'{1}' => $model->amount,'{2}' => $model->currency,'{3}' => $model->status." ".$warning)));
+            $r = ["status"=>"success"];
+        }
+//        Yii::$app->Response->format = Response::FORMAT_JSON;
+        // response->format=RESPONSE::FORMAT_JSON;
+        echo json_encode($r);
+    }
+}
     
-   public function actionCallback()
-{
+   public function actionCallback() {
     $model=new Payments;
 
         // Продакшен заповнення моделі
@@ -206,6 +269,7 @@ $data = $_POST;
 file_put_contents('dump.txt', print_r($data, true), FILE_APPEND);
 fclose($file);
 */
+
 }
         public function actionDone()
     {

@@ -69,7 +69,7 @@ $(window).keydown(function(e){
 		$status = 3;
 	}
 
-	if($status!=1){ // или не отправлено, или отправлено и получен ответ
+	if(true || $status!=1){ // или не отправлено, или отправлено и получен ответ
 	?>
          		<div class="lc">
        			<a href="#" onclick="var c=document.getElementById('pdf_form');if(c){c.style.display=c.style.display=='block'?'none':'block';c.focus()}return false;" class="button"><?= Yii::t('holes_view', 'PRINT_CLAIM') ?></a>

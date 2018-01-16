@@ -41,7 +41,7 @@ $this->pageTitle=Yii::app()->name . ' :: '.$this->title;
 		</div>
 
 	<div class="f">		
-		<div class="bx-yandex-view-layout wide">
+<!--		<div class="bx-yandex-view-layout wide">
 			<div class="bx-yandex-view-map">
 			<div id="ymapcontainer" class="ymapcontainer"></div>
 			<?php Yii::app()->clientScript->registerScript('initmap',<<<EOD
@@ -55,6 +55,7 @@ EOD
 ?>
 			</div>
 		</div>
+-->
 		<img src="/images/map_shadow.jpg" class="mapShadow" alt="" />
 
 	</div>		
