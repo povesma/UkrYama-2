@@ -43,7 +43,7 @@ $this->widget('application.extensions.fancybox.EFancyBox', array(
 			<div class="h">
 				<?php if($hole['LATITUDE'] && $hole['LONGITUDE']):?>
 
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&key=<?php echo Yii::app()->params['google_maps_api']?>"></script>
 <script>
 function initialize() {
   mapdiv=document.getElementById('bigmap');
@@ -72,7 +72,7 @@ function initialize() {
 	</table>
 </div>
 <div  id="ymapcontainer">
-	<img onClick="initialize()" src="http://maps.googleapis.com/maps/api/staticmap?center=<?= $hole->LATITUDE ?>,<?= $hole->LONGITUDE ?>&zoom=14&size=280x300&markers=color:red%7Clabel:Дефект%7Cicon:http://ukryama.com/images/st1234/<?= $hole->type->alias;?>_<?= $hole['STATE'] ?>.png|<?= $hole->LATITUDE ?>,<?= $hole->LONGITUDE ?>&sensor=false"><br>
+	<img onClick="initialize()" src="https://maps.googleapis.com/maps/api/staticmap?center=<?= $hole->LATITUDE ?>,<?= $hole->LONGITUDE ?>&zoom=14&size=280x300&markers=color:red%7Clabel:Дефект%7Cicon:http://ukryama.com/images/st1234/<?= $hole->type->alias;?>_<?= $hole['STATE'] ?>.png|<?= $hole->LATITUDE ?>,<?= $hole->LONGITUDE ?>&sensor=false&key=<?php echo Yii::app()->params['google_maps_api']?>"><br>
 </div>
 				<?php endif;?>
 				<div class="info">
